@@ -1,0 +1,12 @@
+<!DOCTYPE html>
+<html lang="ja" dir="ltr">
+<%= partial "head" %>
+  <body id=<%= @body_id %>>
+    <!--header-->
+    <%= partial "header" %>
+    <!--wrap-->
+    <%= yield %>
+    <!--footer-->
+    <%= partial "footer" %>
+  </body>
+</html>

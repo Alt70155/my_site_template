@@ -1,0 +1,34 @@
+<head>
+  <% @base_title = "Knowledge-Blog" %>
+  <meta charset="utf-8">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  <meta name="viewport" content="width=480">
+  <% if @page_number %>
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:site" content="@70155">
+    <meta property="og:url" content="http://Knowledge-blog.net/articles/<%= @page_number %>.html">
+    <meta property="og:title" content="<%= @title %>">
+    <meta property="og:description" content="<%= @description || @title %>">
+    <meta property="og:image" content="http://Knowledge-blog.net/images/<%= @page_number %>.jpg">
+  <% end %>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Inconsolata|Kaushan+Script|Ropa+Sans">
+  <link rel="shortcut icon" href="../images/favicon.png">
+  <title><%= @title ? @title + " | " + @base_title : @base_title %></title>
+  <link rel="stylesheet" href="../css.css">
+  <script src="https://cdn.rawgit.com/google/code-prettify/master/loader/run_prettify.js"></script>
+  <!-- Global site tag (gtag.js) - Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=UA-131321630-1"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'UA-131321630-1');
+  </script>
+  <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+  <script>
+  (adsbygoogle = window.adsbygoogle || []).push({
+    google_ad_client: "ca-pub-7031203229342761",
+    enable_page_level_ads: true
+  });
+</script>
+</head>

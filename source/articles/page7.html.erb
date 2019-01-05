@@ -1,0 +1,98 @@
+<% @body_id = "article" %>
+<% @title = "【解説】静的サイトジェネレータでテンプレート共通化！Middlemanの使い方を簡単に解説" %>
+<% @description = "静的サイトの管理を楽にする静的サイトジェネレータ・Middlemanの導入と簡単な使い方について書きたいと思います。" %>
+<% @page_number = "page7" %>
+
+<div id="wrap">
+  <div class="content">
+    <div class="text-content">
+
+      <div class="text-title"><h1><%= @title %></h1></div>
+      <div class="posted-date-area"><p>投稿日：2018/12/29</p></div>
+
+      <p>前々からやるやる言ってた静的サイトのテンプレート共通化作業をやっとしました(^^;;<br>今回は静的サイトの管理を楽にする「静的サイトジェネレータ・Middleman」ついて書きたいと思います。</p>
+
+      <div class="text-sub-title"><h2 class="sub-title-border">&nbsp;静的サイトジェネレータとは</h2></div>
+      <p>まず静的サイトジェネレータとはなんぞやですが、</p>
+      <p>静的サイトを作成していると、共通部分が多くなって困ることがあると思います。少ないうちはコピペでいいのですが、じゃあその共通部分を変更して〜となった場合、<b>全ページの変更を行う</b>ことになってしまいます。</p>
+
+      <p>静的サイトジェネレータは、ローカル環境で静的コンテンツのテンプレートや共通部品の管理などを行い、最終的にそのファイルをビルドする事で静的サイトを生成するフレームワークの事です。</p>
+      <p>これにより、共通部品の変更があったとしても、一箇所修正するだけで全ページに修正が適用されるというわけです。</p>
+      <p>ツールも使い方も様々なものがあるのですが、自分の用途ではMiddlemanというフレームワークが一番簡単に使用できました。</p>
+
+      <div class="text-sub-title"><h2 class="sub-title-border">&nbsp;Middlemanとは</h2></div>
+
+      <p>『静的サイトを構築する・使いやすいフレームワーク Middleman はモダンな web 開発のショートカットやツールを 採用した静的サイトジェネレータです』と<a href="https://middlemanapp.com/jp/" target="_blank">公式サイト</a>に書いてあります(丸投げ)</p>
+
+      <div class="text-sub-title"><h2 class="sub-title-border">&nbsp;なぜMiddlemanなのか</h2></div>
+
+      <p>ここのような規模の小さいサイトではどのツールでも同じような事ができると思うのですが、個人的にはRubyとERbが使えるという点で選択しました。<br>最近Railsの勉強をしているのですが、RailsでもERbを用いたHTML部品の共通化ができます。最初はRails入れようかなと思っていたのですが、小さい静的サイトのHTML共通化の為だけにRailsを入れるのは「戦闘機でコンビニに買い物に行く」ようなものだと思ったので辞めましたw</p>
+      <p>結局Middlemanを見つけたのですが、使い方的には<b>RailsからHTML共通化の機能を引っこ抜いた</b>感じでとても使いやすいです。<br>というか説明書なくてもいけます。(ほとんど使い方一緒なので)</p>
+      <p>まとめると、Rubyを少し知っていてRailsも勉強中！そして静的サイトの管理を楽にしたい！というひどくニッチな層にはとてもオススメかなと思います(←これにマッチする人いるのかな...w いたら友達になってください)</p>
+      <p>ただ解説サイトのようなものがあまり多くなく、公式サイトも日本語ではあるのですが少し分かりづらいかな〜？というのが個人的な感想です。</p>
+
+      <div class="text-sub-title"><h2 class="sub-title-border">&nbsp;使い方と環境構築</h2></div>
+
+      <p>環境はMac(ver10.13.6)、Ruby(ver2.5.3)です。nokogiriが入ってない人はそれも必要になります。</p>
+      <pre class="prettyprint linenums"><code># インストール
+gem install middleman
+# 新規プロジェクト
+middleman init project_name</code></pre>
+      <p>コマンド上で新しく作成したプロジェクトに移動し、以下のコマンドでローカルサーバーを立ち上げることができます。(localhost:4567)</p>
+      <pre class="prettyprint linenums"><code>bundle exec middleman server</code></pre>
+      <p>最後にプロジェクトを色々いじったあと、コンテンツをビルドして静的サイトを生成するコマンド</p>
+      <pre class="prettyprint linenums"><code>bundle exec middleman build</code></pre>
+      <p>これを実行すると、sourceの上にbuildというファイルが作成され、そこに最終的な静的サイトがビルドされます。</p>
+
+      <div class="text-sub-title"><h2 class="sub-title-border">&nbsp;ファイル構成</h2></div>
+
+      <p>上の新規プロジェクト作成コマンドを実行すると、以下のようなディレクトリができていると思います。</p>
+      <img src="../images/page7/2.png" alt=""><br><br>
+      <p>sourceの配下にあるファイル群がメインコンテンツで、ここでHTMLやCSS、JSのファイルなどを管理します。 </p>
+      <p>次にconfig.rbが設定ファイルですが、とりあえず共通化やパーシャルの切り出しをするだけなら設定ファイルは弄る必要はないと思います。ですが、上のディレクトリ構成を変える場合・例えば既存ファイルの名前変更やlayoutsの場所変更などはその設定をいじる必要があります。(新しいディレクトリを追加する場合は大丈夫) <br>
+      自分はこの辺を少し弄ったら直らなくなり、1日沼にハマったので既存ファイルはそのままに、新規ディレクトリを追加する事で回避しています。</p>
+      <p>全体的なレイアウトを決める大元となるのはsource/layouts/layout.erbファイルです。全てのHTMLファイルはここを介して出力されます。</p>
+
+      <div class="text-sub-title"><h2 class="sub-title-border">&nbsp;使い方</h2></div>
+      <p>ここからは自分がどのように使っているかを書いていきますので、参考になれば幸いです。</p>
+      <p>流れとしては、まず<b>パーシャル(head, header, footer)</b>となる部分を切り出し、その後<b>テンプレート(mainの部分)</b>を分け、それを<b>レイアウト</b>にまとめるという感じです。</p>
+      <p>自分も使い始めてまだ日が浅いので簡単な使い方しかしていないですが、何かあれば更新していきたいと思っています。</p>
+      <p>まず、自分のサイトに合わせたファイル構成にしていきます。と言っても、自分のサイトはシンプルなのでデフォルトのファイル構成とあまり変わらないです。</p>
+      <p>最終的には以下のような構成になりました。</p>
+      <img src="../images/page7/3.png" alt=""><br><br>
+      <p>それぞれにはファイルの命名規則があり、ERbを使う場合はパーシャルとなるファイルにはアンダースコア+ファイル名+erb、テンプレートとなる部分はファイル名+そのファイルの拡張子+erbとなります。</p>
+      <p>ここでは上の画像のようになるように、headerとfooterを切り出し、テンプレートを作成、layout作成の流れをコードの画像付きで説明していきます。</p>
+
+      <h3>パーシャル(header, footer)の作成</h3>
+      自分はheaderとfooter以外にheadも切り出しています。
+      <p>まずheaderを切り出し</p>
+      <img src="../images/page7/header.png" alt="headerファイル"><br><br>
+      <p>次にfooter</p>
+      <img src="../images/page7/footer.png" alt="footerファイル"><br><br>
+
+
+      <h3>テンプレートの作成</h3>
+      <p>headerとfooterを分離したので、その間に挟まれるメインとなるコンテンツの内容を別ファイルに切り出します。</p>
+      <img src="../images/page7/index.png" alt="indexファイル"><br><br>
+
+      <h3>レイアウトの作成</h3>
+      <p>上で切り出したファイルをまとめる、レイアウトとなる土台を作成します。</p>
+      <p>まずはいつものDOCTYPE宣言からhtmlまでのタグを書き、その中にパーシャルとテンプレートとして切り出したファイルをlayoutに追加する為のコードを書きます。 <br>
+        記述法はpartial "ファイル名(アンダースコア省略)"でパーシャルが挿入され、yieldという部分にテンプレートが挿入されます。(ここでは上で作ったindexが入る)</p>
+        <img src="../images/page7/layout.png" alt="layoutファイル"><br><br>
+      <p>もちろん、index以外のテンプレートを作成しても(例えば記事など)、書く内容はメインとなるコンテンツ部分だけで良く、ビルドすればキチンとheaderやfooterが挿入されています。</p>
+
+      <div class="text-sub-title"><h2 class="sub-title-border">&nbsp;Rubyを使う</h2></div>
+      <p>テンプレート共通化以外にも、MiddlemanはERbというHTML上でRubyのコードが使えるテンプレートエンジンを使っているため、当然ここでもRubyのコードを自分で記述することが可能です。(もっとも上で使っていたyieldなども既にRubyのコードなのですが)</p>
+      <p>例としては、上の画像では触れませんでしたが、layoutのbodyのid部分に変数を使っているのがわかると思います。 <br>
+        これは、テンプレートの部分に変数を指定する事により、読み込むテンプレートの内容によって違う変数をlayoutに渡す事ができるということです。 <br>
+        今回ではindexのページではindexというidを、他にもarticlesではarticleというidを変数に渡す事によって、bodyにそれぞれ違うidを設定しています。 <br></p>
+      <p>他にも、読み込むテンプレートによってheadやheaderの内容を変えたいという場合はif文によって分岐したりということが可能です。</p>
+
+      <div class="text-sub-title"><h2 class="sub-title-border">&nbsp;最後に</h2></div>
+      <p>ここで紹介したのは基礎的な使い方だけなので、調べればもっと便利な使い方などがあると思います！ <br>
+      短くまとめたため、分かりづらかったら申し訳ないですm(_ _)m <br>
+      ここまで読んでくださりありがとうございます！</p>
+    </div>
+  </div>
+</div>

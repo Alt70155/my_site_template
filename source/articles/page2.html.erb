@@ -1,0 +1,42 @@
+<% @body_id = "article" %>
+<% @title = "JavaScriptでタイピングゲームを作ってみた" %>
+<% @description = "JavaScriptを勉強する過程でゲーム制作の勉強もしたので、試しにタイピングゲームを作ってみました。" %>
+<% @page_number = "page2" %>
+
+<div id="wrap">
+  <div class="content">
+    <div class="text-title">
+      <h1><%= @title %></h1>
+    </div>
+    <div class="posted-date-area"><p>投稿日：2018/7/21</p></div>
+
+    <div class="text-sub-title"><h2 class="sub-title-border">&nbsp;感想</h2></div>
+    <div class="text-content">
+      <p>JavaScriptを勉強する過程でゲーム制作の勉強もしたので、試しにタイピングゲームを作ってみました。<br>
+        完成品がこちらになります→<a href="http://knowledge-blog.net/JSTyping" target="_blank">JSTyping</a><br><br>
+        問題として出題される文章がJavaScriptに関連したコードや構文などが出るという申し訳程度のオリジナリティがあります。<br>
+        タイマーやタイピング数、連打メーターなどの機能も追加してみました。<br>
+        ゼロからゲームを作るのは初めてだったので、アルゴリズムを考えたり実装したりがとても楽しかったです。一番難しかった処理はshift同時押しの大文字入力時の判定でした。</p>
+      <p>コードはGitHubにあります、興味のある人は→ <a href="https://github.com/Alt70155/JSTyping" target="_blank">https://github.com/Alt70155/JSTyping</a></p>
+      <div class="text-sub-title"><h2 class="sub-title-border">&nbsp;気を付けたこと</h2></div>
+      <p>今回のコードは、twitterで声をかけてくださったエンジニアの方にコードレビューをしていただき、主に以下の点の指摘を受け、修正しました。</p>
+      <ul>
+        <li>全体的な見やすさ</li>
+        <li>命名規則に沿った変数や関数の命名</li>
+        <li>コードの複雑さの改善</li>
+        <li>重複処理や無駄なコードの添削</li>
+        <li>処理ごとの関数の分離</li>
+        <li>コメントの追加</li>
+        <li>マジックナンバーを減らす</li>
+        <li>変数スコープの意識</li>
+      </ul>
+      <p>など</p>
+      <p>日頃一人で勉強してると、人にコードを見せる機会がほぼないので見やすさや可読性を意識せず、よろしくないのでとても良い勉強になりました。</p>
+      <p>細かく丁寧に指導して頂き、めちゃくちゃ感謝でした！1人でコードを書いていたらこの改善に気付くのに半年以上はかかるであろう情報量だと思います。コードレビューは大切。。。</p>
+      <p>今思うと、最初のコードは変数や関数の名前や場所はめちゃくちゃ、コードはごちゃごちゃ、コメントは無しで酷い状態でした。一週間後の自分が読んで何がしたいのか分からなくなるパターンです。(この後めちゃくちゃリーダブルコード読んだ)</p>
+      <div class="text-sub-title">
+        <h2 class="sub-title-border">&nbsp;改善点</h2></div>
+      <p>まだ改善点は多いと思いますが、とりあえずの改善点としては問題を配列に格納しているのが見づらく使いずらいのでここをオブジェクトでまとめることや、タイマーあたりの関数の改善、グローバル変数を減らすことなどです。</p>
+    </div>
+  </div>
+</div>
