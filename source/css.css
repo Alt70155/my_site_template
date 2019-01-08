@@ -159,7 +159,7 @@ footer small {
 #wrap {
   background-color: white;
   padding-bottom: 50px;
-  min-width: 640px;
+  min-width: 540px;
   min-height: 800px;
 }
 
@@ -170,7 +170,6 @@ footer small {
   margin: auto;
   padding-top: 30px;
   max-width: 960px;
-  min-width: 640px;
 }
 
 .container {
@@ -231,7 +230,7 @@ footer small {
   color: black;
   margin-left: 8px;
   margin-right: 7px;
-  line-height: 1.5em;
+  line-height: 1.8em;
   font-size: 100%;
 }
 
@@ -240,7 +239,7 @@ footer small {
 }
 
 .date {
-  margin-top: -100px;
+
   color: #CCCCCC;
 }
 
@@ -254,6 +253,12 @@ footer small {
   .article-item {
     width: 45%;
     margin-bottom: -40px;
+  }
+}
+@media screen and (max-width: 600px) {
+  .article-item {
+    width: 75%;
+    margin-bottom: -50px;
   }
 }
 
@@ -290,6 +295,7 @@ footer small {
 .text-title {
   margin: 0 auto 0 auto;
   padding-top: 30px;
+  min-width:  550px;
 }
 
 .text-content ul {
@@ -378,7 +384,7 @@ code {
 }
 
 #article img {
-  max-width: 760px;
+  max-width: 620px;
 }
 
 .articles-pic a:hover {
@@ -463,14 +469,19 @@ code {
   }
 }
 
+@media screen and (max-width: 660px) {
+  header {
+    background-size: contain;
+  }
+  #article .content {
+    margin-left: 7px;
+    margin-right: 7px;
+  }
+}
 
-/*スマホのヘッダー部の調節*/
 @media screen and (max-width: 480px) {
-    body {
+    /* body {
       width: 700px;
-    }
-    header {
-      background-size: contain;
     }
     /*page記事の内側*/
     #article #wrap{

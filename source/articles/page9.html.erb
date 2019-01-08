@@ -1,0 +1,148 @@
+<% @body_id = "article" %>
+<% @title = "flexboxと比率を維持しながら拡大縮小する要素のCSSコーディング" %>
+<% @description = "flexboxとブロックを用いて比率を維持しながら拡大縮小する方法について書きたいと思います。" %>
+<% @page_number = "page9" %>
+
+<div id="wrap">
+  <div class="content">
+    <div class="text-content">
+
+      <div class="text-title"><h1><%= @title %></h1></div>
+      <div class="posted-date-area"><p>投稿日：2019/1/8</p></div>
+      <p>flexboxとブロックを用いて比率を維持しながら拡大縮小する方法について書きたいと思います。<br>このサイトの記事一覧は元々flexboxとメディアクエリのみでレスポンシブに対応していましたが、それでは少し見栄えが良くないので、ブログとして本格的に稼働するのを機に作り直してみました。</p>
+      <div class="text-sub-title"><h2 class="sub-title-border">&nbsp;やりたいこと</h2></div>
+      <p>flexboxで記事の要素を横3列に並べ、それに含めてブラウザの横幅を小さくするにつれて、縦と横の比率を維持しながら一緒に縮小していく。<br>ページ幅に合わせて記事の順番を保ちながら自動で折り返す(記事を横に2つ,1つにする)。</p>
+      <div class="text-sub-title"><h2 class="sub-title-border">&nbsp;やり方とサンプルコード</h2></div>
+      <p>具体的には、flexboxで大枠のコンテンツを配置し、その中の個々のパーツはpositionプロパティとwidthの大きさを%で、heightをautoと指定することで実現しました。</p>
+      <p>こちらがサンプルになります。(ブラウザを拡大縮小してみてください)</p>
+      <p><a href="../flex-sample.html">サンプル</a></p>
+      <p>ちなみに、このサイトのトップページにもそれを丸々適用してあるので、そちらでも完成品を確認できます。</p>
+      <p><a href="http://knowledge-blog.net/">knowledge-blog</a></p>
+      <p>サンプルコードはこちらになります。</p>
+      <h3>HTML</h3>
+<pre class="prettyprint linenums"><code>
+&lt;div class="content"&gt;
+  &lt;div class="container"&gt;
+
+    &lt;article class="article-item box"&gt;
+      &lt;div class="article-inside"&gt;
+        &lt;img src="page8.jpg" alt=""&gt;
+        &lt;p&gt;hello world hello world hello world hello &lt;/p&gt;
+      &lt;/div&gt;
+    &lt;/article&gt;
+
+    &lt;article class="article-item box"&gt;
+      &lt;div class="article-inside"&gt;
+        &lt;img src="page8.jpg" alt=""&gt;
+        &lt;p&gt;hello world hello world hello world hello &lt;/p&gt;
+      &lt;/div&gt;
+    &lt;/article&gt;
+
+    &lt;article class="article-item box"&gt;
+      &lt;div class="article-inside"&gt;
+        &lt;img src="page8.jpg" alt=""&gt;
+        &lt;p&gt;hello world hello world hello world hello &lt;/p&gt;
+      &lt;/div&gt;
+    &lt;/article&gt;
+
+    &lt;article class="article-item box"&gt;
+      &lt;div class="article-inside"&gt;
+        &lt;img src="page8.jpg" alt=""&gt;
+        &lt;p&gt;hello world hello world hello world hello &lt;/p&gt;
+      &lt;/div&gt;
+    &lt;/article&gt;
+
+    &lt;article class="article-item box"&gt;
+      &lt;div class="article-inside"&gt;
+        &lt;img src="page8.jpg" alt=""&gt;
+        &lt;p&gt;hello world hello world hello world hello &lt;/p&gt;
+      &lt;/div&gt;
+    &lt;/article&gt;
+
+    &lt;article class="article-item box"&gt;
+      &lt;div class="article-inside"&gt;
+        &lt;img src="page8.jpg" alt=""&gt;
+        &lt;p&gt;hello world hello world hello world hello &lt;/p&gt;
+      &lt;/div&gt;
+    &lt;/article&gt;
+
+  &lt;/div&gt;
+&lt;/div&gt;
+</code></pre><br>
+
+      <h3>CSS</h3>
+<pre class="prettyprint linenums"><code>
+.content {
+  margin: 0 auto;
+  max-width: 960px;
+  /* border: 1px solid black; */
+  height: auto;
+}
+
+/* 記事全ての枠の設定 */
+.container {
+  display: flex;
+  justify-content: space-around;
+  flex-wrap: wrap; /* 記事折り返し設定 */
+  margin: 100px auto 0 auto;
+}
+
+.article-item {
+  position: relative;
+  /* コンテンツの大きさ指定 */
+  width: 30%;
+  height: auto;
+  margin: 15px;
+}
+
+.box:before {
+  content: "";
+  display: block;
+  padding-top: 100%;
+}
+
+.article-inside {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 45%;
+}
+
+img {
+  width: 100%;
+  height: 100%;
+}
+
+.article-item p {
+  margin-left: 8px;
+  margin-right: 7px;
+  line-height: 1.5em;
+  font-size: 100%;
+}
+
+@media screen and (max-width: 920px) {
+  .article-item {
+    width: 45%;
+    margin-bottom: -40px;
+  }
+}
+
+@media screen and (max-width: 620px) {
+  .article-item {
+    width: 85%;
+    margin-bottom: -100px;
+  }
+}
+</code></pre><br>
+
+      <div class="text-sub-title"><h2 class="sub-title-border">&nbsp;解説</h2></div>
+      <p>flexboxの設定はcontainerクラスで行っています。flex-wrap: wrapとすることで要素が自動的に折り返されます。</p>
+      <p>それに加え、記事要素を均等に配置するため、justify-content: space-aroundを指定していますが、このプロパティは文字通り均等に配置するため、要素を3列で並べていて、最後の行の要素数が2つだった場合も当然均等配置になってしまいます。</p>
+      <p>この問題の解決方法は別の記事で解説していますので、そちらも合わせてご覧ください。</p>
+      <p>そして比率を維持しながら拡大・縮小するarticle要素はdisplay:blockを指定、positionで要素を設置し、widthを%、heightをautoとすることで外の大きさ(具体的にはcontentのwidth)に合わせて拡大・縮小するようになります。<br>画像の設定は、widthとheight両方を100%にしておけば親要素に合わせて拡大・縮小してくれます。</p>
+      <p>もしこのサンプルを使う場合は、article-itemのwidthを変えれば比率・要素の大きさが変わります。一緒に外枠のcontentのwidthも合わせて変えないと、4列になったり2列になったりしますので、気を付けてください。</p>
+
+    </div>
+  </div>
+</div>

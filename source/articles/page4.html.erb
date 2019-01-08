@@ -8,12 +8,13 @@
     <div class="text-title">
       <h1><%= @title %></h1>
     </div>
-    <div class="posted-date-area"><p> 投稿日：2018/9/1 &nbsp; 更新日：2018/12/28</p></div>
+    <div class="posted-date-area"><p> 投稿日：2018/9/1 &nbsp; 更新日：2019/1/7</p></div>
 
     <div class="text-content">
+
       <div class="text-sub-title">
         <h2 class="sub-title-border">&nbsp;あらゆる問題が発生</h2></div>
-      <p>朝起きて自分のwebサイトを確認したらエラーページが表示され、焦ってMyDNSを見直しました。(MyDNSは毎週サイトに訪問しないとエラーページが表示されるようになってる)</p>
+      <p>とある朝自分のwebサイトを確認したらMyDNSのエラーページが表示され、焦ってMyDNSを見直しました。(MyDNSは毎週サイトに訪問しないとエラーページが表示されるようになってる)</p>
       <p>手動ではめんどくさいのでcronの設定で毎日サイトにアクセスする設定になっているため、その辺がおかしくなっているのかと手動でシェルスクリプトを実行してもmydnsのサイトに接続できない。。。<br>
         <pre class="prettyprint linenums"><code># sh mydns_update.sh<br>www.mydns.jp (www.mydns.jp) をDNSに問いあわせています... 失敗しました: 名前またはサービスが不明です.<br>wget: ホストアドレス &#39;www.mydns.jp&#39; を解決できませんでした。</p></code></pre>
       <p>取り敢えず公式サイトから手動ログインしサーバーを繋がる状態に。<br><br>
@@ -27,29 +28,34 @@
       <div class="text-sub-title"><h2 class="sub-title-border">&nbsp;原因</h2></div>
 
       <p>エラーを見る限りresolveがダメらしい(?)</p>
-      <p>まずpingで
+      <p>まずpingで疎通確認
         <pre class="prettyprint linenums"><code># ping mirrorlist.centos.org<br>名前またはサービスが不明です</code></pre>
         <p>繋がらない。</p>
-      <p>他のPCでやってみて繋がる事を確認<br>
+      <p>他のPCでやってみて繋がる事を確認(原因が接続先のサイトではなく自分のサーバーにあるかどうかがこれでわかる)<br>
         <pre class="prettyprint linenums"><code># ping mirrorlist.centos.org <br>64 bytes from 67.219.148.138: icmp_seq=0 ttl=49 time=142.333 ms<br>64 bytes from 67.219.148.138: icmp_seq=1 ttl=49 time=142.569 ms</p></code></pre>
-        <p>今度はmirrorlist.centos.orgのIPアドレスに対してpingをしてみる</p>
+        <p>今度は自分のサーバーでmirrorlist.centos.orgのIPアドレスに対してpingをしてみる(DNSの問題かどうかを判別)</p>
       <pre class="prettyprint linenums"><code># ping 212.69.166.138<br>64 bytes from 212.69.166.138: icmp_seq=1 ttl=54 time=261 ms<br>64 bytes from 212.69.166.138: icmp_seq=2 ttl=54 time=262 ms</code></pre>
-      <p>繋がった！！！</p>
-      <p>ここまで来てやっとresolve?関連のエラーだと判明し、ネットには繋がるけどDNSでエラーが起きてるせいで上記のあらゆるエラーを引き起こしている事がわかりました。</p>
+      <p>繋がりました！ <br>
+        つまり、IP指定では繋がるけどドメイン指定では繋がらないわけですね。DNSの名前解決の問題？ちょっとこの辺の詳しい事はよく分かりませんが。
+      </p>
+      <p>そんなこんなでresolve関連のエラーだと判明し、ネットには繋がるけどDNSでエラーが起きてるせいで上記のあらゆるエラーを引き起こしている事がわかりました。</p>
 
       <div><h2 class="sub-title-border">&nbsp;DNSを設定</h2></div>
 
       <p>/etc/sysconfig/network-scripts/ifcfg-xxxに、自分が使ってる機器の設定ファイルがあり、そこにDNS設定を追加する。(xxxは機器の名前) <br>
       DNS=8.8.8.8を追加。8.8.8.8はgoogleのPublic DNSのIPアドレスらしい。</p>
       <pre class="prettyprint linenums"><code># vi /etc/sysconfig/network-scripts/ifcfg-xxx<br>DNS=8.8.8.8</code></pre>
-      <p>これで終わりかと思いきや、できませんでした。<br>/etc/resolve.confにも追加しなければ行けないらしい。
+      <p>これで終わりかと思いきや、できませんでした。<br>/etc/resolve.conf(resolve関連の設定ファイル)にも追加しなければいけないらしい。
       <pre class="prettyprint linenums"><code># vi /etc/resolve.conf<br>nameserver 8.8.8.8</code></pre>
       <p>ここまできてやっとyum updateやその他諸々のエラーが解決しました。</p>
-      <p>最初のサーバー設定でこのへんやらなかったけど、なんで今頃できなくなったんでしょうか・・・<br>サーバーを一度落としたからかも・・・？</p>
+      <p>最初のサーバー設定でこのへんやらなかったけど、なんで今頃できなくなったんでしょうか・・・<br>サーバーを一度落としたからかも・・・？ <br>
+        追記：どうやらデフォルトの設定だとOSを再起動するとresolvの設定が書き変わるらしい。
+      </p>
 
       <p><div class="text-sub-title"><h2 class="sub-title-border">&nbsp;余談</h2></div>
 
-      <p>自分は更に、設定を適用しようとsystemctl restart network.serviceをしたところ、<br>job for network.service failed because the control process exited with error code. See &quot;systemctl status network.service&quot; and &quot;journalctl -xe&quot; for details.<br>というエラーが出ました。</p>
+      <p>自分は更に、設定を適用しようとsystemctl restart network.serviceをしたところ、</p>
+        <div style="border: 1px solid black;padding:0 4px 0 4px;"><p>job for network.service failed because the control process exited with error code. See &quot;systemctl status network.service&quot; and &quot;journalctl -xe&quot; for details.</p></div><br><p>というエラーが出ました。</p>
       <p>これについてはここのサイトがかなり役に立ちました。<a href="http://zacodesign.net/blog/?p=862">http://zacodesign.net/blog/?p=862</a><br>結果的には使ってないインターフェイスにアクティベートしようとして失敗していた模様。<br>
         今思えば、/etc/sysconfig/network-scripts/←ここのファイル一覧を見た時に、使ってない機種名が出てきて？ってなりましたが結局そこがoffになっていないせいでした。</p>
     </div>

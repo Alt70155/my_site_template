@@ -4,6 +4,34 @@
     <p class="page-title"><%= @title %></p>
     <div class="container">
 
+      <% article_contents = [ %>
+        <% ["【flexbox】比率を維持しながら拡大縮小する要素のCSSコーディング", "2019/1/8", "9"], %>
+        <% ["【flexbox】justify-content:space-aroundで余白を埋める方法", "2019/1/8", "10"], %>
+      <% ] %>
+
+      <% article_contents.reverse_each do |e| %>
+        <article class="article-item box">
+          <div class="article-inside">
+            <a href="../articles/page<%= e[2] %>.html"><img src="../images/page<%= e[2] %>.jpg" alt="">
+            <p><a href="../articles/page<%= e[2] %>.html"><%= e[0] %></a><br>
+              <span class="date">Posted on <%= e[1] %></span>
+            </p>
+          </div>
+        </article>
+      <% end %>
+
+      <% 2.times do %>
+        <article class="article-item hidden-item">
+          <div class="article-inside">
+            <a href="#"><img src="images/header.jpg" alt=""></a>
+            <p><a href="#"></a><br>
+              <span class="date"></span>
+            </p>
+          </div>
+        </article>
+      <% end %>
+
+
     </div>
   </div>
 </div>

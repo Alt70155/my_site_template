@@ -1,0 +1,83 @@
+<% @body_id = "article" %>
+<% @title = "【flexbox】justify-content:space-aroundで余白を埋める方法" %>
+<% @description = "flexboxには横に並べた要素を均等に配置するためのjustify-content:space-aroudというプロパティがあります。" %>
+<% @page_number = "page10" %>
+
+<div id="wrap">
+  <div class="content">
+    <div class="text-content">
+
+      <div class="text-title">
+        <h1><%= @title %></h1>
+      </div>
+      <div class="posted-date-area"><p>投稿日：2019/1/8</p></div>
+
+      <div class="text-sub-title">
+        <h2 class="sub-title-border">&nbsp;space-aroundの問題点</h2>
+      </div>
+
+      <p>flexboxには横に並べた要素を均等に配置するためのjustify-content:space-aroudというプロパティがあります。</p>
+      <ul>
+        <li>要素を横に並べたい</li>
+        <li>それを均等に</li>
+      </ul>
+      <p>という需要は多そうだし、とても良いプロパティなのですが、使い所によっては問題点があります。<br><br>
+        その問題とは、</p>
+        <ul>
+          <li><b>要素を複数並べ、</b></li>
+          <li><b>さらに折り返しを用いて、</b></li>
+          <li><b>要素の総数が横に並べた数の倍数でない</b></li>
+        </ul>
+      <p>という場合です。主に、ブログなどの記事一覧はこれに当てはまるかと思います。</p>
+      <p>言葉だとイメージしづらいと思うので、画像で説明。<br>
+        まずは普通の場合</p>
+        <img alt="flexbox_item_current" src="../images/page10/current.png"> <br>
+        <p>最後の行の要素を取り除いてみます。</p>
+        <img alt="flexbox_item" src="../images/page10/flexbox-space.png"><br>
+      <p>最後の行の要素が１つ少ないため、中央に寄っています。<br>これは、要素は均等に並べたいが、最後の行は左詰めにしたいという場合(記事一覧や画像の表示などの時)に困ってしまいます。</p>
+      <div class="text-sub-title">
+        <h2 class="sub-title-border">&nbsp;解決策</h2>
+      </div>
+      <p>これを解決するには、要素数の帳尻を合わせつつ、画面には表示しないというダミーの要素を置きます。(これは自分の解決策なので、他のやり方もあるかもしれません)</p>
+      <p>さっきの画像には、以下のようなarticle要素が5個あります。</p>
+
+<pre class="prettyprint linenums"><code>
+&lt;article class="article-item box"&gt;
+  &lt;div class="article-inside"&gt;
+    &lt;img src="page8.jpg" alt=""&gt;
+    &lt;div class="center"&gt;
+      &lt;p&gt;hello world hello world hello world hello &lt;/p&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+&lt;/article&gt;
+</code></pre>
+
+      <p>それに加えて、以下のクラスとCSSを追加したarticle要素を6個目に追加します。</p>
+<pre class="prettyprint linenums"><code>
+&lt;!-- classにhidden-itemを追加 --&gt;
+&lt;article class="article-item box hidden-item"&gt;
+  &lt;div class="article-inside"&gt;
+    &lt;img src="page8.jpg" alt=""&gt;
+    &lt;div class="center"&gt;
+      &lt;p&gt;hello world hello world hello world hello &lt;/p&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+&lt;/article&gt;
+</code></pre><br>
+
+<pre class="prettyprint linenums"><code>.hidden-item {
+  visibility:hidden;
+}
+</code></pre>
+
+      <p>HTML要素を表示させなくするCSSプロパティは2つあり、それぞれに以下のような特徴があります。</p>
+      <ul>
+        <li>visibility:hidden 見た目上は透明だが、要素自体は存在する(当たり判定?がある)</li>
+        <li>display:none 見た目も要素も消え、その場からなくなる</li>
+      </ul>
+      <p>今回のような見た目は無くていいが、要素の判定だけ欲しいみたいな状況にはvisibility:hiddenが、まるでこのために生まれたかのようにピッタリ使えます。</p>
+      <p>このダミー要素を数合わせに設置することにより、以下のようにしっかりと左詰めに表示されるようになります。</p><br>
+      <img src="../images/page10/flexbox-hidden.png" alt=""><br>
+    </div>
+  </div>
+</div>
