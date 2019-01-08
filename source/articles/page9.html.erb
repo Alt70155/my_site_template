@@ -140,6 +140,14 @@ img {
       <p>flexboxの設定はcontainerクラスで行っています。flex-wrap: wrapとすることで要素が自動的に折り返されます。</p>
       <p>それに加え、記事要素を均等に配置するため、justify-content: space-aroundを指定していますが、このプロパティは文字通り均等に配置するため、要素を3列で並べていて、最後の行の要素数が2つだった場合も当然均等配置になってしまいます。</p>
       <p>この問題の解決方法は別の記事で解説していますので、そちらも合わせてご覧ください。</p>
+      <div class="in-article-link-out">
+      <a href="../articles/page10.html" target="_blank">
+        <div class="in-article-link">
+          <img src="../images/page10.jpg" alt="" class="portfolio-image-deco">
+              <h3>【flexbox】<br>justify-content:space-aroundで余白を埋める方法</h3>
+        </div>
+      </a>
+      </div>
       <p>そして比率を維持しながら拡大・縮小するarticle要素はdisplay:blockを指定、positionで要素を設置し、widthを%、heightをautoとすることで外の大きさ(具体的にはcontentのwidth)に合わせて拡大・縮小するようになります。<br>画像の設定は、widthとheight両方を100%にしておけば親要素に合わせて拡大・縮小してくれます。</p>
       <p>もしこのサンプルを使う場合は、article-itemのwidthを変えれば比率・要素の大きさが変わります。一緒に外枠のcontentのwidthも合わせて変えないと、4列になったり2列になったりしますので、気を付けてください。</p>
 

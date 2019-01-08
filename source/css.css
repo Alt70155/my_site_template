@@ -319,12 +319,6 @@ footer small {
   margin-bottom: 30px;
 }
 
-/* @media screen and (max-width: 760px) {
-  .text-sub-title {
-    margin-bottom: 60px;
-  }
-} */
-
 .sub-title-border {
   border-left: 8px solid black;
   border-bottom: 1px solid black;
@@ -352,6 +346,40 @@ footer small {
   padding-left: 18px;
   margin-bottom: 10px;
   background-color: #f5f5f5;
+}
+
+/* 記事内のリンク設定 */
+.in-article-link-out {
+  width: 500px;
+  height: 120px;
+  margin: 30px 0 65px 10px;
+}
+
+.in-article-link-out:hover {
+  opacity: 0.6;
+}
+
+.in-article-link {
+  width: 500px;
+  height: 120px;
+  display: flex;
+  border: 1px solid black;
+  padding: 15px;
+}
+
+
+.in-article-link-out a {
+  text-decoration: none;
+
+}
+
+.in-article-link img {
+  width: 45%;
+  height: auto;
+}
+
+.in-article-link h3 {
+  margin-left: 20px;
 }
 
 /*---コードブロックの設定---*/
