@@ -4,8 +4,22 @@
   <body id=<%= @body_id %>>
     <!--header-->
     <%= partial "header" %>
+
     <!--wrap-->
-    <%= yield %>
+    <div id="wrap">
+      <div class="content">
+        <% if @body_id == "article" %>
+          <%= partial "adsense" %>
+          <%= partial "article_title" %>
+          <%= @article_page_top_ads %>
+          <%= yield %>
+          <%= @article_page_bottom_ads %>
+        <% else %>
+          <%= yield %>
+        <% end %>
+      </div>
+    </div>
+
     <!--footer-->
     <%= partial "footer" %>
   </body>

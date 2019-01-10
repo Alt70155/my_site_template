@@ -2,54 +2,45 @@
 <% @title = "リモートとローカルのディレクトリを転送する方法" %>
 <% @description = "【CentOS】リモートのサーバーとローカルPCのディレクトリを中身ごと転送するscpコマンドを解説" %>
 <% @page_number = "page6" %>
+<% @posted_date = "投稿日：2018/11/3" %>
 
-<div id="wrap">
-  <div class="content">
-    <div class="text-content">
+<div class="text-content">
+  <p>リモートとローカルでファイルをやり取りするだけならtera termのscp機能を使えば簡単にできるのですが、ディレクトリごと転送したい時はscpコマンドを使わないと出来なかったのでメモを兼ねて、各コマンドの引数などを解説したいと思います。</p>
 
-      <div class="text-title">
-        <h1><%= @title %></h1>
-      </div>
-      <div class="posted-date-area"><p>投稿日：2018/11/3</p></div>
+  <p>環境はCentOS7(リモート)とwindows10(ローカル)です。</p>
 
-      <p>リモートとローカルでファイルをやり取りするだけならtera termのscp機能を使えば簡単にできるのですが、ディレクトリごと転送したい時はscpコマンドを使わないと出来なかったのでメモを兼ねて、各コマンドの引数などを解説したいと思います。</p>
-
-      <p>環境はCentOS7(リモート)とwindows10(ローカル)です。</p>
-
-      <div class="text-sub-title">
-        <h2 class="sub-title-border">&nbsp;やり方</h2>
-      </div>
-
-      <p>
-        <h3>リモートからローカルへ転送</h3>
-        windows(ローカル)のほうのコマンドラインで<br>
-        <pre class="prettyprint linenums"><code>scp -i C:/Users/name/Documents/private_key_file -r -P 1234 user@192.168.x.y:/var/www/html C:/Users/name/Desktop/
-        </code></pre>
-        なんか色々長いですが、「-P 1234」以降の部分がメインで、スペース区切りで左に「転送元」、右に「転送先」となっています。 <br>
-        各コマンドの細かい説明は下のほうにまとめて書いておくので、そちらも参考にしてください。 <br>
-        以上のコマンドで今回の場合、リモート先の/var/www/配下にあるhtmlディレクトリを中身ごとローカルのdesktop上にコピーできます。 <br>
-        <h3>ローカルからリモートへ転送</h3>
-        上の部分を逆にしただけなのですが一応載せて置きます。 <br>
-        同じくローカルのコマンドラインで <br>
-        <pre class="prettyprint linenums"><code>scp -i C:/Users/name/Documents/private_key_file -r -P 1234 C:/Users/name/Desktop/dir user@192.168.x.y:/var/www/html/
-        </code></pre>
-        これはローカルのdesktop上にあるdirディレクトリをリモートの/var/www/html/に転送しています。
-      </p>
-      <h2 class="sub-title-border">&nbsp;引数・オプションの説明</h2>
-      <p>
-        <b>・-i [ファイルの絶対パス]</b><br>
-        ssh時に必要な秘密鍵を指定する引数。-iの後にローカルに保存されている秘密鍵の絶対パスを記述する(sshを公開鍵認証にしている場合のみ) <br><br>
-        <b>・-r </b><br>
-        これをつける事によりサーバから持ってくるものをディレクトリにすることができる。ないとファイルのみ <br><br>
-        <b>・-P [ポート番号]</b><br>
-        sshのポート番号を変えてる人が多いと思いますが、その場合ポート番号を指定しなければいけないです。 <br><br>
-        <b>・user@192.168.x.y:/var/www/html/ </b><br>
-        リモート先のユーザとipを指定し、持ってきたい・または送りたいディレクトリの絶対パスを指定(ここではwebサーバのドキュメントルート) <br><br>
-        <b>・C:/Users/name/Desktop </b><br>
-        ローカル側のディレクトリがある絶対パス。 <br><br>
-        他の記事では、-iが無かったり-Pが無かったりとしていたのですが、ポート番号を変えていたり公開鍵にしている場合、上のコマンドを指定しないと出来ません。(permission deniedや22番が空いてませんとエラーが出る)<br>
-        他のエラーポイントとしては、/が¥になっていたせいで出来ないなどもあります。
-      </p>
-    </div>
+  <div class="text-sub-title">
+    <h2 class="sub-title-border">&nbsp;やり方</h2>
   </div>
+
+  <p>
+    <h3>リモートからローカルへ転送</h3>
+    windows(ローカル)のほうのコマンドラインで<br>
+    <pre class="prettyprint linenums"><code>scp -i C:/Users/name/Documents/private_key_file -r -P 1234 user@192.168.x.y:/var/www/html C:/Users/name/Desktop/
+    </code></pre>
+    なんか色々長いですが、「-P 1234」以降の部分がメインで、スペース区切りで左に「転送元」、右に「転送先」となっています。 <br>
+    各コマンドの細かい説明は下のほうにまとめて書いておくので、そちらも参考にしてください。 <br>
+    以上のコマンドで今回の場合、リモート先の/var/www/配下にあるhtmlディレクトリを中身ごとローカルのdesktop上にコピーできます。 <br>
+    <h3>ローカルからリモートへ転送</h3>
+    上の部分を逆にしただけなのですが一応載せて置きます。 <br>
+    同じくローカルのコマンドラインで <br>
+    <pre class="prettyprint linenums"><code>scp -i C:/Users/name/Documents/private_key_file -r -P 1234 C:/Users/name/Desktop/dir user@192.168.x.y:/var/www/html/
+    </code></pre>
+    これはローカルのdesktop上にあるdirディレクトリをリモートの/var/www/html/に転送しています。
+  </p>
+  <h2 class="sub-title-border">&nbsp;引数・オプションの説明</h2>
+  <p>
+    <b>・-i [ファイルの絶対パス]</b><br>
+    ssh時に必要な秘密鍵を指定する引数。-iの後にローカルに保存されている秘密鍵の絶対パスを記述する(sshを公開鍵認証にしている場合のみ) <br><br>
+    <b>・-r </b><br>
+    これをつける事によりサーバから持ってくるものをディレクトリにすることができる。ないとファイルのみ <br><br>
+    <b>・-P [ポート番号]</b><br>
+    sshのポート番号を変えてる人が多いと思いますが、その場合ポート番号を指定しなければいけないです。 <br><br>
+    <b>・user@192.168.x.y:/var/www/html/ </b><br>
+    リモート先のユーザとipを指定し、持ってきたい・または送りたいディレクトリの絶対パスを指定(ここではwebサーバのドキュメントルート) <br><br>
+    <b>・C:/Users/name/Desktop </b><br>
+    ローカル側のディレクトリがある絶対パス。 <br><br>
+    他の記事では、-iが無かったり-Pが無かったりとしていたのですが、ポート番号を変えていたり公開鍵にしている場合、上のコマンドを指定しないと出来ません。(permission deniedや22番が空いてませんとエラーが出る)<br>
+    他のエラーポイントとしては、/が¥になっていたせいで出来ないなどもあります。
+  </p>
 </div>

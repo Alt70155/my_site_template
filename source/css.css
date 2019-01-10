@@ -158,7 +158,6 @@ footer small {
 
 #wrap {
   background-color: white;
-  padding-bottom: 50px;
   min-width: 540px;
   min-height: 800px;
 }
@@ -249,7 +248,7 @@ footer small {
     /* margin-bottom: -70px; */
   }
 }
-@media screen and (max-width: 783px) {
+@media screen and (max-width: 800px) {
   .article-item {
     width: 45%;
     margin-bottom: -40px;
@@ -271,6 +270,7 @@ footer small {
   max-width: 760px;
   background-color: white;
   height: auto;
+  margin-bottom: 80px;
 }
 
 #article h3 {
@@ -527,5 +527,26 @@ code {
 @supports (-ms-ime-align:auto) {
   .logo {
     min-width: 500px;
+  }
+}
+
+/* google adsense */
+.example_responsive_1 {
+  width: 320px;
+  height: 100px;
+  border: 1px solid black;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+@media(min-width: 500px) {
+  .example_responsive_1 {
+    width: 468px; height: 60px;
+  }
+}
+
+@media(min-width: 800px) {
+  .example_responsive_1 {
+    width: 728px; height: 90px;
   }
 }

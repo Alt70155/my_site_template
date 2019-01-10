@@ -1,38 +1,35 @@
 <% @title = "サイト運営" %>
-<div id="wrap">
-  <div class="content">
-    <p class="page-title"><%= @title %></p>
-    <div class="container">
 
-      <% article_contents = [ %>
-        <% ["ポートフォリオサイトを作って自宅サーバで公開しました", "2018/7/21", "1"], %>
-        <% ["【CentOS7】yum updateができない・外部サイトに繋がらない問題", "2018/9/11", "4"], %>
-        <% ["【CentOS7】リモートとローカルのディレクトリを転送する方法を解説", "2018/11/3", "6"], %>
-        <% ["【解説】静的サイトジェネレータでテンプレート共通化！Middleman使い方を簡単に解説", "2018/12/29", "7"], %>
-      <% ] %>
+<p class="page-title"><%= @title %></p>
+<div class="container">
 
-      <% article_contents.reverse_each do |e| %>
-        <article class="article-item box">
-          <div class="article-inside">
-            <a href="../articles/page<%= e[2] %>.html"><img src="../images/page<%= e[2] %>.jpg" alt="">
-            <p><a href="../articles/page<%= e[2] %>.html"><%= e[0] %></a><br>
-              <span class="date">Posted on <%= e[1] %></span>
-            </p>
-          </div>
-        </article>
-      <% end %>
+  <% article_contents = [ %>
+    <% ["ポートフォリオサイトを作って自宅サーバで公開しました", "2018/7/21", "1"], %>
+    <% ["【CentOS7】yum updateができない・外部サイトに繋がらない問題", "2018/9/11", "4"], %>
+    <% ["【CentOS7】リモートとローカルのディレクトリを転送する方法を解説", "2018/11/3", "6"], %>
+    <% ["【解説】静的サイトジェネレータでテンプレート共通化！Middleman使い方を簡単に解説", "2018/12/29", "7"], %>
+  <% ] %>
 
-      <% 2.times do %>
-        <article class="article-item hidden-item">
-          <div class="article-inside">
-            <a href="#"><img src="images/header.jpg" alt=""></a>
-            <p><a href="#"></a><br>
-              <span class="date"></span>
-            </p>
-          </div>
-        </article>
-      <% end %>
+  <% article_contents.reverse_each do |e| %>
+    <article class="article-item box">
+      <div class="article-inside">
+        <a href="../articles/page<%= e[2] %>.html"><img src="../images/page<%= e[2] %>.jpg" alt="">
+        <p><a href="../articles/page<%= e[2] %>.html"><%= e[0] %></a><br>
+          <span class="date">Posted on <%= e[1] %></span>
+        </p>
+      </div>
+    </article>
+  <% end %>
 
-    </div>
-  </div>
+  <% 2.times do %>
+    <article class="article-item hidden-item">
+      <div class="article-inside">
+        <a href="#"><img src="images/header.jpg" alt=""></a>
+        <p><a href="#"></a><br>
+          <span class="date"></span>
+        </p>
+      </div>
+    </article>
+  <% end %>
+
 </div>
