@@ -2,6 +2,7 @@
 <html lang="ja" dir="ltr">
 <%= partial "head" %>
   <body id=<%= @body_id %>>
+
     <!--header-->
     <%= partial "header" %>
 
@@ -12,6 +13,7 @@
           <%= partial "adsense" %>
           <%= partial "article_title" %>
           <%= @article_page_top_ads %>
+          <!--article main contents-->
           <%= yield %>
           <%= @article_page_bottom_ads %>
         <% else %>

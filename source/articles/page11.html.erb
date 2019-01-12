@@ -1,0 +1,220 @@
+<% @body_id = "article" %>
+<% @title = "JavaScriptでライフゲームを実装してみた" %>
+<% @description = "JavaScriptでライフゲームを実装してみました。ついでに練習も兼ねて、ES6以降の書き方を意識して書いてみました。リファクタにリファクタを重ねてなるべく綺麗に書いたので、比較的読みやすいコードになったかなぁと自負しております。" %>
+<% @page_number = "page11" %>
+<% @posted_date = "投稿日：2019/1/12" %>
+
+<div class="text-content">
+  <div class="text-sub-title"><h2 class="sub-title-border">&nbsp;概要</h2></div>
+  <p>JavaScriptでライフゲームを実装してみました。<br>ついでに練習も兼ねて、ES6以降の書き方を意識して書いてみました。<br>
+    リファクタにリファクタを重ねてなるべく綺麗に書いたので、比較的読みやすいコードになったかなぁと自負しております。 <br>
+  ですが時間かけた割になんか微妙な気もしますが、これ以上手を加えようとするとアルゴリズムから変えないとダメそうなのでやめました</p>
+  <p>以下に、簡単な解説と完成品、サンプルコードを載せて行きます。</p>
+  <div class="text-sub-title"><h2 class="sub-title-border">&nbsp;ライフゲームとは</h2></div>
+  <p>ライフゲームとは、生命の誕生、進化、淘汰などのプロセスを簡易的なモデルで再現したシミュレーションゲームである。単純なルールでその模様の変化を楽しめるため、パズルの要素を持っている。 (wikipediaより)</p>
+  <p>ルール</p>
+  <ul>
+  <li><b>誕生</b><br>  死んでいるセルに隣接する生きたセルがちょうど3つあれば、次の世代が誕生する。</li>
+  <li><b>生存</b><br>  生きているセルに隣接する生きたセルが2つか3つならば、次の世代でも生存する。</li>
+  <li><b>過疎</b><br>  生きているセルに隣接する生きたセルが1つ以下ならば、過疎により死滅する。</li>
+  <li><b>過密</b><br>  生きているセルに隣接する生きたセルが4つ以上ならば、過密により死滅する。</li>
+  </ul>
+  <div class="text-sub-title"><h2 class="sub-title-border">&nbsp;全体的な流れ</h2></div>
+  <p>まず現在の状態とその次の状態を保持する二次元配列(currentState:以下current、currentNextState:以下next)と、HTMLに描写する為のtableを作成します。</p>
+  <p>その後の流れとしては、</p>
+  <p><b>current配列を用いてセルの周囲8マスの生死を数える</b>
+    <br>↓<br>
+    <b>数えた結果を元にマスの状態をnext配列に更新</b>
+    <br>↓<br>
+    <b>next配列を値渡しでcurrent配列に上書きする</b>
+    <br>↓<br>
+    <b>新しくなったcurrent配列の状態を用いて画面を更新・tableのtd要素の色を塗る</b></p>
+  <p>この流れを繰り返します。</p><br>
+  <p>画面の更新については、tableのtdにidで座標番号を付与し、それと二次元配列のi,j座標を用いて状態を更新したりします。<br>具体的にはcurrent[i][j]の状態を確認し、そのiとjからtdのidを求めてcurrent[i][j]に当たるtdの色を更新します。</p><br>
+  <p>周囲8マスの判定の時が厄介で、角や端の判定をする場合にそこを起点とすると、存在しない配列にアクセスすることになってしまってエラーが起きます。<br>これを回避するため、判定用の配列は実際に描写したりするフィールドの配列より一回り大きく設定しました。<br>画像にするとこんな感じ↓ 赤の部分のみを描写に使います。</p>
+  <img src="../images/page11-life.png" alt="">
+  <p>ほかにも色々考えましたが、これ以外の良い方法が思い付かなかったのでこのままで。</p>
+
+  <div class="text-sub-title"><h2 class="sub-title-border">&nbsp;完成品</h2></div>
+  <div class="in-article-link-out">
+  <a href="http://knowledge-blog.net/LifeGame" target="_blank">
+    <div class="in-article-link">
+      <img src="../images/page11.jpg" alt="" class="portfolio-image-deco">
+          <h3>LifeGameサンプル</h3>
+    </div>
+  </a>
+  </div>
+  <div class="text-sub-title"><h2 class="sub-title-border">&nbsp;コード</h2></div>
+  <p>HTML</p>
+  <pre class="prettyprint linenums"><code>
+  &lt;style&gt;
+    table {
+      border: 1px solid black;
+      border-collapse: collapse;
+      margin-top: 10px;
+    }
+
+    tr {
+      text-align: center;
+    }
+
+    td {
+      width: 13px;
+      height: 15px;
+      background-color: white;
+    }
+
+    .black {
+      background-color: black;
+    }
+&lt;/style&gt;
+&lt;body onload="init()"&gt;
+  &lt;button onclick="start()"&gt;start&lt;/button&gt;
+  &lt;button onclick="stop()"&gt;stop&lt;/button&gt;
+  &lt;button onclick="clearCell()"&gt;clear&lt;/button&gt;
+  &lt;table border="1" id="table"&gt;&lt;/table&gt;
+&lt;/body&gt;
+  </code></pre>
+  <p>JavaScript</p>
+  <pre class="prettyprint linenums"><code>
+"use strict";
+
+let currentState = [];
+let currentNextState = [];
+//判定用のフィールドは実際使うフィールドより一回り大きく設定
+const JUDGE_FIELD_SIZE = 40;
+const FIELD_SIZE = JUDGE_FIELD_SIZE - 1;
+let sameAsBeforeCnt = 0;
+let id = null;
+
+const start = () =&gt; {
+  if (id === null) id = setInterval(updateCellColor, 90);
+}
+
+const stop = () =&gt; {
+  if (id !== null) {
+    clearInterval(id);
+    id = null;
+  }
+}
+
+const init = () =&gt; {
+  //tableを作成
+  const table = document.getElementById("table");
+  //一回り分の数を足してそこからカウント
+  let ct = JUDGE_FIELD_SIZE + 1;
+  for (let i = 1; i &lt; FIELD_SIZE; i++) {
+    const tr = document.createElement("tr");
+    for (let j = 1; j &lt; FIELD_SIZE; j++) {
+      const td = document.createElement("td");
+      td.id = `num${ct}`;
+      //td一つ一つにonClick関数をセットして、クリックで色を塗れるようにする
+      td.onclick = onClickFunc;
+      tr.appendChild(td);
+      ct++;
+    }
+    //外枠をスキップ
+    ct += 2;
+    table.appendChild(tr);
+  }
+  //初期値ゼロの二次元配列を作成
+  currentState = JSON.parse(JSON.stringify((new Array(JUDGE_FIELD_SIZE)).fill((new Array(JUDGE_FIELD_SIZE)).fill(0))));
+  //currentStateをNextに値渡しして配列を複製
+  currentNextState = JSON.parse(JSON.stringify(currentState));
+}
+
+const onClickFunc = e =&gt; initPaintFunc(e.target.id);
+
+const updateCellColor = () =&gt; {
+  updateArrayToNextState().forEach((inArray, i) =&gt; {
+    inArray.forEach((state, j) =&gt; {
+      //添字からtd要素のidを計算
+      const targetId = i * JUDGE_FIELD_SIZE + j;
+      state ? paintBlack(`num${targetId}`) : paintWhite(`num${targetId}`);
+    });
+  });
+}
+
+const updateArrayToNextState = () =&gt; {
+  for (let i = 1; i &lt; FIELD_SIZE; i++) {
+    for (let j = 1; j &lt; FIELD_SIZE; j++) {
+      const cellCountResult = lifeDeathJudge(i, j);
+      if (currentState[i][j]) {
+        cellCountResult === 2 || cellCountResult === 3 ? currentNextState[i][j] = 1 : currentNextState[i][j] = 0;
+      } else {
+        cellCountResult === 3 ? currentNextState[i][j] = 1 : currentNextState[i][j] = 0;
+      }
+    }
+  }
+  infinityLoopCheck();
+  //配列を現在に上書き
+  return currentState = JSON.parse(JSON.stringify(currentNextState));
+}
+
+const infinityLoopCheck = () =&gt; {
+  //無限ループ防止に前回の配列の状態と100秒間同じだった場合止める
+  const STOP_TIME = 1000;
+  if (currentState.toString() === currentNextState.toString()) {
+    sameAsBeforeCnt++;
+    if (sameAsBeforeCnt === STOP_TIME) {
+      stop();
+      sameAsBeforeCnt = 0;
+    }
+  }
+}
+
+//自マスの周りの生死を判定して生存マスの数を返す
+const lifeDeathJudge = (i, j) =&gt; {
+  let aliveState = 0;
+  const diffCoor = [-1, 0, 1];
+  diffCoor.forEach(y =&gt; {
+    diffCoor.forEach(x =&gt; {
+      //現座標から周囲8方向の座標を計算
+      const iy = i + y;
+      const jx = j + x;
+      //比較する座標が自分のマスだった場合をはじく
+      if ((iy != i || jx != j) && currentState[iy][jx]) aliveState++;
+    });
+  });
+  return aliveState;
+}
+
+//クリックで塗る時の関数
+const initPaintFunc = (paintTileId) =&gt; {
+  //IDから数字部分を取り出し、二次元配列の添字を求める
+  //[num, 100].split("m")[1] / 40 = 100 / 40 = 2
+  const i = Math.floor(paintTileId.split("m")[1] / JUDGE_FIELD_SIZE);
+  const j = paintTileId.split("m")[1] % JUDGE_FIELD_SIZE;
+  if (currentState[i][j]) {
+    currentState[i][j] = 0;
+    paintWhite(paintTileId);
+  } else {
+    currentState[i][j] = 1;
+    paintBlack(paintTileId);
+  }
+}
+
+const paintBlack = paintTileId =&gt; {
+  const td = document.getElementById(paintTileId);
+  if (td !== null) td.classList.add("black");
+}
+
+const paintWhite = paintTileId =&gt; {
+  const td = document.getElementById(paintTileId);
+  if (td !== null) td.classList.remove("black");
+}
+
+const clearCell = () =&gt; {
+  if (id !== null) stop();
+  currentState.forEach((inArray, i) =&gt; {
+    inArray.forEach((x, j) =&gt; {
+      if (currentState[i][j]) {
+        currentState[i][j] = 0;
+        const targetId = i * JUDGE_FIELD_SIZE + j;
+        paintWhite(`num${targetId}`);
+      }
+    });
+  });
+}
+  </code></pre>
+</div>
