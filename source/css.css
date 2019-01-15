@@ -536,6 +536,19 @@ code {
   margin-right: auto;
 }
 
+/* ins {
+  border: 1px solid black;
+} */
+
+.ads_bottom {
+  margin-top: 40px;
+}
+
+.ads_middle {
+  margin-bottom: 35px;
+  margin-top: 20px;
+}
+
 @media(min-width: 500px) {
   .example_responsive_1 {
     width: 468px; height: 60px;
