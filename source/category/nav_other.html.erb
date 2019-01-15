@@ -3,19 +3,20 @@
 <p class="page-title"><%= @title %></p>
 <div class="container">
 
-  <% article_contents = [ %>
-    <% ["【Ruby】ファイルの読み書きと正規表現で書き換えて保存するサンプルコード", "2019/1/5", "8"], %>
-  <% ] %>
+  <% partial "article_info" %>
 
-  <% article_contents.reverse_each do |e| %>
-    <article class="article-item box">
-      <div class="article-inside">
-        <a href="../articles/page<%= e[2] %>.html"><img src="../images/page<%= e[2] %>.jpg" alt="">
-        <p><a href="../articles/page<%= e[2] %>.html"><%= e[0] %></a><br>
-          <span class="date">Posted on <%= e[1] %></span>
-        </p>
-      </div>
-    </article>
+  <% @article_contents.each_with_index.reverse_each do |e, i| %>
+    <% if e[2] == "other" %>
+    <% index = i + 1 %>
+      <article class="article-item box">
+        <div class="article-inside">
+          <a href="../articles/page<%= index %>.html"><img src="../images/page<%= index %>.jpg" alt="">
+          <p><a href="../articles/page<%= index %>.html"><%= e[0] %></a><br>
+            <span class="date">Posted on <%= e[1] %></span>
+          </p>
+        </div>
+      </article>
+    <% end %>
   <% end %>
 
   <% 2.times do %>

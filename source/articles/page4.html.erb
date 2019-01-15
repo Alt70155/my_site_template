@@ -1,8 +1,10 @@
+<%= partial "article_info" %>
 <% @body_id = "article" %>
-<% @title = "【CentOS7】yum updateができない・外部サイトに繋がらない問題" %>
+<% @title = @article_contents[3][0] %>
+<% @posted_date = "投稿日：#{@article_contents[3][1]}" %>
+<% @page_number = "page#{@article_contents[3][2]}" %>
 <% @description = "yum updateが出来ない問題が発生した時の問題解決をメモとして残して置きます。" %>
-<% @page_number = "page4" %>
-<% @posted_date =  "投稿日：2018/9/1 &nbsp; 更新日：2019/1/7" %>
+<% partial "adsense" %>
 
 <div class="text-content">
   <div class="text-sub-title">
@@ -33,6 +35,8 @@
     つまり、IP指定では繋がるけどドメイン指定では繋がらないわけですね。DNSの名前解決の問題？ちょっとこの辺の詳しい事はよく分かりませんが。
   </p>
   <p>そんなこんなでresolve関連のエラーだと判明し、ネットには繋がるけどDNSでエラーが起きてるせいで上記のあらゆるエラーを引き起こしている事がわかりました。</p>
+
+  <%= @article_page_middle_ads %>
 
   <div><h2 class="sub-title-border">&nbsp;DNSを設定</h2></div>
 

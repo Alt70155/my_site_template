@@ -1,8 +1,9 @@
+<%= partial "article_info" %>
 <% @body_id = "article" %>
-<% @title = "【flexbox】比率を維持しながら拡大縮小する要素のCSSコーディング" %>
+<% @title = @article_contents[8][0] %>
+<% @posted_date = "投稿日：#{@article_contents[8][1]}" %>
+<% @page_number = "page#{@article_contents[8][2]}" %>
 <% @description = "flexboxとブロックを用いて比率を維持しながら拡大縮小する方法について書きたいと思います。" %>
-<% @page_number = "page9" %>
-<% @posted_date = "投稿日：2019/1/8" %>
 
 <div class="text-content">
   <p>flexboxとブロックを用いて比率を維持しながら拡大縮小する方法について書きたいと思います。<br>このサイトの記事一覧は元々flexboxとメディアクエリのみでレスポンシブに対応していましたが、それでは少し見栄えが良くないので、ブログとして本格的に稼働するのを機に作り直してみました。</p>

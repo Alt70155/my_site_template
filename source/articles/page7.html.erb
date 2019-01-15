@@ -1,8 +1,9 @@
+<%= partial "article_info" %>
 <% @body_id = "article" %>
-<% @title = "【解説】静的サイトジェネレータでテンプレート共通化！Middlemanの使い方を簡単に解説" %>
+<% @title = @article_contents[6][0] %>
+<% @posted_date = "投稿日：#{@article_contents[6][1]}" %>
+<% @page_number = "page#{@article_contents[6][2]}" %>
 <% @description = "静的サイトの管理を楽にする静的サイトジェネレータ・Middlemanの導入と簡単な使い方について書きたいと思います。" %>
-<% @page_number = "page7" %>
-<% @posted_date = "投稿日：2018/12/29" %>
 
 <div class="text-content">
   <p>前々からやるやる言ってた静的サイトのテンプレート共通化作業をやっとしました(^^;;<br>今回は静的サイトの管理を楽にする「静的サイトジェネレータ・Middleman」ついて書きたいと思います。</p>

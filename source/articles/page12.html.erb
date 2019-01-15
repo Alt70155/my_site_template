@@ -1,0 +1,18 @@
+<%= partial "article_info" %>
+<% @body_id = "article" %>
+<% @title = @article_contents[11][0] %>
+<% @posted_date = "投稿日：#{@article_contents[11][1]}" %>
+<% @page_number = "page#{@article_contents[11][2]}" %>
+
+<div class="text-content">
+  <div class="text-sub-title"><h2 class="sub-title-border">&nbsp;Rails・herokuのエラー</h2></div>
+  <p>Railsチュートリアルをやっていて、heroku run rails db:migrateをしようとしたところ、</p>
+  <pre class="prettyprint linenums"><code>$ heroku run rails db:migrate<br>ECONNREFUSED: connect ECONNREFUSED 50.19.103.36:5000<br></code></pre>
+
+  <p>というエラーが出ました。<br>調べてもイマイチ解決策が出ず。。。</p>
+  <div class="text-sub-title"><h2 class="sub-title-border">&nbsp;解決</h2></div>
+  <p> 「ECONNREFUSED」というのはネットワーク関連のエラーで、つまりホストがサービスの接続や転送を拒否した時のメッセージだと思われます。<br> エラーメッセージを見ると:5000とありますが、これはおそらく接続ポート番号のことで、使っているネットワークのファイアウォールの設定等により5000番ポートが使えず接続できないということを言ってるのかと思います(たぶん)</p>
+  <p> 上のような状況を鑑みて、そのときはたまたま学校のインターネットを使っていたため「まさかこれが原因か・・・？」とテザリングに変えてみたところ、アッサリ解決しました。(学校のネットワークがこの辺の接続をブロックしていたものと思われる)</p>
+  <p> この問題に限らず、ネットワークを変えてみるというのは一つの手かもしれません(わかりません)</p>
+  <p> これで解決しない場合は、heroku logsを見てみると Error R13とあるので、それを元に調べてみると<a href="https://stackoverflow.com/questions/20926403/heroku-rake-dbmigrate-results-in-error-r13-attach-error-failed-to-attach-t" target="_blank">このへん(Stack Overflow)</a>が役に立つかもしれません。</p>
+</div>

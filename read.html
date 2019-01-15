@@ -1,0 +1,11 @@
+<h1 id="rails-heroku-econnrefused-connect-econnrefused-">rails/heroku エラー「ECONNREFUSED: connect ECONNREFUSED」</h1>
+<h2 id="rails-heroku-">Rails・herokuのエラー</h2>
+<p>Railsチュートリアルをやっていて、heroku run rails db:migrateをしようとしたところ、</p>
+<marquee><br>$ heroku run rails db:migrate<br>ECONNREFUSED: connect ECONNREFUSED 50.19.103.36:5000<br></marquee>
+
+<p>というエラーが出ました。<br>調べてもイマイチ解決策が出ず。。。</p>
+<h2 id="-">解決</h2>
+<p> 「ECONNREFUSED」というのはネットワーク関連のエラーで、つまりホストがサービスの接続や転送を拒否した時のメッセージだと思われます。<br> エラーログを見ると:5000とありますが、これはおそらく接続ポート番号のことで使っているネットワークのファイアウォールの設定等により5000番ポートが使えず接続できないということを言ってるのかと思います(たぶん)</p>
+<p> 自分はこの時学校のインターネットを使っていたため、上のような説明を見たとき「まさかこれが原因か・・・？」とテザリングに変えてみたところ、アッサリ解決しました。</p>
+<p> この問題に限らず、ネットワークを変えてみるというのは一つの手かもしれません(わかりません)</p>
+<p> これで解決しない場合は、heroku logsを見てみると Error R13とあるので、それを元に調べてみると<a href="https://stackoverflow.com/questions/20926403/heroku-rake-dbmigrate-results-in-error-r13-attach-error-failed-to-attach-t">このへん(Stack Overflow)</a>が役に立つかもしれません。</p>

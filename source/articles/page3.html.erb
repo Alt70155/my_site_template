@@ -1,8 +1,9 @@
+<%= partial "article_info" %>
 <% @body_id = "article" %>
-<% @title = "ES6・アロー関数の省略的な書き方" %>
+<% @title = @article_contents[2][0] %>
+<% @posted_date = "投稿日：#{@article_contents[2][1]}" %>
+<% @page_number = "page#{@article_contents[2][2]}" %>
 <% @description = "ES6でのアロー関数の省略的な書き方について少し解説" %>
-<% @page_number = "page3" %>
-<% @posted_date = "投稿日：2018/8/10" %>
 
 <div class="text-content">
   <p>Ruby入門を最近やっているのですが、そのサンプルで16進数カラーコードの変換プログラムがあり、それがとても短く書けていて「おお〜」となりました。</p>

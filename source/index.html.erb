@@ -1,48 +1,32 @@
 <% @body_id = "index" %>
 <% @title = "専門学生の技術系・WEB開発ブログ" %>
 
-<div id="wrap">
-  <div class="content">
-    <p class="page-title">最新記事</p>
-    <div class="container">
+<p class="page-title">最新記事</p>
+<div class="container">
 
-      <% article_contents = [ %>
-        <% ["ポートフォリオサイトを作って自宅サーバで公開しました", "2018/7/21", "1"], %>
-        <% ["JavaScriptでタイピングゲームを作ってみた(感想)","2018/7/21", "2"], %>
-        <% ["アロー関数の省略的な書き方について", "2018/8/10", "3"], %>
-        <% ["【CentOS7】yum updateができない・外部サイトに繋がらない問題", "2018/9/11", "4"], %>
-        <% ["PUBGで使える降下地点ランダムサイトを作ってみた", "2018/11/1", "5"], %>
-        <% ["【CentOS7】リモートとローカルのディレクトリを転送する方法を解説", "2018/11/3", "6"], %>
-        <% ["【解説】静的サイトジェネレータでテンプレート共通化！Middleman使い方を簡単に解説", "2018/12/29", "7"], %>
-        <% ["【Ruby】ファイルの読み書きと正規表現で書き換えて保存するサンプルコード", "2019/1/5", "8"], %>
-        <% ["【flexbox】比率を維持しながら拡大縮小する要素のCSSコーディング", "2019/1/8", "9"], %>
-        <% ["【flexbox】justify-content:space-aroundで余白を埋める方法", "2019/1/8", "10"], %>
-        <% ["JavaScriptでライフゲームを実装してみた", "2019/1/12", "11"], %>
-      <% ] %>
+  <%= partial "article_info" %>
 
-      <% article_contents.each_with_index.reverse_each do |e, i| %>
-        <% index = i + 1 %>
-        <article class="article-item box">
-          <div class="article-inside">
-            <a href="../articles/page<%= index %>.html"><img src="../images/page<%= index %>.jpg" alt="">
-            <p><a href="../articles/page<%= index %>.html"><%= e[0] %></a><br>
-              <span class="date">Posted on <%= e[1] %></span>
-            </p>
-          </div>
-        </article>
-      <% end %>
+  <% @article_contents.each_with_index.reverse_each do |e, i| %>
+    <% index = i + 1 %>
+    <article class="article-item box">
+      <div class="article-inside">
+        <a href="../articles/page<%= index %>.html"><img src="../images/page<%= index %>.jpg" alt="">
+        <p><a href="../articles/page<%= index %>.html"><%= e[0] %></a><br>
+          <span class="date">Posted on <%= e[1] %></span>
+        </p>
+      </div>
+    </article>
+  <% end %>
 
-      <% 2.times do %>
-        <article class="article-item hidden-item">
-          <div class="article-inside">
-            <a href="#"><img src="images/header.jpg" alt=""></a>
-            <p><a href="#"></a><br>
-              <span class="date"></span>
-            </p>
-          </div>
-        </article>
-      <% end %>
+  <% 2.times do %>
+    <article class="article-item hidden-item">
+      <div class="article-inside">
+        <a href="#"><img src="images/header.jpg" alt=""></a>
+        <p><a href="#"></a><br>
+          <span class="date"></span>
+        </p>
+      </div>
+    </article>
+  <% end %>
 
-    </div>
-  </div>
 </div>

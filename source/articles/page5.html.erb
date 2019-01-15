@@ -1,7 +1,8 @@
+<%= partial "article_info" %>
 <% @body_id = "article" %>
-<% @title = "PUBGで使える降下地点ランダムサイトを作ってみた" %>
-<% @page_number = "page5" %>
-<% @posted_date = "2018/11/1" %>
+<% @title = @article_contents[4][0] %>
+<% @posted_date = "投稿日：#{@article_contents[4][1]}" %>
+<% @page_number = "page#{@article_contents[4][2]}" %>
 
 <div class="text-content">
   <div class="text-sub-title">

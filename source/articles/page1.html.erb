@@ -1,8 +1,9 @@
+<%= partial "article_info" %>
 <% @body_id = "article" %>
-<% @title = "ポートフォリオサイトを作って自宅サーバで公開しました" %>
+<% @title = @article_contents[0][0] %>
+<% @posted_date = "投稿日：#{@article_contents[0][1]}" %>
+<% @page_number = "page#{@article_contents[0][2]}" %>
 <% @description = "HTML/CSSを勉強したので、ポートフォリオサイトを作成して公開しました。" %>
-<% @page_number = "page1" %>
-<% @posted_date = "投稿日：2018/7/21" %>
 
 <div class="text-content">
   <div class="text-sub-title">

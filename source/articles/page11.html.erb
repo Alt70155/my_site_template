@@ -1,8 +1,9 @@
+<%= partial "article_info" %>
 <% @body_id = "article" %>
-<% @title = "JavaScriptでライフゲームを実装してみた" %>
+<% @title = @article_contents[10][0] %>
+<% @posted_date = "投稿日：#{@article_contents[10][1]}" %>
+<% @page_number = "page#{@article_contents[10][2]}" %>
 <% @description = "JavaScriptでライフゲームを実装してみました。ついでに練習も兼ねて、ES6以降の書き方を意識して書いてみました。リファクタにリファクタを重ねてなるべく綺麗に書いたので、比較的読みやすいコードになったかなぁと自負しております。" %>
-<% @page_number = "page11" %>
-<% @posted_date = "投稿日：2019/1/12" %>
 
 <div class="text-content">
   <div class="text-sub-title"><h2 class="sub-title-border">&nbsp;概要</h2></div>
@@ -182,7 +183,7 @@ const lifeDeathJudge = (i, j) =&gt; {
 //クリックで塗る時の関数
 const initPaintFunc = (paintTileId) =&gt; {
   //IDから数字部分を取り出し、二次元配列の添字を求める
-  //[num, 100].split("m")[1] / 40 = 100 / 40 = 2
+  //"num100".split("m") = ["num", 100], [1] = 100, 100 / 40 = 2
   const i = Math.floor(paintTileId.split("m")[1] / JUDGE_FIELD_SIZE);
   const j = paintTileId.split("m")[1] % JUDGE_FIELD_SIZE;
   if (currentState[i][j]) {
