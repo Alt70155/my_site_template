@@ -4,6 +4,7 @@
 <% @title = @article_contents[3][0] %>
 <% @posted_date = "投稿日：#{@article_contents[3][1]}" %>
 <% @page_number = "page#{@article_contents[3][2]}" %>
+<% @update_date = "更新日：#{@article_contents[3][3]}" %>
 <% @description = "yum updateが出来ない問題が発生した時の問題解決をメモとして残して置きます。" %>
 
 <div class="text-content">
@@ -38,16 +39,17 @@
 
   <%= @article_page_middle_ads %>
 
-  <div><h2 class="sub-title-border">&nbsp;DNSを設定</h2></div>
-
+  <div><h2 class="sub-title-border">&nbsp;解決</h2></div>
+  <p>ネットワーク関連の設定ファイルsysconfigとresolveに設定を追加する。</p>
   <p>/etc/sysconfig/network-scripts/ifcfg-xxxに、自分が使ってる機器の設定ファイルがあり、そこにDNS設定を追加する。(xxxは機器の名前) <br>
   DNS=8.8.8.8を追加。8.8.8.8はgoogleのPublic DNSのIPアドレスらしい。</p>
   <pre class="prettyprint linenums"><code># vi /etc/sysconfig/network-scripts/ifcfg-xxx<br>DNS=8.8.8.8</code></pre>
-  <p>これで終わりかと思いきや、できませんでした。<br>/etc/resolve.conf(resolve関連の設定ファイル)にも追加しなければいけないらしい。
+  <p>resolve.confの設定にも以下の行を追加します。<br>
   <pre class="prettyprint linenums"><code># vi /etc/resolve.conf<br>nameserver 8.8.8.8</code></pre>
   <p>ここまできてやっとyum updateやその他諸々のエラーが解決しました。</p>
-  <p>最初のサーバー設定でこのへんやらなかったけど、なんで今頃できなくなったんでしょうか・・・<br>サーバーを一度落としたからかも・・・？ <br>
-    追記：どうやらデフォルトの設定だとOSを再起動するとresolvの設定が書き変わるらしい。
+  <p>最初のサーバー設定でこのへんやらなかったけど、なんで今頃できなくなったんでしょうか・・・<br>サーバーを一度落としたからかも・・・？ <br><br>
+    追記：どうやらCentOS7のネットワーク関連の設定はNetworkManagerが管理しており、デフォルトの設定だとOSを再起動してしまうとresolvの設定が勝手に書き変わる(元に戻される？)らしい。<br>
+    なので、最初は普通に使えてたのに再起動したら使えなくなるという現象が起きたっぽい。
   </p>
 
   <p><div class="text-sub-title"><h2 class="sub-title-border">&nbsp;余談</h2></div>
