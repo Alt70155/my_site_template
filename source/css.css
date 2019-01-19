@@ -190,7 +190,7 @@ footer small {
   margin: 15px;
 }
 
-.box:before {
+.box::before {
   content: "";
   display: block;
   padding-top: 100%;
@@ -252,7 +252,7 @@ footer small {
     margin-bottom: -40px;
   }
 }
-@media screen and (max-width: 600px) {
+@media screen and (max-width: 618px) {
   .article-item {
     width: 75%;
     margin-bottom: -50px;
