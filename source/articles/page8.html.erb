@@ -1,8 +1,5 @@
-<%= partial "article_info" %>
 <% @body_id = "article" %>
-<% @title = @article_contents[7][0] %>
-<% @posted_date = "投稿日：#{@article_contents[7][1]}" %>
-<% @page_number = "page#{@article_contents[7][2]}" %>
+<% @page_number = 8 %>
 <% @description = "AtomでMarkdownから出力したHTMLファイルには余計なidやclassがついてきて、それを自分のブログに合わせたHTMLに変換するのが大変だったため、Rubyで変換して新規ファイルに保存するスニペットを書いてみました。" %>
 
 <div class="text-content">

@@ -1,15 +1,17 @@
+<% partial "article_info" %>
+<% @title = @article_contents[@page_number-1][0] unless @page_number.nil? %>
 <head>
   <% @base_title = "Knowledge-Blog" %>
   <meta charset="utf-8">
   <meta http-equiv="x-ua-compatible" content="ie=edge">
-  <meta name="viewport" content="width=640px">
-  <% if @page_number %>
+  <meta name="viewport" content="width=640">
+  <% if @body_id == "article" %>
     <meta name="twitter:card" content="summary">
     <meta name="twitter:site" content="@70155">
-    <meta property="og:url" content="http://Knowledge-blog.net/articles/<%= @page_number %>.html">
+    <meta property="og:url" content="http://Knowledge-blog.net/articles/page<%= @page_number.to_s %>.html">
     <meta property="og:title" content="<%= @title %>">
     <meta property="og:description" content="<%= @description || @title %>">
-    <meta property="og:image" content="http://Knowledge-blog.net/images/<%= @page_number %>.jpg">
+    <meta property="og:image" content="http://Knowledge-blog.net/images/page<%= @page_number.to_s %>.jpg">
   <% end %>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Inconsolata|Kaushan+Script|Ropa+Sans">
   <link rel="shortcut icon" href="../images/favicon.png">
