@@ -536,9 +536,13 @@ code {
   margin-right: auto;
 }
 
-/* ins {
+ins {
   border: 1px solid black;
-} */
+}
+
+.ads_top {
+  margin-bottom: 30px;
+}
 
 .ads_bottom {
   margin-top: 40px;
