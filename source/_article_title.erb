@@ -1,11 +1,13 @@
 <% partial "article_info" %>
-<% num = @page_number - 1 %>
-<div class="text-title"><h1><%= @article_contents[num][0] %></h1></div>
+<%# 読み込まれる現在のページ数を取得 %>
+<% page_num = @page_number - 1 %>
+<div class="text-title"><h1><%= @article_contents[page_num][0] %></h1></div>
 <div class="posted-date-area">
   <p>
-    <% unless @article_contents[num][3].nil? %>
-      <%= "更新日" + @article_contents[num][3] %>
+    <%# infoに更新日があれば追加する %>
+    <% unless @article_contents[page_num][3].nil? %>
+      <%= "更新日：" + @article_contents[page_num][3] %>
     <% end %>
-    &emsp;<%= "投稿日：" + @article_contents[num][1] %>
+    &emsp;<%= "投稿日：" + @article_contents[page_num][1] %>
   </p>
 </div>

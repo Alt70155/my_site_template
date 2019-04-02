@@ -1,3 +1,4 @@
+<% partial "adsense" %>
 <% @body_id = "article" %>
 <% @page_number = 11 %>
 <% @description = "JavaScriptでライフゲームを実装してみました。ついでに練習も兼ねて、ES6以降の書き方を意識して書いてみました。リファクタにリファクタを重ねてなるべく綺麗に書いたので、比較的読みやすいコードになったかなぁと自負しております。" %>
@@ -32,6 +33,7 @@
   <p>周囲8マスの判定の時が厄介で、角や端の判定をする場合にそこを起点とすると、存在しない配列にアクセスすることになってしまってエラーが起きます。<br>これを回避するため、判定用の配列は実際に描写したりするフィールドの配列より一回り大きく設定しました。<br>画像にするとこんな感じ↓ 赤の部分のみを描写に使います。</p>
   <img src="../images/page11-life.png" alt="">
   <p>ほかにも色々考えましたが、これ以外の良い方法が思い付かなかったのでこのままで。</p>
+  <%= @article_page_middle_ads %>
 
   <div class="text-sub-title"><h2 class="sub-title-border">&nbsp;完成品</h2></div>
   <div class="in-article-link-out">
@@ -43,7 +45,7 @@
   </a>
   </div>
   <div class="text-sub-title"><h2 class="sub-title-border">&nbsp;コード</h2></div>
-  <p>HTML</p>
+  <h3>HTML</h3>
   <pre class="prettyprint linenums"><code>
   &lt;style&gt;
     table {
@@ -73,7 +75,7 @@
   &lt;table border="1" id="table"&gt;&lt;/table&gt;
 &lt;/body&gt;
   </code></pre>
-  <p>JavaScript</p>
+  <h3>JavaScript</h3>
   <pre class="prettyprint linenums"><code>
 "use strict";
 
@@ -215,4 +217,10 @@ const clearCell = () =&gt; {
   });
 }
   </code></pre>
+  <div class="text-sub-title"><h2 class="sub-title-border">&nbsp;まとめ</h2></div>
+  <p>
+    最初は簡単そうに思えましたが何も考えずに書くと、意外と複雑になってしまい試行錯誤しました汗 <br>
+    昔、C言語でライフゲームを実装しようとして挫折したことがあったので、今回はとりあえず動くものが無事公開できて良かったです。(笑)
+    こういう動くゲームやアプリを作るのはとても面白いのでまたネタがあれば記事にしたいと思います！
+  </p>
 </div>
