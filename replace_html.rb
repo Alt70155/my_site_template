@@ -1,4 +1,5 @@
-@page_num = 13
+@page_num = Dir.open('source/articles').to_a.length - 1
+
 def replace_html_tag(args)
   File.open(args[:write_file_path], "w") do |write_file|
     File.open(args[:read_file_path], "r") do |read_file|

@@ -417,6 +417,10 @@ code {
    opacity: 0.5;
 }
 
+.articles-pic-hover:hover {
+  opacity: 0.5;
+}
+
 /*-----Article end-----*/
 
 /*-----portfolio start-----*/
@@ -537,7 +541,7 @@ code {
 }
 
 ins {
-  border: 1px solid black;
+  /* border: 1px solid black; */
 }
 
 .ads_top {
