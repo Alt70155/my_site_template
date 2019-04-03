@@ -1,13 +1,13 @@
 <% partial "article_info" %>
-<%# 読み込まれる現在のページ数を取得 %>
+<%# 各記事に設定してあるページ番号を取得して配列の添字に合わせる %>
 <% page_num = @page_number - 1 %>
-<div class="text-title"><h1><%= @article_contents[page_num][0] %></h1></div>
+<div class="text-title"><h1><%= @article_info_list[page_num][:title] %></h1></div>
 <div class="posted-date-area">
   <p>
     <%# infoに更新日があれば追加する %>
-    <% unless @article_contents[page_num][3].nil? %>
-      <%= "更新日：" + @article_contents[page_num][3] %>
+    <% unless @article_info_list[page_num][:update_date].empty? %>
+      <%= "更新日：" + @article_info_list[page_num][:update_date] %>
     <% end %>
-    &emsp;<%= "投稿日：" + @article_contents[page_num][1] %>
+    &emsp;<%= "投稿日：" + @article_info_list[page_num][:post_date] %>
   </p>
 </div>

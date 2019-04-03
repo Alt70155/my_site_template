@@ -1,23 +1,23 @@
+<% partial "article_info" %>
 <% @body_id = "index" %>
 <% @title = "専門学生の技術系・WEB開発ブログ" %>
 
 <p class="page-title">最新記事</p>
 <div class="container">
 
-  <%= partial "article_info" %>
-
-  <% @article_contents.each_with_index.reverse_each do |e, i| %>
-    <% index = i + 1 %>
+  <% @article_info_list.each_with_index.reverse_each do |article, i| %>
+    <% page_num = i + 1 %>
     <article class="article-item box">
       <div class="article-inside">
-        <a href="../articles/page<%= index %>.html"><img src="../images/page<%= index %>.jpg" alt="">
-        <p><a href="../articles/page<%= index %>.html"><%= e[0] %></a><br>
-          <span class="date">Posted on <%= e[1] %></span>
+        <a href="../articles/page<%= page_num %>.html"><img src="../images/page<%= page_num %>.jpg" alt="">
+        <p><a href="../articles/page<%= page_num %>.html"><%= article[:title] %></a><br>
+          <span class="date">Posted on <%= article[:post_date] %></span>
         </p>
       </div>
     </article>
   <% end %>
 
+  <%# dummy article %>
   <% 2.times do %>
     <article class="article-item hidden-item">
       <div class="article-inside">

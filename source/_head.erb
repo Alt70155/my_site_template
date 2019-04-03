@@ -1,11 +1,12 @@
 <% partial "article_info" %>
-<% @title = @article_contents[@page_number-1][0] unless @page_number.nil? %>
+<% @title = false %>
 <head>
   <% @base_title = "Knowledge-Blog" %>
   <meta charset="utf-8">
   <meta http-equiv="x-ua-compatible" content="ie=edge">
   <meta name="viewport" content="width=640">
   <% if @body_id == "article" %>
+    <% @title = @article_info_list[@page_number-1][:title] %>
     <meta name="twitter:card" content="summary">
     <meta name="twitter:site" content="@70155">
     <meta property="og:url" content="http://Knowledge-blog.net/articles/page<%= @page_number.to_s %>.html">
