@@ -1,22 +1,9 @@
 <% @title = "HTML/CSS" %>
+<% @body_id = "index" %>
 <p class="page-title"><%= @title %></p>
 <div class="container">
 
-  <% partial "article_info" %>
-
-  <% @article_info_list.each_with_index.reverse_each do |article, i| %>
-    <% if article[:category] == "html/css" %>
-      <% page_num = i + 1 %>
-        <article class="article-item box">
-          <div class="article-inside">
-            <a href="../articles/page<%= page_num %>.html"><img src="../images/page<%= page_num %>.jpg" alt="">
-            <p><a href="../articles/page<%= page_num %>.html"><%= article[:title] %></a><br>
-              <span class="date">Posted on <%= article[:post_date] %></span>
-            </p>
-          </div>
-        </article>
-    <% end %>
-  <% end %>
+  <%= partial "nav_list" %>
 
   <% 2.times do %>
     <article class="article-item hidden-item">
@@ -28,4 +15,5 @@
       </div>
     </article>
   <% end %>
+  
 </div>

@@ -7,7 +7,11 @@
     <%= partial "header" %>
 
     <!--wrap-->
-    <div id="wrap">
+    <% if @body_id == "index" %>
+      <div id="wrap" class="wrap-index-color">
+    <% else %>
+      <div id="wrap">
+    <% end %>
       <div class="content">
         <% if @body_id == "article" %>
           <%= partial "adsense" %>

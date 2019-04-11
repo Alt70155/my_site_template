@@ -1,0 +1,16 @@
+<% partial "article_info" %>
+
+<% @article_info_list.each_with_index.reverse_each do |article, i| %>
+  <% if article[:category] == @title %>
+    <% page_num = i + 1 %>
+    <a href="../articles/page<%= page_num %>.html" class="article-item box fly">
+      <article class="article-inside">
+        <img src="../images/page<%= page_num %>.jpg" alt="">
+        <p>
+          <span class="date">Posted on <%= article[:post_date] %></span><br>
+          <%= article[:title] %>
+        </p>
+      </article>
+    </a>
+  <% end %>
+<% end %>

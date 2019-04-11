@@ -7,14 +7,15 @@
 
   <% @article_info_list.each_with_index.reverse_each do |article, i| %>
     <% page_num = i + 1 %>
-    <article class="article-item box">
-      <div class="article-inside">
-        <a href="../articles/page<%= page_num %>.html"><img src="../images/page<%= page_num %>.jpg" alt="">
-        <p><a href="../articles/page<%= page_num %>.html"><%= article[:title] %></a><br>
-          <span class="date">Posted on <%= article[:post_date] %></span>
+    <a href="../articles/page<%= page_num %>.html" class="article-item box fly">
+      <article class="article-inside">
+        <img src="../images/page<%= page_num %>.jpg" alt="">
+        <p>
+          <span class="date">Posted on <%= article[:post_date] %></span><br>
+          <%= article[:title] %>
         </p>
-      </div>
-    </article>
+      </article>
+    </a>
   <% end %>
 
   <%# dummy article %>
