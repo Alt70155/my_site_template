@@ -467,6 +467,7 @@ code {
 
 .made-items-content {
   max-width: 960px;
+  min-width: 640px;
   height: auto;
   min-height: 800px;
   margin: auto;
@@ -478,8 +479,9 @@ code {
   padding: 30px 30px 30px 40px;
   max-width: 740px;
   min-height: 150px;
-  border: 1px solid black;
   display: flex;
+  background-color: white;
+  box-shadow: 0 8px 6px 0px rgba(0,0,0,.3);
 }
 
 .made-item img {
