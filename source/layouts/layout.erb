@@ -1,3 +1,4 @@
+<%= partial "adsense" %>
 <!DOCTYPE html>
 <html lang="ja" dir="ltr">
 <%= partial "head" %>
@@ -9,12 +10,12 @@
     <!--wrap-->
     <% if @body_id == "index" %>
       <div id="wrap" class="wrap-index-color">
+        <%= @index_ads %>
     <% else %>
       <div id="wrap">
     <% end %>
       <div class="content">
         <% if @body_id == "article" %>
-          <%= partial "adsense" %>
           <%= partial "article_title" %>
           <%= @article_page_top_ads %>
           <!--article main contents-->

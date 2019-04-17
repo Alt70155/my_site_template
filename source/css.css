@@ -164,7 +164,7 @@ footer small {
 
 #wrap {
   min-width: 540px;
-  min-height: 800px;
+  min-height: 1000px;
 }
 
 .wrap-index-color {
@@ -176,7 +176,7 @@ footer small {
   font-size: 30px;
   text-align: center;
   margin: auto;
-  padding-top: 30px;
+  padding: 15px 0 10px 0;
   max-width: 960px;
 }
 
@@ -185,7 +185,8 @@ footer small {
   flex-wrap: wrap;
   max-width: 980px;
   height: auto;
-  margin: 20px auto 0 auto;
+  margin: 0 auto;
+  padding-bottom: 50px;
   justify-content: space-around;
 }
 
@@ -445,6 +446,11 @@ code {
 
 /*-----portfolio start-----*/
 
+#portfolio .content {
+  background-color: rgb(245, 245, 245);
+  padding-bottom: 50px;
+}
+
 .portfolio-title {
   color: black;
   font-family: 'Playfair Display', serif;
@@ -452,6 +458,7 @@ code {
   letter-spacing: 6px;
   text-align: center;
   padding-top: 10px;
+  margin-bottom: -30px;
 }
 
 .portfolio-link {
@@ -467,7 +474,7 @@ code {
 }
 
 .made-item {
-  margin: 40px auto 80px auto;
+  margin: 50px auto 0 auto;
   padding: 30px 30px 30px 40px;
   max-width: 740px;
   min-height: 150px;
@@ -570,11 +577,16 @@ ins {
 
 .ads_bottom {
   margin-top: 40px;
+
 }
 
 .ads_middle {
   margin-bottom: 35px;
   margin-top: 20px;
+}
+
+.ads_index {
+  padding-top: 30px;
 }
 
 @media(min-width: 500px) {
