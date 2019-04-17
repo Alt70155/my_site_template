@@ -484,15 +484,14 @@ code {
   box-shadow: 0 8px 6px 0px rgba(0,0,0,.3);
 }
 
+.made-items-content a {
+  text-decoration: none;
+}
+
 .made-item img {
   width: 350px;
   height: 200px;
 }
-
-.made-item a:hover img {
-  opacity: 0.7
-}
-
 
 .made-item-description {
   width: 360px;
