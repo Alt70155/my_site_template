@@ -1,0 +1,104 @@
+<% partial "adsense" %>
+<% @body_id = "article" %>
+<% @page_number = 16 %>
+<% @description = ".htaccessを用いて、URLの.htmlという拡張子を省略しても同じようにサイトにアクセスできるようにしたいと思います。" %>
+
+<div class="text-content">
+
+  <p>.htaccessを用いて、URLの.htmlという拡張子を省略しても同じようにサイトにアクセスできるようにしたいと思います。</p>
+  <div class="text-sub-title">
+    <h2 class="sub-title-border">&nbsp;環境</h2>
+  </div>
+  <p>・CentOS7<br>
+    ・Apache2.4</p>
+  <div class="text-sub-title">
+    <h2 class="sub-title-border">&nbsp;.htaccessとは</h2>
+  </div>
+  <p>ディレクトリ単位のWebサーバー設定ファイルのことです。<br>設定ファイルとしてhttpd.confがありますが、こっちは全てのディレクトリで共通となります。<br>.htaccessを使うとこちらのファイルに書かれた設定が優先的になります。<br>
+    他にも、httpd.confはスーパーユーザの権限がないと変更できませんが、一般ユーザが目的のディレクトリに.htaccessを作成して有効な設定を書く、という感じで活用することもできます。</p>
+  <p>.htaccessはクライアントがドキュメントをリクエストするたびに読み込まれるため、httpd.confをリロードする必要がない反面、サーバーの負荷が若干高くなる...ということもあるらしいです。</p>
+  <div class="text-sub-title">
+    <h2 class="sub-title-border">&nbsp;.htaccessファイルを作成</h2>
+  </div>
+  <p>.htaccessという名前のファイルをドキュメントルート配下(/var/www/html/)に作成します。<br>または、設定を適用したいディレクトリの下に作成します。<br>設定は作成したディレクトリの下にあるファイル全てに適用されます。</p>
+  <p>ファイルを作成したら、以下のように記載</p>
+
+  <div>/var/www/html/.htaccess</div>
+  <pre class="prettyprint linenums"><code>RewriteEngine On
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^([^.]+)$ $1.html [NC,L]
+</code></pre>
+  <%= @article_page_middle_ads %>
+
+  <div class="text-sub-title">
+    <h2 class="sub-title-border">&nbsp;httpd.confの設定変更</h2>
+  </div>
+  <p>デフォルトの設定では.htaccessを参照しないようになっているので、参照するようにhttpd.confを変更します。<br>変更する箇所はAllowOverrideという部分</p>
+
+  <div>/etc/httpd/conf/httpd.conf</div>
+  <pre class="prettyprint linenums"><code>&lt;Directory &quot;&#047;var&#047;www&#047;html&quot;&gt;
+  ・・・略・・・
+  AllowOverride None ←ここ
+  ・・・略・・・
+&lt;&#047;Directory&gt;</code></pre>
+
+  <p>AllowOverrideが.htaccessでどのような設定を許可するかを指定する場所になります。<br>Noneだと.htaccessを全く参照しません。</p>
+  <p>・オプション一覧</p>
+  <table class="article-table">
+    <thead>
+      <tr>
+        <th>オプション</th>
+        <th>説明</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>All</td>
+        <td>すべてを許可する</td>
+      </tr>
+      <tr>
+        <td>None</td>
+        <td>すべてを無効にする</td>
+      </tr>
+      <tr>
+        <td>AuthConfig</td>
+        <td>AuthName, AuthUserFileなどユーザ認証に関する設定を許可</td>
+      </tr>
+      <tr>
+        <td>FileInfo</td>
+        <td>DefaultTypeやErrorDocumentなどドキュメントタイプを制御するための設定を許可する</td>
+      </tr>
+      <tr>
+        <td>Indexes</td>
+        <td>AddDescriptionやAddIconなど、ディレクトリインデックス(ディレクトリの一覧表示)を制御するための設定を許可</td>
+      </tr>
+      <tr>
+        <td>Limit</td>
+        <td>ホストへのアクセス制御を設定するためのAllow, Deny, Order設定を許可する</td>
+      </tr>
+      <tr>
+        <td>Options</td>
+        <td>ディレクトリの機能を限定するOptions, およびXBitHackの設定を許可する</td>
+      </tr>
+    </tbody>
+  </table><br>
+  <p>ファイルの拡張子の設定変更のため、オプションをFileInfoに設定します。</p>
+  <div>/etc/httpd/conf/httpd.conf</div>
+  <pre class="prettyprint linenums"><code>&lt;Directory &quot;&#047;var&#047;www&#047;html&quot;&gt;
+  ・・・略・・・
+  AllowOverride FileInfo ←変更
+  ・・・略・・・
+&lt;&#047;Directory&gt;</code></pre>
+
+  <p>設定したらApacheを再起動<br>
+  <pre class="prettyprint linenums"><code>service httpd restart</code></pre>
+  <div class="text-sub-title">
+    <h2 class="sub-title-border">&nbsp;上手く設定できたか確認</h2>
+  </div>
+  <p>拡張子を省略してアクセス</p>
+  <img src="../images/page16/2019422-1.png" alt="">
+  <p>うまくできてますね。</p>
+  <p>念のため拡張子をつけた状態でも</p>
+  <img src="../images/page16/2019422-2.png" alt="">
+  <p>これで完了です！</p>
+</div>

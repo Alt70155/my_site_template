@@ -350,6 +350,10 @@ footer small {
   text-justify: inter-ideograph;
 }
 
+.text-content p {
+  font-size: 17px;
+}
+
 .text-content p, .text-title h1 {
   color: black;
   font-family: 'Montserrat', sans-serif;
@@ -440,6 +444,21 @@ code {
 
 .articles-pic-hover:hover {
   opacity: 0.5;
+}
+
+.article-table {
+  border: solid 1px #000000;
+  border-collapse: collapse;
+}
+
+#article td {
+  border: 1px solid black;
+  padding: 5px 15px;
+}
+
+#article th {
+  border: 1px solid black;
+  text-align: center;
 }
 
 /*-----Article end-----*/

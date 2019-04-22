@@ -1,7 +1,63 @@
-<p>オブジェクト指向設計実践ガイド - Rubyでわかる進化しつづける柔軟なアプリケーションの育て方 を読みました。(長かった)</p>
-<h1 id="-">感想</h1>
-<p>アンチパターンをまず書き、それのどこが悪いのかを説明したあとに良いデザインパターンなどを使って徐々に修正していくスタイルで、これがかなり分かりやすくて良かったです。<br>サンプルコードを章をまたいで使ったりするため、体系的に学べました。</p>
-<p>ただ全体的に内容が濃く一章一章が重いため、かなり体力を使います^^;<br>自分のレベル的にはかなり難しく、高度な内容だなと思いました。<br>なのでもし読む人がいたら、Rubyとオブジェクト指向の基礎知識を別で勉強してから読むと良いと思います。</p>
-<p>自分はオブジェクト指向は基礎を勉強しても、「じゃあいつどうやって使うんだろう」みたいな疑問がつきまとって、それのせい？で苦手意識がありました。<br>そういう基礎はある程度わかったけどどうするの？みたいな疑問に例題とコードと解説で答えてくれるみたいな感じです。<br>ただそれですぐ実践できるようになる訳ではないですが...(本の中でも失敗と修正を何回も経験する必要があると書いてありました。)</p>
-<p>これと平行して勉強していたRailsでもこれで得た知識が役に立つ部分がありました。<br>Railsを使って行う設計や、それを使って書くコードがオブジェクトやクラスを用いている部分が多くあるため、「この書き方は多分こういう意味があるんだな」と思う部分が随所にあり、面白さが増しました。</p>
-<p>おそらくこういう本は、現時点では知識としてしか持てないけど、いざ本格的にアプリを考えたり作ったりする時に力を発揮するタイプの本だと思うので(たぶん)、上にも書きましたが自分のようなオブジェクト指向初心者が最初に読んでもすぐに使えるようにはならないかなと思います。<br>理解した気になっておいて、必要そうな場面に出くわしたら読み直して役立てるという感じで良いと思います。</p>
+<p>.htaccessを用いて、URLの.htmlという拡張子を省略しても同じようにサイトにアクセスできるようにしたいと思います。</p>
+<h3 id="-">環境</h3>
+<p>・CentOS7<br>・Apache</p>
+<h3 id="-htaccess-">.htaccessとは</h3>
+<p>ディレクトリ単位のWebサーバー設定ファイルのことです。<br>設定ファイルとしてhttpd.confがありますが、こっちは全てのディレクトリで共通となります。<br>.htaccessを使うとこちらのファイルに書かれた設定が優先的になります。<br>他にも、httpd.confはスーパーユーザの権限がないと変更できませんが、目的のディレクトリに.htaccessを作成して有効な設定を書く、という感じで活用することもできます。</p>
+<p>.htaccessはクライアントがドキュメントをリクエストするたびに読み込まれるため、httpd.confをリロードする必要がない反面、サーバーの負荷が若干高くなる...ということもあるらしいです。</p>
+<h3 id="-htaccess-">.htaccessを作成</h3>
+<p>.htaccessという名前のファイルをドキュメントルート配下(/var/www/html/)に作成します。<br>または、設定を適用したいディレクトリの下に作成します。<br>設定は作成したディレクトリの下にあるファイル全てに適用されます。</p>
+<p>ファイルを作成したら、以下のように記載</p>
+<p>/var/www/html/.htaccess</p>
+<marquee></marquee><br><br>RewriteEngine On<br>RewriteCond %{REQUEST_FILENAME} !-d<br>RewriteRule ^([^.]+)$ $1.html [NC,L]<br><br><marquee></marquee>
+
+<h3 id="httpd-conf-">httpd.confの設定変更</h3>
+<p>/etc/httpd/conf/httpd.confの設定を変更して.htaccessを許可するようにします。<br>変更する箇所はAllowOverrideという部分</p>
+<p>/etc/httpd/conf/httpd.conf</p>
+<marquee></marquee><br><br>  ・・・略・・・<br>  AllowOverride None ←ここ<br>  ・・・略・・・<br><br><marquee></marquee>
+
+<p>AllowOverrideが.htaccessでどのような設定を許可するかを指定する場所になります。<br>Noneだと.htaccessを全く参照しません。</p>
+<p>・オプション一覧</p>
+<table>
+<thead>
+<tr>
+<th>オプション</th>
+<th>説明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>All</td>
+<td>すべてを許可する</td>
+</tr>
+<tr>
+<td>None</td>
+<td>すべてを無効にする</td>
+</tr>
+<tr>
+<td>AuthConfig</td>
+<td>AuthName, AuthUserFileなどユーザ認証に関する設定を許可</td>
+</tr>
+<tr>
+<td>FileInfo</td>
+<td>DefaultTypeやErrorDocumentなどドキュメントタイプを制御するための設定を許可する</td>
+</tr>
+<tr>
+<td>Indexes</td>
+<td>AddDescriptionやAddIconなど、ディレクトリインデックス(ディレクトリの一覧表示)を制御するための設定を許可</td>
+</tr>
+<tr>
+<td>Limit</td>
+<td>ホストへのアクセス制御を設定するためのAllow, Deny, Order設定を許可する</td>
+</tr>
+<tr>
+<td>Options</td>
+<td>ディレクトリの機能を限定するOptions, およびXBitHackの設定を許可する</td>
+</tr>
+</tbody>
+</table>
+<p>ファイルの拡張子の設定変更のため、オプションをFileInfoに設定します。</p>
+<p>/etc/httpd/conf/httpd.conf</p>
+<marquee></marquee><br><br>  ・・・略・・・<br>  AllowOverride FileInfo ←変更<br>  ・・・略・・・<br><br><marquee></marquee>
+
+<p>設定したらApacheを再起動<br>service httpd restart</p>
+<h3 id="-">上手く設定できたか確認</h3>
