@@ -1,0 +1,22 @@
+<% partial "article_info" %>
+
+<h2 class="other-title">その他記事</h2>
+
+<div class="container">
+  <% ct = 0 %>
+  <% @article_info_list.each_with_index.reverse_each do |article, i| %>
+    <% page_num = i + 1 %>
+    <% next if page_num == @page_number %>
+    <% ct+=1 %>
+    <% break if ct == 7 %>
+    <a href="../articles/page<%= page_num %>.html" class="article-item other-article-item box fly">
+      <article class="article-inside">
+        <img src="../images/page<%= page_num %>.jpg" alt="">
+        <p>
+          <span class="date">Posted on <%= article[:post_date] %></span><br>
+          <%= article[:title] %>
+        </p>
+      </article>
+    </a>
+  <% end %>
+</div>

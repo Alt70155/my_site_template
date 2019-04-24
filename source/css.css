@@ -261,6 +261,7 @@ footer small {
   transform: translateY(-5px);
 }
 
+/* 記事一覧のレスポンシブ */
 @media screen and (max-width: 925px) {
   .article-item {
     width: 29.5%;
@@ -459,6 +460,46 @@ code {
 #article th {
   border: 1px solid black;
   text-align: center;
+}
+
+#article .other-title {
+  color: black;
+  text-align: center;
+  margin-top: 50px;
+}
+
+.other-title {
+	color: #444;
+	font-size: 24px;
+	display: flex;
+	align-items: center;
+}
+.other-title:before, .other-title:after {
+	content: "";
+	flex-grow: 1;
+	height: 1px;
+	background: #444;
+	display: block;
+}
+.other-title:before {
+	margin-right: .4em;
+}
+
+.other-title:after {
+	margin-left: .4em;
+}
+
+/* 記事内のその他記事の大きさをother-article-itemクラスで
+　 上書きする */
+.other-article-item {
+  width: 45%;
+  font-size: 18px;
+}
+@media screen and (max-width: 618px) {
+  .other-article-item {
+    width: 42%;
+    font-size: 13px;
+  }
 }
 
 /*-----Article end-----*/
