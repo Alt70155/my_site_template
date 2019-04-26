@@ -636,14 +636,13 @@ ins {
   margin-bottom: 30px;
 }
 
-.ads_bottom {
-  margin-top: 40px;
-
-}
-
 .ads_middle {
   margin-bottom: 35px;
   margin-top: 20px;
+}
+
+.ads_bottom {
+  margin-top: 40px;
 }
 
 .ads_index {
