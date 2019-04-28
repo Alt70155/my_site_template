@@ -1,63 +1,25 @@
-<p>.htaccessを用いて、URLの.htmlという拡張子を省略しても同じようにサイトにアクセスできるようにしたいと思います。</p>
-<h3 id="-">環境</h3>
-<p>・CentOS7<br>・Apache</p>
-<h3 id="-htaccess-">.htaccessとは</h3>
-<p>ディレクトリ単位のWebサーバー設定ファイルのことです。<br>設定ファイルとしてhttpd.confがありますが、こっちは全てのディレクトリで共通となります。<br>.htaccessを使うとこちらのファイルに書かれた設定が優先的になります。<br>他にも、httpd.confはスーパーユーザの権限がないと変更できませんが、目的のディレクトリに.htaccessを作成して有効な設定を書く、という感じで活用することもできます。</p>
-<p>.htaccessはクライアントがドキュメントをリクエストするたびに読み込まれるため、httpd.confをリロードする必要がない反面、サーバーの負荷が若干高くなる...ということもあるらしいです。</p>
-<h3 id="-htaccess-">.htaccessを作成</h3>
-<p>.htaccessという名前のファイルをドキュメントルート配下(/var/www/html/)に作成します。<br>または、設定を適用したいディレクトリの下に作成します。<br>設定は作成したディレクトリの下にあるファイル全てに適用されます。</p>
-<p>ファイルを作成したら、以下のように記載</p>
-<p>/var/www/html/.htaccess</p>
-<marquee></marquee><br><br>RewriteEngine On<br>RewriteCond %{REQUEST_FILENAME} !-d<br>RewriteRule ^([^.]+)$ $1.html [NC,L]<br><br><marquee></marquee>
+<p>正規表現でちょっと困ったので、メモ程度に書いておきます。</p>
+<h2 id="-">やりたいこと</h2>
+<p>HTMLファイルの中の一部のHTMLを探し、その一部のHTMLタグだけをエスケープ文字に置き換えたい<br>(すんごい需要なさそう)</p>
+<p>自分はmarkdownで記事を書き、それをHTML出力した後に自作の変換コードを使って自分用のHTMLタグに置き換えているのですが、その時にHTML関連の記事を書くとコードブロック内にあるHTMLタグを置き換える必要がありました。<br>それを解決したいなーと思ったら意外と手間取りました・・・</p>
+<h2 id="-">解決</h2>
+<p>gsubのみで出来るかなーと思ったのですが、色々やっても自分は出来なかったのでまずmatchで正規表現を使い、HTMLファイルの特定文字列を取り出します。</p>
+<p>例<br>codeはコードブロックを意味します。このcodeを使って探し、その中をエスケープします。</p>
+<marquee>;<br><h1>ここはエスケープしない</h1><br>code<br>  <h1>ここのタグはエスケープしたい</h1><br>code<br>;</marquee>
 
-<h3 id="httpd-conf-">httpd.confの設定変更</h3>
-<p>/etc/httpd/conf/httpd.confの設定を変更して.htaccessを許可するようにします。<br>変更する箇所はAllowOverrideという部分</p>
-<p>/etc/httpd/conf/httpd.conf</p>
-<marquee></marquee><br><br>  ・・・略・・・<br>  AllowOverride None ←ここ<br>  ・・・略・・・<br><br><marquee></marquee>
+<p>上のコードをまずhtml_file変数に格納するとして、matchでcode~codeを探します。<br>gsubだと変換するための引数が必要になるため、単純に特定の文字列を抜き出すためにはmatchを使います。</p>
+<marquee>;<br>match_html = html_file.match(/code<br>;</marquee>
 
-<p>AllowOverrideが.htaccessでどのような設定を許可するかを指定する場所になります。<br>Noneだと.htaccessを全く参照しません。</p>
-<p>・オプション一覧</p>
-<table>
-<thead>
-<tr>
-<th>オプション</th>
-<th>説明</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>All</td>
-<td>すべてを許可する</td>
-</tr>
-<tr>
-<td>None</td>
-<td>すべてを無効にする</td>
-</tr>
-<tr>
-<td>AuthConfig</td>
-<td>AuthName, AuthUserFileなどユーザ認証に関する設定を許可</td>
-</tr>
-<tr>
-<td>FileInfo</td>
-<td>DefaultTypeやErrorDocumentなどドキュメントタイプを制御するための設定を許可する</td>
-</tr>
-<tr>
-<td>Indexes</td>
-<td>AddDescriptionやAddIconなど、ディレクトリインデックス(ディレクトリの一覧表示)を制御するための設定を許可</td>
-</tr>
-<tr>
-<td>Limit</td>
-<td>ホストへのアクセス制御を設定するためのAllow, Deny, Order設定を許可する</td>
-</tr>
-<tr>
-<td>Options</td>
-<td>ディレクトリの機能を限定するOptions, およびXBitHackの設定を許可する</td>
-</tr>
-</tbody>
-</table>
-<p>ファイルの拡張子の設定変更のため、オプションをFileInfoに設定します。</p>
-<p>/etc/httpd/conf/httpd.conf</p>
-<marquee></marquee><br><br>  ・・・略・・・<br>  AllowOverride FileInfo ←変更<br>  ・・・略・・・<br><br><marquee></marquee>
+<p>(a|b)はaまたはbを探します。今回は改行・空白も検索対象に入れたいため、\s(空白文字)と\S(空白文字以外)を(\s|\S)とすることでcode~code間の空白・改行を含む文字列を検索対象にしています。<br>アスタリスクハテナは直前の表現(今回は(\s|\S))の0回以上の繰り返しを意味するので、空白・改行を含む文字列が何文字あっても、それを正規表現で捉えることができます。</p>
+<p>上の正規表現を用いることで</p>
+<marquee>;<br>code<br>  <h1>ここは置き換えたい</h1><br>code<br>;</marquee>
 
-<p>設定したらApacheを再起動<br>service httpd restart</p>
-<h3 id="-">上手く設定できたか確認</h3>
+<p>この部分を取得できます。これをgsubで置き換えます。<br>気を付けるのはmatchが返すのはMatchDataオブジェクトなので、.to_sでStringに置き換えてからgsubをします。</p>
+<marquee>;<br>rewrite_html_escape_char = match_html.to_s.gsub()<br>;</marquee>
+
+<p>gsubの正規表現の詳しい説明は割愛しますが、マッチした文字を第二引数でハッシュで指定すると、それを置き換えることができます。</p>
+<p>ここまでは一致した文字列を抜き出し、その中の文字列を置き換えましたが、それをHTMLファイルに適用します。<br>今度はgsubでhtml_fileに対してcode~codeを探し、それを丸々rewrite_html_escape_charに書き換えます。</p>
+<p>一番最初のmatchで行ったのと同じ正規表現を使って、今度はgsub!でhtml_fileに対してcode~codeを探し、それを丸々rewrite_html_escape_charに書き換えます。</p>
+<marquee>;<br>html_file.gsub!(, rewrite_html_escape_char)<br>;</marquee>
+
+<p>ここまでやって初めて書き換えが完了します。</p>

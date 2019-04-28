@@ -1,0 +1,47 @@
+<% @body_id = "article" %>
+<% @page_number = 17 %>
+<% @description = "" %>
+<div class="text-content">
+
+  <p>正規表現でちょっと困ったので、メモ程度に書いておきます。</p>
+  <div class="text-sub-title">
+    <h2 class="sub-title-border">&nbsp;やりたいこと</h2>
+  </div>
+  <p>HTMLファイルの中の一部のHTMLを探し、その一部のHTMLタグだけをエスケープ文字に置き換えたい<br>(すんごい需要なさそう)</p>
+  <p>自分はmarkdownで記事を書き、それをHTML出力した後に自作の変換コードを使って自分用のHTMLタグに置き換えているのですが、その時にHTML関連の記事を書くとコードブロック内にあるHTMLタグを置き換える必要がありました。<br>それを解決したいなーと思ったら意外と手間取りました・・・</p>
+  <div class="text-sub-title">
+    <h2 class="sub-title-border">&nbsp;解決</h2>
+  </div>
+  <p>gsubのみで出来るかなーと思ったのですが、色々やっても自分は出来なかったのでまずmatchを使い、HTMLファイルの特定文字列を取り出します。</p>
+  <p>例<br>codeはコードブロックを意味します。このcodeを使って探し、その中をエスケープします。</p>
+  <pre class="prettyprint linenums"><code>&lt;h1&gt;ここはエスケープしない&lt;&#047;h1&gt;
+code
+&lt;h1&gt;ここのタグはエスケープしたい&lt;&#047;h1&gt;
+code
+</code></pre>
+
+  <p>上のHTMLをまずhtml_file変数に格納したとして、matchでcodeからcodeまでの文字列を探します。
+    <br>gsubだと変換するための引数が必要になるため、単純に特定の文字列を抜き出すためにはmatchを使います。</p>
+  <pre class="prettyprint linenums"><code>match_html = html_file.match(&#047;code(&#092;s&#124;&#092;S)*?code&#047;)</code></pre>
+
+  <p>今回はcodeからcodeまでの改行・空白含む全ての文字列を選択したいため、これを正規表現で表すとcode(&#092;s&#124;&#092;S)*?codeになります。<br>
+&#092;s(空白文字)と&#092;S(空白文字以外)を(&#092;s&#124;&#092;S)とすることでcode〜code間の空白・改行を含む文字列を検索対象にしています。((a&#124;b)はaまたはbとなる)</p>
+  <p>*?は直前の表現(今回は(&#092;s&#124;&#092;S))の0回以上の繰り返しを意味するので、空白・改行を含む文字列が何文字あっても、それを正規表現で捉えることができます。</p>
+  <p>上の正規表現を用いることで</p>
+
+  <pre class="prettyprint linenums"><code>code
+&lt;h1&gt;ここのタグはエスケープしたい&lt;&#047;h1&gt;
+code</code></pre>
+
+  <p>この部分を取得できます。これをgsubで置き換えます。<br><br>気を付けるのはmatchが返すのはStringではなくMatchDataオブジェクトなので、.to_sでStringに置き換えてからgsubをします。</p>
+  <pre class="prettyprint linenums"><code>rewrite_html_escape_char = match_html.to_s
+  .gsub!(/[<>&quot;&#092;/]/, "<" => "&amp;lt;", ">" => "&amp;gt;", '&quot;' => "&amp;quot;", "/" => "&amp;#047;")
+</code></pre>
+
+  <p>gsubの正規表現の詳しい説明は割愛しますが、マッチした文字(今回は&lt;&gt;&quot;&#047;のいずれか)を第二引数でハッシュで指定すると、それを置き換えることができます。</p>
+  <br><p>ここまでは一致した文字列を抜き出し、その中の文字を置き換えましたが、それをHTMLファイルに適用します。</p>
+  <p>一番最初のmatchで行ったのと同じ正規表現を使って、今度はgsub!でhtml_fileに対してcode〜codeを探し、それを丸々rewrite_html_escape_charに書き換えます。</p>
+  <pre class="prettyprint linenums"><code>html_file.gsub!(/code(&#092;s&#124;&#092;S)*?code/, rewrite_html_escape_char)</code></pre>
+
+  <p>ここまでやって初めて書き換えが完了します。</p>
+</div>
