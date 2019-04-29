@@ -323,6 +323,10 @@ footer small {
   font-family: 'Montserrat', sans-serif;
 }
 
+.text-content li {
+  color: black;
+}
+
 .articles-list {
   margin-bottom: -20px;
 }

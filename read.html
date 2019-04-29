@@ -1,25 +1,18 @@
-<p>正規表現でちょっと困ったので、メモ程度に書いておきます。</p>
-<h2 id="-">やりたいこと</h2>
-<p>HTMLファイルの中の一部のHTMLを探し、その一部のHTMLタグだけをエスケープ文字に置き換えたい<br>(すんごい需要なさそう)</p>
-<p>自分はmarkdownで記事を書き、それをHTML出力した後に自作の変換コードを使って自分用のHTMLタグに置き換えているのですが、その時にHTML関連の記事を書くとコードブロック内にあるHTMLタグを置き換える必要がありました。<br>それを解決したいなーと思ったら意外と手間取りました・・・</p>
-<h2 id="-">解決</h2>
-<p>gsubのみで出来るかなーと思ったのですが、色々やっても自分は出来なかったのでまずmatchで正規表現を使い、HTMLファイルの特定文字列を取り出します。</p>
-<p>例<br>codeはコードブロックを意味します。このcodeを使って探し、その中をエスケープします。</p>
-<marquee>;<br><h1>ここはエスケープしない</h1><br>code<br>  <h1>ここのタグはエスケープしたい</h1><br>code<br>;</marquee>
+<p>メジャーなWebサイトでよく見る『2カラムレイアウト』をflexboxで作ってみたいと思います！<br>めっちゃ簡単にできました。</p>
+<h2 id="2-">2カラムレイアウトとは</h2>
+<p>2カラムレイアウトとは、メインコンテンツ(記事本文など)の右か左の部分にサイドバーとして列を配置する構成の事を言います。(下の画像が例)</p>
+<p>記事の横に追加情報やその他記事、広告など様々な情報を置く事ができるので、1ページの情報量が多くなるのが利点かなーと思っています。<br>他にも3カラムレイアウトというものもあります。</p>
+<p><img alt="" src=""></p>
+<h2 id="-">サンプル</h2>
+<h2 id="-">実装</h2>
+<p>flexboxで簡単に実装できます。それに加えて微調節を行って綺麗に。<br>追加でメディアクエリを使って、横幅が小さくなってサイドバーがはみ出すタイミングで下に回り込ませています。</p>
+<p>HTML</p>
+<marquee>[<br><header><br>  <h1>ヘッダー</h1><br></header><br><br><div id="wrap"><br>  <main><br>    <h1>メインコンテンツ</h1><br>    <p>article...</p><br>  </main><br><br>  <aside class="left-bar"><br>    <h2>サイドバー</h2><br>  </aside><br></div><br><br><footer><br>  <h1>フッター</h1><br></footer><br>]</marquee>
 
-<p>上のコードをまずhtml_file変数に格納するとして、matchでcode~codeを探します。<br>gsubだと変換するための引数が必要になるため、単純に特定の文字列を抜き出すためにはmatchを使います。</p>
-<marquee>;<br>match_html = html_file.match(/code<br>;</marquee>
 
-<p>(a|b)はaまたはbを探します。今回は改行・空白も検索対象に入れたいため、\s(空白文字)と\S(空白文字以外)を(\s|\S)とすることでcode~code間の空白・改行を含む文字列を検索対象にしています。<br>アスタリスクハテナは直前の表現(今回は(\s|\S))の0回以上の繰り返しを意味するので、空白・改行を含む文字列が何文字あっても、それを正規表現で捉えることができます。</p>
-<p>上の正規表現を用いることで</p>
-<marquee>;<br>code<br>  <h1>ここは置き換えたい</h1><br>code<br>;</marquee>
 
-<p>この部分を取得できます。これをgsubで置き換えます。<br>気を付けるのはmatchが返すのはMatchDataオブジェクトなので、.to_sでStringに置き換えてからgsubをします。</p>
-<marquee>;<br>rewrite_html_escape_char = match_html.to_s.gsub()<br>;</marquee>
 
-<p>gsubの正規表現の詳しい説明は割愛しますが、マッチした文字を第二引数でハッシュで指定すると、それを置き換えることができます。</p>
-<p>ここまでは一致した文字列を抜き出し、その中の文字列を置き換えましたが、それをHTMLファイルに適用します。<br>今度はgsubでhtml_fileに対してcode~codeを探し、それを丸々rewrite_html_escape_charに書き換えます。</p>
-<p>一番最初のmatchで行ったのと同じ正規表現を使って、今度はgsub!でhtml_fileに対してcode~codeを探し、それを丸々rewrite_html_escape_charに書き換えます。</p>
-<marquee>;<br>html_file.gsub!(, rewrite_html_escape_char)<br>;</marquee>
+<p>CSS</p>
+<marquee>[<br>header {<br>  max-width: 980px;<br>  height: 300px;<br>  margin: auto;<br>  border: 1px solid black;<br>  text-align: center;<br>}<br><br>#wrap {<br>  display: flex;          /<em> 全体を横並びに </em>/<br>  flex-wrap: wrap;　       /<em> 下に回り込む設定 </em>/<br>  justify-content: center; /<em> flexboxの要素をセンターに寄せる </em>/<br>  margin: auto;<br>  max-width: 980px;<br>  height: auto;<br>  border: 1px solid black;<br>}<br><br>main {<br>  width: 75%;     /<em> mainとside-barで3:1に設定 </em>/<br>  height: 1000px;<br>  text-align: center;<br>  background-color: #BAD3FF;<br>}<br><br>.left-bar {<br>  width: 25%;<br>  text-align: center;<br>  background-color: #75A9FF;<br>}<br><br>footer {<br>  max-width: 980px;<br>  height: 250px;<br>  margin: auto;<br>  border: 1px solid black;<br>  text-align: center;<br>}<br><br><br>@media screen and (max-width: 997px) {<br>  main {<br>    width: 100%;<br>  }<br><br>  .left-bar {<br>    width: 100%;<br>    height: 300px;<br>  }<br>}<br>]</marquee>
 
-<p>ここまでやって初めて書き換えが完了します。</p>
+<p>wrapのmax-widthやmainのmin-width値を変えた場合、left-barのwidthやメディアクエのmax-width値も連動して変更する必要があります。</p>

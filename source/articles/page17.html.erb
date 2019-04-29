@@ -1,6 +1,6 @@
 <% @body_id = "article" %>
 <% @page_number = 17 %>
-<% @description = "" %>
+<% @description = "正規表現でちょっと困ったので、メモ程度に書いておきます。" %>
 <div class="text-content">
 
   <p>正規表現でちょっと困ったので、メモ程度に書いておきます。</p>
@@ -13,14 +13,23 @@
     <h2 class="sub-title-border">&nbsp;解決</h2>
   </div>
   <p>gsubのみで出来るかなーと思ったのですが、色々やっても自分は出来なかったのでまずmatchを使い、HTMLファイルの特定文字列を取り出します。</p>
-  <p>例<br>codeはコードブロックを意味します。このcodeを使って探し、エスケープしたい文字列を取り出します。</p>
+  <p>流れ</p>
+  <ul>
+    <li><B>HTMLファイル中の置き換えたい文字列をmatchで取得</B></li>
+    <li><B>matchで取得した文字列をgsubで置き換え</B></li>
+    <li><B>置き換えた文字列をHTMLファイルに適用</B></li>
+  </ul>
+  <p>という感じです。</p>
+
+  <p>例として下のHTMLに対して置き換えていきます。</p>
+  <p>codeはコードブロックを意味します。このcodeを使って探し、エスケープしたい文字列を取り出します。</p>
   <pre class="prettyprint linenums"><code>&lt;h1&gt;ここはエスケープしない&lt;&#047;h1&gt;
 code
 &lt;h1&gt;ここのタグはエスケープしたい&lt;&#047;h1&gt;
 code
 </code></pre>
 
-  <p>上のHTMLをまずhtml_file変数に格納したとして、matchでcodeからcodeまでの文字列を取得します。
+  <p>上のHTMLをhtml_file変数に格納し、matchでcodeからcodeまでの文字列を取得します。
     <br>gsubだと変換するための引数が必要になるので、単純に特定の文字列を抜き出すためにはmatchを使います。</p>
   <pre class="prettyprint linenums"><code>match_html = html_file.match(&#047;code(&#092;s&#124;&#092;S)*?code&#047;)</code></pre>
 
