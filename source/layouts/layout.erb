@@ -16,13 +16,18 @@
     <% end %>
       <div class="content">
         <% if @body_id == "article" %>
-          <%= partial "article_title" %>
-          <%= @article_page_top_ads %>
-          <!--article main contents-->
-          <%= yield %>
-          <!--article end-->
-          <%= @article_page_bottom_ads %>
-          <%= partial "other_list" %>
+          <div class="main-aside-wrap">
+            <div class="text-content">
+              <%= partial "article_title" %>
+              <%= @article_page_top_ads %>
+              <!--article main contents-->
+              <%= yield %>
+              <!--article end-->
+              <%= @article_page_bottom_ads %>
+              <%= partial "other_list" %>
+            </div>
+            <%= partial "right_bar" %>
+          </div>
         <% else %>
           <%= yield %>
         <% end %>
