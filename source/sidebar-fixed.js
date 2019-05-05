@@ -5,6 +5,7 @@ const _textContent  = document.querySelector('.text-content')
 const _content      = document.querySelector('.content')
 const headerHeight  = document.querySelector('header').clientHeight
 const _asideBox     = document.querySelector('.aside-box')
+const _otherTitle   = document.querySelectorAll('.other-title')[1]
 // フッター要素までのtopからの絶対座標を取得
 // スクロールされたままリロードされた場合ズレるのでスクロール量も足しておく
 const footerTop     = document.querySelector('footer')
@@ -20,6 +21,7 @@ const updateLeftValOfSidebar = () => {
   const contentWidth = Number(contentWidthStr.replace(/[^0-9]/g, ''))
   // 片方のpadding値を出すため÷2する
   const paddingVal = (_content.clientWidth - contentWidth) / 2
+  // 左からtextcontentの右側までの距離
   const textContentRight = _textContent.getBoundingClientRect().right
   _rightBar.style.left = `${textContentRight + paddingVal + 2}px`
 }
@@ -53,9 +55,11 @@ const fixSidebarWhenScrolled = () => {
 }
 
 const windowSizeJudge = () => {
+  // ブラウザが1080px以上だった場合はサイドバーを表示する
   if (window.outerWidth > MAX_WIDTH) {
     _rightBar.classList.add('right-bar')
-    _rightBar.classList.remove('right-bar-2')
+    _rightBar.classList.remove('right-bar-is-down')
+    _otherTitle.classList.add('display-none')
     _window.addEventListener('scroll', fixSidebarWhenScrolled)
     // 最初に実行し初期値をセット、以降は画面サイズが変わるたびにleft値を変更
     updateLeftValOfSidebar()
@@ -63,7 +67,8 @@ const windowSizeJudge = () => {
   } else {
     _window.removeEventListener('scroll', fixSidebarWhenScrolled)
     _rightBar.classList.remove('fixed', 'right-bar')
-    _rightBar.classList.add('right-bar-2')
+    _rightBar.classList.add('right-bar-is-down')
+    _otherTitle.classList.remove('display-none')
   }
 }
 

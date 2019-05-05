@@ -186,7 +186,7 @@ footer small {
   max-width: 980px;
   height: auto;
   margin: 0 auto;
-  padding-bottom: 50px;
+  /* padding-bottom: 40px; */
   justify-content: space-around;
 }
 
@@ -213,7 +213,6 @@ footer small {
   width: 100%;
   height: 45%;
 }
-
 
 .article-item img {
   width: 100%;
@@ -431,7 +430,7 @@ footer small {
 
 /* 1080px以下の場合にこっちを使用する */
 /* JS側で操作する */
-.right-bar-2 {
+.right-bar-is-down {
   width: 250px;
   height: 800px;
   margin-top: 50px;
@@ -442,6 +441,19 @@ footer small {
   height: 220px;
   margin: auto auto 50px auto;
   border: 1px solid #383434;
+}
+
+.aside-box-link {
+  position: relative;
+}
+
+.aside-box-link a {
+  display: block;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
 }
 
 .aside-box h1 {
@@ -457,20 +469,9 @@ footer small {
   line-height: 22px;
 }
 
-.sidebox-2 {
-  height: 200px;
-}
-
-.aside-box img {
-  width: 100%;
-}
-
-.right-bar a {
-  text-decoration: none;
-}
-
-.sidebox-2:hover {
-  opacity: 0.7;
+.aside-box-inside img {
+  width: 240px;
+  height: 85%;
 }
 
 .fixed{
@@ -485,13 +486,50 @@ footer small {
     margin: auto;
   }
 
-  .right-bar-2 {
+  .right-bar-is-down {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
     width: 760px;
+    height: 250px;
     margin: auto;
+    /* border: 1px solid black; */
+  }
+
+  .aside-box {
+    position: relative;
+    width: 27%;
+    height: 220px;
     border: 1px solid black;
-    background-color: red;
+  }
+
+  .aside-box-inside {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 45%;
+  }
+
+  .aside-box-inside img {
+    width: 100%;
+    height: 85%;
+  }
+
+  .aside-box-jstyping-p { margin-top: 0px; }
+}
+
+@media screen and (max-width: 721px) {
+  .right-bar-is-down {
+    height: 500px;
+    border: 1px solid black;
+  }
+
+  .aside-box {
+    width: 35%;
   }
 }
+
 
 /*---コードブロックの設定---*/
 .language-tag {
@@ -549,16 +587,12 @@ code {
   text-align: center;
 }
 
-#article .other-title {
-  color: black;
-  text-align: center;
-  margin-top: 50px;
-}
-
 .other-title {
-	color: #444;
+  display: flex;
+	color: black;
 	font-size: 24px;
-	display: flex;
+  margin-top: 25px;
+  text-align: center;
 	align-items: center;
 }
 .other-title:before, .other-title:after {
@@ -746,4 +780,8 @@ ins {
   .example_responsive_1 {
     width: 728px; height: 90px;
   }
+}
+
+.display-none {
+  display: none;
 }
