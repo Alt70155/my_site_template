@@ -8,9 +8,7 @@ def replace_html_tag(args)
       write_file.puts(
 %Q[<% @body_id = "article" %>
 <% @page_number = #{@page_num} %>
-<% @description = "" %>
-<div class="text-content">
-        ])
+<% @description = "" %>])
       # 文字列の一部を抜き出し、その中から正規表現で探すことを一行ではできないため、
       # 文字列全体から;から;を抜き出し、タグなどのエスケープ文字を置き換えたら変数に入れておく
       # 次で文字全体から;から;を変数の文字に置き換える
@@ -21,13 +19,11 @@ def replace_html_tag(args)
                            .gsub(%r@</h1>@,   "</h1></div>")
                            .gsub(%r@</h2>@,   "</h2></div>")
                            .gsub(%r@</marquee>@,   "</code></pre>"))
-      write_file.puts(%Q[</div>])
     end
   end
 end
 
 replace_html_tag(
   :write_file_path => "/Users/chika/Documents/my_site_temp/source/articles/page#{@page_num}.html.erb",
-  # :write_file_path => "/Users/chika/Documents/test-file/ruby-src/x.html.erb",
   :read_file_path  => "/Users/chika/Documents/my_site_temp/read.html",
 )

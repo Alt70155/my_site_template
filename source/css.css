@@ -9,7 +9,7 @@ body {
 }
 
 header {
-  min-width: 640px;
+  min-width: 450px;
   height: 325px;
   position: relative;
   background-image: url(images/header.jpg);
@@ -163,7 +163,6 @@ footer small {
 }
 
 #wrap {
-  min-width: 640px;
   min-height: 1000px;
 }
 
@@ -183,7 +182,7 @@ footer small {
 .container {
   display: flex;
   flex-wrap: wrap;
-  max-width: 980px;
+  max-width: 1080px;
   height: auto;
   margin: 0 auto;
   /* padding-bottom: 40px; */
@@ -251,7 +250,6 @@ footer small {
   box-sizing: border-box;
   -webkit-transition: all .2s;
   transition: all .2s;
-  /* margin: 30px auto 0 auto; */
 }
 
 .fly:hover {
@@ -262,21 +260,21 @@ footer small {
 
 /* 記事一覧のレスポンシブ */
 @media screen and (max-width: 925px) {
-  .article-item {
+  #index .article-item {
     width: 29.5%;
 
   }
 }
 @media screen and (max-width: 800px) {
-  .article-item {
+  #index .article-item {
     width: 45%;
-
+    font-size: 2.6vw;
   }
 }
 @media screen and (max-width: 618px) {
-  .article-item {
+  #index .article-item {
     width: 70%;
-    font-size: 20px;
+    font-size: 4vw;
   }
 }
 
@@ -310,10 +308,9 @@ footer small {
   color: black;
 }
 
-.text-title {
+.article-title {
   margin: 0 auto 0 auto;
   padding-top: 30px;
-  min-width:  550px;
 }
 
 .text-content ul {
@@ -327,10 +324,6 @@ footer small {
 
 .articles-list {
   margin-bottom: -20px;
-}
-
-.text-sub-title, .text-content, .text-title {
-  min-width: 460px;
 }
 
 .text-sub-title {
@@ -357,7 +350,7 @@ footer small {
   font-size: 17px;
 }
 
-.text-content p, .text-title h1 {
+.text-content p, .article-title h1 {
   color: black;
   font-family: 'Montserrat', sans-serif;
 }
@@ -479,6 +472,11 @@ footer small {
   top: 0;
 }
 
+.aside-box-link a { text-decoration: none; }
+.aside-box-link:hover { opacity: 0.6; }
+
+.aside-box-ads { padding-left: 20px; }
+
 /*--- サイドバーレスポンシブ ---*/
 @media screen and (max-width: 1079px) {
   .text-content {
@@ -517,20 +515,26 @@ footer small {
   }
 
   .aside-box-jstyping-p { margin-top: 0px; }
+
+  .aside-box-ads { padding-left: 0px; }
 }
 
 @media screen and (max-width: 721px) {
   .right-bar-is-down {
-    height: 500px;
-    border: 1px solid black;
+    height: auto;
   }
-
   .aside-box {
     width: 35%;
   }
 }
 
-
+@media screen and (max-width: 590px) {
+  /* .right-bar-is-down { height: 800px; } */
+  .aside-box {
+    width: 60%;
+  }
+  .aside-box-ads { text-align: center; }
+}
 /*---コードブロックの設定---*/
 .language-tag {
   width: 80px;
@@ -562,6 +566,7 @@ code {
 
 #article img {
   max-width: 620px;
+  width: 100%;
 }
 
 .articles-pic a:hover {
@@ -613,14 +618,29 @@ code {
 /* 記事内のその他記事の大きさをother-article-itemクラスで
 　 上書きする */
 .other-article-item {
-  width: 45%;
-  font-size: 18px;
+  width: 28%;
 }
-@media screen and (max-width: 618px) {
-  .other-article-item {
-    width: 42%;
-    font-size: 13px;
-  }
+
+.other-article-item .article-inside p { font-size: 13px; }
+
+/* その他記事レスポンシブ */
+@media screen and (max-width: 1050px) {
+  .other-article-item .article-inside p { font-size: 1.3vw; }
+}
+
+@media screen and (max-width: 860px) {
+  .other-article-item { width: 43%; }
+  .other-article-item .article-inside p { font-size: 2.2vw; }
+}
+
+@media screen and (max-width: 540px) {
+  .other-article-item { width: 80%; }
+  .other-article-item .article-inside p { font-size: 3.5vw; }
+}
+
+@media screen and (max-width: 515px) {
+  .other-article-item { width: 60%; }
+  .other-article-item .article-inside p { font-size: 2.8vw; }
 }
 
 /*-----Article end-----*/
@@ -648,7 +668,6 @@ code {
 
 .made-items-content {
   max-width: 960px;
-  min-width: 640px;
   height: auto;
   min-height: 800px;
   margin: auto;
@@ -718,20 +737,10 @@ code {
   }
 }
 
-@media screen and (max-width: 480px) {
-    /* body {
-      width: 700px;
-    }
-    /*page記事の内側*/
-    #article #wrap{
-      font-size: 20px;
-      padding-left: 15px;
-      padding-right: 15px;
-    }
-
-    #article img {
-      width: 480px;
-    }
+@media screen and (max-width: 435px) {
+  header {
+    height: 300px;
+  }
 }
 
 /*Edge対応*/

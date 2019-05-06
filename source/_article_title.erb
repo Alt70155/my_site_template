@@ -1,7 +1,7 @@
 <% partial "article_info" %>
 <%# 各記事に設定してあるページ番号を取得して配列の添字に合わせる %>
 <% page_num = @page_number - 1 %>
-<div class="text-title"><h1><%= @article_info_list[page_num][:title] %></h1></div>
+<div class="article-title"><h1><%= @article_info_list[page_num][:title] %></h1></div>
 <div class="posted-date-area">
   <p>
     <%# infoに更新日があれば追加する %>
