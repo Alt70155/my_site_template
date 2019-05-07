@@ -296,6 +296,11 @@ footer small {
   margin-bottom: 5px;
 }
 
+#article img {
+  max-width: 500px;
+  width: 100%;
+}
+
 .posted-date-area {
   border-bottom: 1px solid black;
   margin-bottom: 40px;
@@ -386,13 +391,12 @@ footer small {
   padding: 15px;
 }
 
-
 .in-article-link-out a {
   text-decoration: none;
-
 }
 
-.in-article-link img {
+/* #article img より優先度を上げるために指定 */
+#article .in-article-link-img {
   width: 45%;
   height: auto;
 }
@@ -475,7 +479,10 @@ footer small {
 .aside-box-link a { text-decoration: none; }
 .aside-box-link:hover { opacity: 0.6; }
 
-.aside-box-ads { padding-left: 20px; }
+.aside-box-ads {
+  text-align: center;
+  border: none;
+}
 
 /*--- サイドバーレスポンシブ ---*/
 @media screen and (max-width: 1079px) {
@@ -529,7 +536,6 @@ footer small {
 }
 
 @media screen and (max-width: 590px) {
-  /* .right-bar-is-down { height: 800px; } */
   .aside-box {
     width: 60%;
   }
@@ -562,11 +568,6 @@ code {
 .articles-pic img{
   width: 400px;
   height: 320px;
-}
-
-#article img {
-  max-width: 620px;
-  width: 100%;
 }
 
 .articles-pic a:hover {

@@ -14,11 +14,11 @@ def replace_html_tag(args)
       # 次で文字全体から;から;を変数の文字に置き換える
       rewrite_html_escape_char = html.match(/\[(\s|\S)*?\]/).to_s.gsub!(/<br>/, "").gsub!(/[<>"\/\[\]]/, "[" => "", "]" => "", "<" => "&lt;", ">" => "&gt;", '"' => "&quot;", "/" => "&#047;")
       write_file.write(html.gsub(/\[(\s|\S)*?\]/, rewrite_html_escape_char)
-                           .gsub(%r@<h2.*?>@, '<div class="text-sub-title"><h2 class="sub-title-border">&nbsp;')
-                           .gsub(%r@<marquee>@,    '<pre class="prettyprint linenums"><code>')
-                           .gsub(%r@</h1>@,   "</h1></div>")
-                           .gsub(%r@</h2>@,   "</h2></div>")
-                           .gsub(%r@</marquee>@,   "</code></pre>"))
+                           .gsub(%r@<h2.*?>@,    "<div class="text-sub-title"><h2 class="sub-title-border">&nbsp;")
+                           .gsub(%r@<marquee>@,  "<pre class="prettyprint linenums"><code>")
+                           .gsub(%r@</h1>@,      "</h1></div>")
+                           .gsub(%r@</h2>@,      "</h2></div>")
+                           .gsub(%r@</marquee>@, "</code></pre>"))
     end
   end
 end

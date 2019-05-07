@@ -3,7 +3,7 @@
 <% @page_number = 4 %>
 <% @description = "yum updateが出来ない問題が発生した時の問題解決をメモとして残して置きます。" %>
 
-<div class="text-content">
+
   <div class="text-sub-title">
     <h2 class="sub-title-border">&nbsp;あらゆる問題が発生</h2>
   </div>
@@ -54,4 +54,4 @@
     <div style="border: 1px solid black;padding:0 4px 0 4px;"><p>job for network.service failed because the control process exited with error code. See &quot;systemctl status network.service&quot; and &quot;journalctl -xe&quot; for details.</p></div><br><p>というエラーが出ました。</p>
   <p>これについてはここのサイトがかなり役に立ちました。<a href="http://zacodesign.net/blog/?p=862" target="_blank" rel="noopener">http://zacodesign.net/blog/?p=862</a><br>結果的には使ってないインターフェイスにアクティベートしようとして失敗していた模様。<br>
     今思えば、/etc/sysconfig/network-scripts/←ここのファイル一覧を見た時に、使ってない機種名が出てきて？ってなりましたが結局そこがoffになっていないせいでした。</p>
-</div>
+
