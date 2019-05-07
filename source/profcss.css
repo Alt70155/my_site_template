@@ -7,7 +7,7 @@ body {
   font-size: 15px;
   line-height: 2;
   overflow-x: hidden;
-  min-height: 900px;
+  height: auto;
 }
 
 p, h1, h2, h3, h4, h5, h6 {
@@ -129,7 +129,6 @@ footer small {
 
 .mask {
   background-color: rgba( 0, 0, 0, 0.5);
-  min-height: 960px;
 }
 
 .content {
