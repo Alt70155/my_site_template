@@ -498,14 +498,12 @@ footer small {
     width: 760px;
     height: 250px;
     margin: auto;
-    /* border: 1px solid black; */
   }
 
   .aside-box {
     position: relative;
     width: 27%;
     height: 220px;
-    border: 1px solid black;
   }
 
   .aside-box-inside {
@@ -523,7 +521,9 @@ footer small {
 
   .aside-box-jstyping-p { margin-top: 0px; }
 
-  .aside-box-ads { padding-left: 0px; }
+  .aside-box-ads {
+    padding-left: 0px;
+  }
 }
 
 @media screen and (max-width: 721px) {
