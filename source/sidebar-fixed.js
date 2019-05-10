@@ -1,4 +1,4 @@
-const MAX_WIDTH     = 1080
+const HALFWAY_POINT_WIDTH = 1080
 const _window       = window
 const _rightBar     = document.querySelector('.right-bar')
 const _textContent  = document.querySelector('.text-content')
@@ -56,7 +56,8 @@ const fixSidebarWhenScrolled = () => {
 
 const windowSizeJudge = () => {
   // ブラウザが1080px以上だった場合はサイドバーを表示する
-  if (window.outerWidth > MAX_WIDTH) {
+  if (matchMedia(`(min-width: ${HALFWAY_POINT_WIDTH}px)`).matches) {
+    console.log('ok')
     _rightBar.classList.add('right-bar')
     _rightBar.classList.remove('right-bar-is-down')
     _otherTitle.classList.add('display-none')
@@ -65,6 +66,7 @@ const windowSizeJudge = () => {
     updateLeftValOfSidebar()
     _window.addEventListener('resize', updateLeftValOfSidebar)
   } else {
+    console.log('no')
     _window.removeEventListener('scroll', fixSidebarWhenScrolled)
     _rightBar.classList.remove('fixed', 'right-bar')
     _rightBar.classList.add('right-bar-is-down')

@@ -59,6 +59,7 @@ a:hover {
 .nav-flex {
   max-width: 1080px;
   margin: auto;
+  padding-left: 20px;
   display: flex;
   justify-content: space-between;
 }

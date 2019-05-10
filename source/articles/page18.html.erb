@@ -23,72 +23,74 @@
 <p>flexboxで簡単に実装できます。それに加えて微調節を行って綺麗にしています。<br>追加でメディアクエリを使って、横幅が小さくなってサイドバーがはみ出すタイミングで下に回り込ませています。</p>
 <h3>HTML</h3>
 <pre class="prettyprint linenums"><code>&lt;header&gt;
-&lt;h1&gt;ヘッダー&lt;&#047;h1&gt;
+  &lt;h1&gt;ヘッダー&lt;&#047;h1&gt;
 &lt;&#047;header&gt;
+
 &lt;div id=&quot;wrap&quot;&gt;
-&lt;main&gt;
-  &lt;h1&gt;メインコンテンツ&lt;&#047;h1&gt;
-    &lt;p&gt;article...&lt;&#047;p&gt;
-&lt;&#047;main&gt;
-&lt;aside class=&quot;left-bar&quot;&gt;
-  &lt;h2&gt;サイドバー&lt;&#047;h2&gt;
-&lt;&#047;aside&gt;
+  &lt;main&gt;
+    &lt;h1&gt;メインコンテンツ&lt;&#047;h1&gt;
+      &lt;p&gt;article...&lt;&#047;p&gt;
+  &lt;&#047;main&gt;
+  &lt;aside class=&quot;left-bar&quot;&gt;
+    &lt;h2&gt;サイドバー&lt;&#047;h2&gt;
+  &lt;&#047;aside&gt;
 &lt;&#047;div&gt;
+
 &lt;footer&gt;
-&lt;h1&gt;フッター&lt;&#047;h1&gt;
+  &lt;h1&gt;フッター&lt;&#047;h1&gt;
 &lt;&#047;footer&gt;
 </code></pre>
 <br>
 <h3>CSS</h3>
 <pre class="prettyprint linenums"><code>header {
-max-width: 980px;
-height: 300px;
-margin: auto;
-border: 1px solid black;
-text-align: center;
+  max-width: 980px;
+  height: 300px;
+  margin: auto;
+  border: 1px solid black;
+  text-align: center;
 }
 
 #wrap {
-display: flex;            &#047;* 全体を横並びに *&#047;
-flex-wrap: wrap;          &#047;* 下に回り込む設定 *&#047;
-justify-content: center;  &#047;* flexboxの要素をセンターに寄せる *&#047;
-margin: auto;
-max-width: 980px;
-height: auto;
-border: 1px solid black;
+  display: flex;            &#047;* 全体を横並びに *&#047;
+  flex-wrap: wrap;          &#047;* 下に回り込む設定 *&#047;
+  justify-content: center;  &#047;* flexboxの要素をセンターに寄せる *&#047;
+  margin: auto;
+  max-width: 980px;
+  height: auto;
+  border: 1px solid black;
 }
 
 main {
-width: 75%;     &#047;* mainと.left-barで3:1に設定 *&#047;
-height: 1000px;
-text-align: center;
-background-color: #BAD3FF;
+  width: 75%;     &#047;* mainと.left-barで3:1に設定 *&#047;
+  height: 1000px;
+  text-align: center;
+  background-color: #BAD3FF;
 }
 
 .left-bar {
-width: 25%;
-text-align: center;
-background-color: #75A9FF;
+  width: 25%;
+  text-align: center;
+  background-color: #75A9FF;
 }
 
 footer {
-max-width: 980px;
-height: 250px;
-margin: auto;
-border: 1px solid black;
-text-align: center;
+  max-width: 980px;
+  height: 250px;
+  margin: auto;
+  border: 1px solid black;
+  text-align: center;
 }
 
 
 @media screen and (max-width: 997px) {
-main {
-  width: 100%;
-}
+  main {
+    width: 100%;
+  }
 
-.left-bar {
-  width: 100%;
-  height: 300px;
-}
+  .left-bar {
+    width: 100%;
+    height: 300px;
+  }
 }
 </code></pre>
 
