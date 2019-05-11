@@ -1,3 +1,5 @@
+# 指定ディレクトリの全ファイルの特定文字列を置き換えるスクリプト
+
 dir_path = "/Users/chika/Documents/my_site_temp/source/articles/"
 
 Dir.glob("#{dir_path}*.html.erb") do |path|

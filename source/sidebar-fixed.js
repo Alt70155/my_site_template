@@ -5,6 +5,7 @@ const _textContent  = document.querySelector('.text-content')
 const _content      = document.querySelector('.content')
 const headerHeight  = document.querySelector('header').clientHeight
 const _asideBox     = document.querySelector('.aside-box')
+// 二個目のothertitleを取得
 const _otherTitle   = document.querySelectorAll('.other-title')[1]
 // フッター要素までのtopからの絶対座標を取得
 // スクロールされたままリロードされた場合ズレるのでスクロール量も足しておく
@@ -57,16 +58,15 @@ const fixSidebarWhenScrolled = () => {
 const windowSizeJudge = () => {
   // ブラウザが1080px以上だった場合はサイドバーを表示する
   if (matchMedia(`(min-width: ${HALFWAY_POINT_WIDTH}px)`).matches) {
-    console.log('ok')
     _rightBar.classList.add('right-bar')
     _rightBar.classList.remove('right-bar-is-down')
     _otherTitle.classList.add('display-none')
+    fixSidebarWhenScrolled()
     _window.addEventListener('scroll', fixSidebarWhenScrolled)
     // 最初に実行し初期値をセット、以降は画面サイズが変わるたびにleft値を変更
     updateLeftValOfSidebar()
     _window.addEventListener('resize', updateLeftValOfSidebar)
   } else {
-    console.log('no')
     _window.removeEventListener('scroll', fixSidebarWhenScrolled)
     _rightBar.classList.remove('fixed', 'right-bar')
     _rightBar.classList.add('right-bar-is-down')

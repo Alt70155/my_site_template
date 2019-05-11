@@ -21,7 +21,9 @@
               <%= partial "article_title" %>
               <%= @article_page_top_ads %>
               <!--article main contents-->
-              <%= yield %>
+              <div class="article-main-contents">
+                <%= yield %>
+              </div>
               <!--article end-->
               <%= @article_page_bottom_ads %>
               <%= partial "other_list" %>

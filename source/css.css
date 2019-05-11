@@ -361,6 +361,10 @@ footer small {
   font-family: 'Montserrat', sans-serif;
 }
 
+.article-main-contents p {
+  line-height: 40px;
+}
+
 .torikesi-sen {
   text-decoration: line-through;
 }
@@ -544,10 +548,9 @@ footer small {
 }
 /*---コードブロックの設定---*/
 .language-tag {
-  width: 80px;
+  width: 150px;
   height: 16px;
-  text-align: center;
-  padding-bottom: 10px;
+  padding-bottom: 15px;
 }
 
 pre {
@@ -623,11 +626,13 @@ code {
   width: 28%;
 }
 
-.other-article-item .article-inside p { font-size: 13px; }
+.other-article-item .article-inside p {
+  font-size: 14px;
+}
 
 /* その他記事レスポンシブ */
 @media screen and (max-width: 1050px) {
-  .other-article-item .article-inside p { font-size: 1.3vw; }
+  .other-article-item .article-inside p { font-size: 1.4vw; }
 }
 
 @media screen and (max-width: 860px) {

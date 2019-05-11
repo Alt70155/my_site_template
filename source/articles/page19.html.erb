@@ -1,0 +1,214 @@
+<% @body_id = "article" %>
+<% @page_number = 19 %>
+<% @description = "ページがスクロールされたら一定の位置でサイドバーを固定表示にし、スクロールされてもずっと残るようにして、更にページの一番下まで行ったら固定を解除する<br>という事をJavaScriptを使って実現したいと思います！" %>
+
+<div class="text-sub-title">
+  <h2 class="sub-title-border">&nbsp;やりたいこと</h2>
+</div>
+<p>ページがスクロールされたら一定の位置でサイドバーを固定表示にし、スクロールされてもずっと残るようにして、更にページの一番下まで行ったら固定を解除する<br>という事をJavaScriptを使って実現したいと思います！</p>
+<p>今回は2カラムレイアウトの場合を想定し、右側にサイドバーを作ってそれを固定&amp;解除したいと思います。<br>更に追加でページ幅が変わった場合も崩れないようにします。</p>
+<div class="text-sub-title">
+  <h2 class="sub-title-border">&nbsp;サンプル</h2>
+</div>
+<p>ページ幅1000px以上でサイドバーが表示されます。</p>
+<a href="../samples/sidebar-fixed.html" target="_blank">サンプル</a>
+
+<div class="text-sub-title">
+  <h2 class="sub-title-border">&nbsp;コード</h2>
+</div>
+<p>固定するだけならもっと短いコード量でいけるのですが、下部まで行ったら解除するのと、レスポンシブへの対応を追加したら少し冗長というか複雑な感じになってしまいました。</p>
+<p>注意：jsファイルを分ける場合はリンクをbodyの最後に書くか、deferを付けて読み込んでください。</p>
+
+<div class="language-tag"><B>▼ HTML</B></div>
+<pre class="prettyprint linenums"><code>&lt;header id=&quot;header&quot;&gt;
+&lt;h1&gt;ヘッダー&lt;&#047;h1&gt;
+&lt;&#047;header&gt;
+
+&lt;div id=&quot;wrap&quot;&gt;
+  &lt;main&gt;
+    &lt;h1&gt;メインコンテンツ&lt;&#047;h1&gt;
+    &lt;p&gt;article...&lt;&#047;p&gt;
+  &lt;&#047;main&gt;
+
+  &lt;aside class=&quot;right-bar&quot;&gt;
+    &lt;h2&gt;サイドバー&lt;&#047;h2&gt;
+    &lt;div class=&quot;aside-box&quot;&gt;
+      &lt;p&gt;text&lt;&#047;p&gt;
+    &lt;&#047;div&gt;
+    &lt;div class=&quot;aside-box&quot;&gt;
+      &lt;p&gt;ad&lt;&#047;p&gt;
+    &lt;&#047;div&gt;
+  &lt;&#047;aside&gt;
+&lt;&#047;div&gt;
+
+&lt;footer&gt;
+  &lt;h1&gt;フッター&lt;&#047;h1&gt;
+&lt;&#047;footer&gt;
+</code></pre>
+
+    <div class="language-tag"><B>▼ CSS</B></div>
+    <pre class="prettyprint linenums"><code>header {
+  max-width: 980px;
+  height: 300px;
+  margin: auto;
+  border: 1px solid black;
+  text-align: center;
+}
+
+#wrap {
+  display: flex;
+  &#047;* 下に回り込む設定 *&#047;
+  flex-wrap: wrap;　
+  &#047;* flexboxの要素をセンターに寄せる *&#047;
+  justify-content: center;
+  margin: auto;
+  max-width: 980px;
+  height: auto;
+  border: 1px solid black;
+}
+
+main {
+  width: 75%;
+  height: 2000px;
+  text-align: center;
+  background-color: #bad3ff;
+}
+
+.right-bar {
+  position: absolute;
+  width: 245px;
+  text-align: center;
+  background-color: #75a9ff;
+  height: 500px;
+}
+
+footer {
+  max-width: 980px;
+  height: 1000px;
+  margin: auto;
+  border: 1px solid black;
+  text-align: center;
+}
+
+.fixed{
+  position: fixed;
+  top: 0px;
+}
+
+.aside-box {
+  width: 200px;
+  height: 80px;
+  border: 1px solid black;
+  margin: auto;
+  margin-top: 10px;
+}
+
+@media screen and (max-width: 1000px) {
+  main {
+    width: 100%;
+  }
+  .right-bar {
+    position: static;
+    width: 100%;
+    height: 300px;
+  }
+}
+</code></pre>
+
+    <div class="language-tag"><B>▼ JavaScript</B></div>
+    <pre class="prettyprint linenums"><code>const _window   = window
+const _main     = document.queryselector('main')
+const _rightBar = document.queryselector('.right-bar')
+const HALFWAY_POINT_WIDTH = 1000 &#047;&#047; cssのメティアクエリのmax-width値を設定
+
+&#047;&#047; サイドバーのposition:left値を更新する関数
+&#047;&#047; 画面サイズが変わるたびにleft値を変更する
+const updateleftvalofsidebar = () =&gt; {
+  const rangeuptomainright = _main.getboundingclientrect().right
+  &#047;&#047; サイドバーはmainの右隣にあるため、ブラウザの左端からmainの右までの距離を調べる
+  _rightBar.style.left = `${rangeuptomainright}px`
+}
+
+const fixsidebarwhenscrolled = () =&gt; {
+  const rangefromtoptoheader = document.queryselector('header')
+    .getboundingclientrect().bottom + _window.pageyoffset
+
+  const rangefromtoptofooter = document.queryselector('footer')
+    .getboundingclientrect().top + _window.pageyoffset - _rightBar.clientheight
+  &#047;&#047; メインコンテンツより下(フッター内)の場合のtopの値を計算
+  &#047;&#047; right-barの位置をスクロール量を合わせて固定表示にする
+  const sidebartopfixedval = `${_main.getboundingclientrect().bottom +
+    _window.pageyoffset - _rightBar.clientheight}px`
+  &#047;&#047; スクロール量を取得
+  const _windowscrollweight = _window.pageyoffset
+  &#047;&#047; サイドバーがメインコンテンツ内にある場合
+  if (_windowscrollweight &gt; rangefromtoptoheader &&
+    _windowscrollweight &lt; rangefromtoptofooter) {
+    _rightBar.style.top = `0px`
+    _rightBar.classlist.add('fixed')
+  } else {
+    _rightBar.style.top = `${rangefromtoptoheader + 1}px` &#047;&#047; borderの1pxを追加
+    _rightBar.classlist.remove('fixed')
+    &#047;&#047; メインコンテンツ外かつ、メインコンテンツより下(フッター内)の場合、固定を解除してその場の高さを設定
+    if (_windowscrollweight &gt;= rangefromtoptofooter) {
+      _rightBar.style.top = sidebartopfixedval
+    }
+  }
+}
+
+const windowSizeJudge = () =&gt; {
+  &#047;&#047; cssのメディアクエリでブラウザ幅が1000px以下の場合はサイドバーを下に回り込ませているため、
+  &#047;&#047; サイドバーが横にある場合のみ固定&解除の処理をする
+  if (matchmedia(`(min-width: ${HALFWAY_POINT_WIDTH}px)`).matches) {
+    fixsidebarwhenscrolled()
+    updateleftvalofsidebar()
+    _window.addeventlistener('scroll', fixsidebarwhenscrolled)
+    _window.addeventlistener('resize', updateleftvalofsidebar)
+  } else {
+    _window.removeeventlistener('scroll', fixsidebarwhenscrolled)
+    _window.removeeventlistener('resize', updateleftvalofsidebar)
+  }
+}
+
+windowSizeJudge()
+_window.addeventlistener('resize', windowSizeJudge)
+</code></pre>
+
+    <div class="text-sub-title">
+      <h2 class="sub-title-border">&nbsp;解説</h2>
+    </div>
+    <p>コード内にも説明が書いてありますが、それぞれの関数を順を追って少し解説してみたいと思います。</p>
+    <h3>・windowSizeJudge</h3>
+    <p>今回のHTMLの構成が一応レスポンシブになるよう考えたので、サイドバーが表示されないくらいのブラウザサイズであれば、サイドバーをメインコンテンツの下にまわり込ませるようCSSのメディアクエリで制御しています。</p>
+    <p>なのでまず、一番最初に現在のブラウザサイズを取得し、それがCSSで設定した回り込む値(HALFWAY_POINT_WIDTH)より大きいかどうかをmatchMediaメソッドで判定し、</p>
+    <ul>
+      <li>大きければサイドバーの固定・解除処理を実行&amp;それぞれイベントリスナーに登録</li>
+      <li>小さければイベントリスナーを解除</li>
+    </ul>
+    <p>という処理をします。</p>
+    <p>この関数はブラウザサイズが変わるたびに毎回実行しなければ行けないため、addEventListenerでイベントリスナに登録します。(ブラウザサイズ変更のイベント種類名はresize)</p>
+    <h3>・fixSidebarWhenScrolled</h3>
+    <p>今回のメインであるスクロール時にサイドバーを固定&amp;解除する処理を行います。<br>この関数はwindowSizeJudgeでscrollを検知したら毎回実行されるよう登録してあります。(スクロールのイベント種類名はscroll)</p>
+    <p>まず固定する方法として、CSSにスクロールされても固定となるposition:fixedをクラスとして用意しておき、それを固定するタイミングになったらサイドバーにそのクラスを追加します。</p>
+    <p>対応するCSSのクラス</p>
+    <pre class="prettyprint linenums"><code>.fixed {
+  position: fixed;
+  top: 0px;
+}
+</code></pre>
+
+<p>固定するかどうかの判定は、window.pageYOffsetでスクロール量を取得し、それがメインコンテンツの高さまで来たら固定、そしてフッターの高さまで来たら解除、という流れでやります。</p>
+<p>まず必要な情報としてブラウザの一番上からヘッダーまでの距離、ブラウザの一番上からfooterまでの距離をそれぞれ取得します。この値はスクロールされた状態でリロードするとスクロールされている分値がズレてしまうので、スクロール量も値に足しています。</p>
+<p>これを変数rangeFromTopToHeaderと変数rangeFromTopToFooterで取得します。</p>
+<p>ただし、変数rangeFromTopToFooterはそのままの値を使うと<a href="../samples/sidebar-fixed2.html" target="_blank">サンプル</a>のようになってしまうため、サイドバーの高さを引いて調節します。</p><br>
+<p>さらにサイドバーの要素がfooterの位置まで来た場合にそこで固定を解除してしまうと、サイドバーが一番上まで飛んでいってしまうので、固定を解除したタイミングの位置を変数sidebarTopFixedValで取得しておき、それをCSSのtopとして代入します。</p>
+<p>具体的にはmainの下部までの距離を取得、そこにサイドバーの高さを引く事によって以下の画像の高さが取得できます。</p>
+<img src="../images/page19/page19-1.jpg" alt=""><br>
+<p>この赤のラインで固定を解除し、その高さをCSSのposition:topにセットします。</p>
+<h3>・updateLeftValOfSidebar</h3>
+<p>これもwindowSizeJudgeでresizeされた場合のイベントリスナに登録してありますが、サイドバーはpositionで指定しているため、ブラウザサイズが変わった場合にこの関数でleft値を更新する処理をしています。</p>
+<div class="text-sub-title">
+  <h2 class="sub-title-border">&nbsp;まとめ</h2>
+</div>
+<p>けっこう複雑だったので、解説もちょっと分かりずらい気がしますが、誰かの参考になったら嬉しいです！
+  <br>外見的には意外と良い感じに作れたので良かったと思っています。また何か作れたら解説記事もどんどん書いて行きたいと思っています！</p>
