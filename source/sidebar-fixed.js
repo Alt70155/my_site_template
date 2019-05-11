@@ -59,12 +59,11 @@ const windowSizeJudge = () => {
   // ブラウザが1080px以上だった場合はサイドバーを表示する
   if (matchMedia(`(min-width: ${HALFWAY_POINT_WIDTH}px)`).matches) {
     _rightBar.classList.add('right-bar')
-    _rightBar.classList.remove('right-bar-is-down')
+    _rightBar.classList.remove('right-bar-is-down', 'hidden-item')
     _otherTitle.classList.add('display-none')
     fixSidebarWhenScrolled()
-    _window.addEventListener('scroll', fixSidebarWhenScrolled)
-    // 最初に実行し初期値をセット、以降は画面サイズが変わるたびにleft値を変更
     updateLeftValOfSidebar()
+    _window.addEventListener('scroll', fixSidebarWhenScrolled)
     _window.addEventListener('resize', updateLeftValOfSidebar)
   } else {
     _window.removeEventListener('scroll', fixSidebarWhenScrolled)
