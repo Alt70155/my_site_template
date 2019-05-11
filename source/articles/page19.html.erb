@@ -174,23 +174,23 @@ windowSizeJudge()
 _window.addeventlistener('resize', windowSizeJudge)
 </code></pre>
 
-    <div class="text-sub-title">
-      <h2 class="sub-title-border">&nbsp;解説</h2>
-    </div>
-    <p>コード内にも説明が書いてありますが、それぞれの関数を順を追って少し解説してみたいと思います。</p>
-    <h3>・windowSizeJudge</h3>
-    <p>今回のHTMLの構成が一応レスポンシブになるよう考えたので、サイドバーが表示されないくらいのブラウザサイズであれば、サイドバーをメインコンテンツの下にまわり込ませるようCSSのメディアクエリで制御しています。</p>
-    <p>なのでまず、一番最初に現在のブラウザサイズを取得し、それがCSSで設定した回り込む値(HALFWAY_POINT_WIDTH)より大きいかどうかをmatchMediaメソッドで判定し、</p>
-    <ul>
-      <li>大きければサイドバーの固定・解除処理を実行&amp;それぞれイベントリスナーに登録</li>
-      <li>小さければイベントリスナーを解除</li>
-    </ul>
-    <p>という処理をします。</p>
-    <p>この関数はブラウザサイズが変わるたびに毎回実行しなければ行けないため、addEventListenerでイベントリスナに登録します。(ブラウザサイズ変更のイベント種類名はresize)</p>
-    <h3>・fixSidebarWhenScrolled</h3>
-    <p>今回のメインであるスクロール時にサイドバーを固定&amp;解除する処理を行います。<br>この関数はwindowSizeJudgeでscrollを検知したら毎回実行されるよう登録してあります。(スクロールのイベント種類名はscroll)</p>
-    <p>まず固定する方法として、CSSにスクロールされても固定となるposition:fixedをクラスとして用意しておき、それを固定するタイミングになったらサイドバーにそのクラスを追加します。</p>
-    <p>対応するCSSのクラス</p>
+<div class="text-sub-title">
+  <h2 class="sub-title-border">&nbsp;解説</h2>
+</div>
+<p>コード内にも説明が書いてありますが、それぞれの関数を順を追って少し解説してみたいと思います。</p>
+<h3>・windowSizeJudge</h3>
+<p>今回のHTMLの構成が一応レスポンシブになるよう考えたので、サイドバーが表示されないくらいのブラウザサイズであれば、サイドバーをメインコンテンツの下にまわり込ませるようCSSのメディアクエリで制御しています。</p>
+<p>なのでまず、一番最初に現在のブラウザサイズを取得し、それがCSSで設定した回り込む値(HALFWAY_POINT_WIDTH)より大きいかどうかをmatchMediaメソッドで判定し、</p>
+<ul>
+  <li>大きければサイドバーの固定・解除処理を実行&amp;それぞれイベントリスナーに登録</li>
+  <li>小さければイベントリスナーを解除</li>
+</ul>
+<p>という処理をします。</p>
+<p>この関数はブラウザサイズが変わるたびに毎回実行しなければ行けないため、addEventListenerでイベントリスナに登録します。(ブラウザサイズ変更のイベント種類名はresize)</p>
+<h3>・fixSidebarWhenScrolled</h3>
+<p>今回のメインであるスクロール時にサイドバーを固定&amp;解除する処理を行います。<br>この関数はwindowSizeJudgeでscrollを検知したら毎回実行されるよう登録してあります。(スクロールのイベント種類名はscroll)</p>
+<p>まず固定する方法として、CSSにスクロールされても固定となるposition:fixedをクラスとして用意しておき、それを固定するタイミングになったらサイドバーにそのクラスを追加します。</p>
+<p>対応するCSSのクラス</p>
     <pre class="prettyprint linenums"><code>.fixed {
   position: fixed;
   top: 0px;

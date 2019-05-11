@@ -1,24 +1,27 @@
-# 指定ディレクトリの全ファイルの特定文字列を置き換えるスクリプト
+# 任意の名前のファイルの特定文字列を一括で置き換えるRubyスクリプト
 
-dir_path = "/Users/chika/Documents/my_site_temp/source/articles/"
+def batch_str_replace(args)
+  Dir.glob("#{args[:dir_path]}#{args[:file_name_to_replace]}") do |file_path|
+    # readモードでファイルを開く
+    File.open(file_path, 'r') do |r|
+      read_file = r.read
+      @str = read_file.gsub(args[:before_replace_regexp], args[:after_replace_str])
+    end
 
-Dir.glob("#{dir_path}*.html.erb") do |path|
-
-  File.open(path, 'r') do |r|
-    html = r.read
-    @str = html.gsub!(%r@<div class="text-content">@, '')
-    # ファイルの最後のdivを消したいので
-    div_len = html.scan(%r@</div>@).length
-    ct = 0
-    @str = html.gsub(%r@</div>@) do |match_char|
-      ct += 1
-      # 最後の要素なら空文字に、そうでなければ同じ文字を返してそれに置き換える。
-      ct == div_len ? '' : match_char
+    # ファイルの上書きはw指定のwriteのみで可能なため新規で開く
+    File.open(file_path, 'w') do |w|
+      w.write(@str)
     end
   end
-
-  # ファイルの上書きはw指定のwriteのみで可能なため新規で開く
-  File.open(path, 'w') do |w|
-    w.write(@str)
-  end
 end
+
+batch_str_replace(
+  dir_path:              "/Users/chika/Documents/test-file/html-src/",
+  file_name_to_replace:  "step*.html",
+  before_replace_regexp: %r[], # 正規表現
+  after_replace_str:     "no"
+)
+
+
+# before_replace_regexpで指定した文字列が複数ある場合、全て置き換えます。
+# 指定した文字列を一つだけ置き換えたい場合は6行目のgsubをsubにすれば可能です。
