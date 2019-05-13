@@ -22,7 +22,7 @@
 
 <p>flexboxで簡単に実装できます。それに加えて微調節を行って綺麗にしています。<br>追加でメディアクエリを使って、横幅が小さくなってサイドバーがはみ出すタイミングで下に回り込ませています。</p>
 <h3>HTML</h3>
-<pre class="prettyprint linenums"><code>&lt;header&gt;
+<pre class="prettyprint linenums">&lt;header&gt;
   &lt;h1&gt;ヘッダー&lt;&#047;h1&gt;
 &lt;&#047;header&gt;
 
@@ -39,10 +39,10 @@
 &lt;footer&gt;
   &lt;h1&gt;フッター&lt;&#047;h1&gt;
 &lt;&#047;footer&gt;
-</code></pre>
+</pre>
 <br>
 <h3>CSS</h3>
-<pre class="prettyprint linenums"><code>header {
+<pre class="prettyprint linenums">header {
   max-width: 980px;
   height: 300px;
   margin: auto;
@@ -92,6 +92,6 @@ footer {
     height: 300px;
   }
 }
-</code></pre>
+</pre>
 
 <p>wrapのmax-widthやmainのmin-width値を変えた場合、left-barのwidthやメディアクエリのmax-width値も連動して変更する必要があります。</p>

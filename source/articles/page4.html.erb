@@ -9,25 +9,25 @@
   </div>
   <p>とある朝自分のwebサイトを確認したらMyDNSのエラーページが表示され、焦ってMyDNSを見直しました。(MyDNSは毎週サイトに訪問しないとエラーページが表示されるようになってる)</p>
   <p>手動ではめんどくさいのでcronの設定で毎日サイトにアクセスする設定になっているため、その辺がおかしくなっているのかと手動でシェルスクリプトを実行してもmydnsのサイトに接続できない。。。<br>
-    <pre class="prettyprint linenums"><code># sh mydns_update.sh<br>www.mydns.jp (www.mydns.jp) をDNSに問いあわせています... 失敗しました: 名前またはサービスが不明です.<br>wget: ホストアドレス &#39;www.mydns.jp&#39; を解決できませんでした。</p></code></pre>
+    <pre class="prettyprint linenums"># sh mydns_update.sh<br>www.mydns.jp (www.mydns.jp) をDNSに問いあわせています... 失敗しました: 名前またはサービスが不明です.<br>wget: ホストアドレス &#39;www.mydns.jp&#39; を解決できませんでした。</p></pre>
   <p>取り敢えず公式サイトから手動ログインしサーバーを繋がる状態に。<br><br>
     まずはmailを確認したらアンチウィルスソフトのclamavから大量のメールが来ていたのでもしやウィルスか！？と焦りましたが、<br>よく読んだらウィルス定義更新の為のミラーサイトに繋がらないらしい<br>
-    <pre class="prettyprint linenums"><code># freshclam <br>ERROR: Cant get information about database.clamav.net: Name or service not known</p></code></pre>
+    <pre class="prettyprint linenums"># freshclam <br>ERROR: Cant get information about database.clamav.net: Name or service not known</p></pre>
   <p>上のエラー二つの原因はよく分らず・・・<br>
     取り敢えずyum updateをしてみたところ、それすらもできず。</p>
-  <pre class="prettyprint linenums"><code># yum update<br>Could not resolve host: mirrorlist.centos.org; 不明なエラー</code></pre>
+  <pre class="prettyprint linenums"># yum update<br>Could not resolve host: mirrorlist.centos.org; 不明なエラー</pre>
   <p>ネットワークには繋がっているのにコマンドから外へのアクセスが全然できない状態に。</p>
 
   <div class="text-sub-title"><h2 class="sub-title-border">&nbsp;原因</h2></div>
 
   <p>エラーを見る限りresolveがダメらしい(?)</p>
   <p>まずpingで疎通確認
-    <pre class="prettyprint linenums"><code># ping mirrorlist.centos.org<br>名前またはサービスが不明です</code></pre>
+    <pre class="prettyprint linenums"># ping mirrorlist.centos.org<br>名前またはサービスが不明です</pre>
     <p>繋がらない。</p>
   <p>他のPCでやってみて繋がる事を確認(原因が接続先のサイトではなく自分のサーバーにあるかどうかがこれでわかる)<br>
-    <pre class="prettyprint linenums"><code># ping mirrorlist.centos.org <br>64 bytes from 67.219.148.138: icmp_seq=0 ttl=49 time=142.333 ms<br>64 bytes from 67.219.148.138: icmp_seq=1 ttl=49 time=142.569 ms</p></code></pre>
+    <pre class="prettyprint linenums"># ping mirrorlist.centos.org <br>64 bytes from 67.219.148.138: icmp_seq=0 ttl=49 time=142.333 ms<br>64 bytes from 67.219.148.138: icmp_seq=1 ttl=49 time=142.569 ms</p></pre>
     <p>今度は自分のサーバーでmirrorlist.centos.orgのIPアドレスに対してpingをしてみる(DNSの問題かどうかを判別)</p>
-  <pre class="prettyprint linenums"><code># ping 212.69.166.138<br>64 bytes from 212.69.166.138: icmp_seq=1 ttl=54 time=261 ms<br>64 bytes from 212.69.166.138: icmp_seq=2 ttl=54 time=262 ms</code></pre>
+  <pre class="prettyprint linenums"># ping 212.69.166.138<br>64 bytes from 212.69.166.138: icmp_seq=1 ttl=54 time=261 ms<br>64 bytes from 212.69.166.138: icmp_seq=2 ttl=54 time=262 ms</pre>
   <p>繋がりました！ <br>
     つまり、IP指定では繋がるけどドメイン指定では繋がらないわけですね。DNSの名前解決の問題？ちょっとこの辺の詳しい事はよく分かりませんが。
   </p>
@@ -39,9 +39,9 @@
   <p>ネットワーク関連の設定ファイルsysconfigとresolveに設定を追加する。</p>
   <p>/etc/sysconfig/network-scripts/ifcfg-xxxに、自分が使ってる機器の設定ファイルがあり、そこにDNS設定を追加する。(xxxは機器の名前) <br>
   DNS=8.8.8.8を追加。8.8.8.8はgoogleのPublic DNSのIPアドレスらしい。</p>
-  <pre class="prettyprint linenums"><code># vi /etc/sysconfig/network-scripts/ifcfg-xxx<br>DNS=8.8.8.8</code></pre>
+  <pre class="prettyprint linenums"># vi /etc/sysconfig/network-scripts/ifcfg-xxx<br>DNS=8.8.8.8</pre>
   <p>resolve.confの設定にも以下の行を追加します。<br>
-  <pre class="prettyprint linenums"><code># vi /etc/resolve.conf<br>nameserver 8.8.8.8</code></pre>
+  <pre class="prettyprint linenums"># vi /etc/resolve.conf<br>nameserver 8.8.8.8</pre>
   <p>ここまできてやっとyum updateやその他諸々のエラーが解決しました。</p>
   <p>最初のサーバー設定でこのへんやらなかったけど、なんで今頃できなくなったんでしょうか・・・<br>サーバーを一度落としたからかも・・・？ <br><br>
     追記：どうやらCentOS7のネットワーク関連の設定はNetworkManagerが管理しており、デフォルトの設定だとOSを再起動してしまうとresolveの設定が勝手に書き変わる(元に戻される？)らしい。<br>

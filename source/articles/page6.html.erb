@@ -14,16 +14,16 @@
   <p>
     <h3>リモートからローカルへ転送</h3>
     windows(ローカル)のほうのコマンドラインで<br>
-    <pre class="prettyprint linenums"><code>scp -i C:/Users/name/Documents/private_key_file -r -P 1234 user@192.168.x.y:/var/www/html C:/Users/name/Desktop/
-    </code></pre>
+    <pre class="prettyprint linenums">scp -i C:/Users/name/Documents/private_key_file -r -P 1234 user@192.168.x.y:/var/www/html C:/Users/name/Desktop/
+    </pre>
     なんか色々長いですが、「-P 1234」以降の部分がメインで、スペース区切りで左に「転送元」、右に「転送先」となっています。 <br>
     各コマンドの細かい説明は下のほうにまとめて書いておくので、そちらも参考にしてください。 <br>
     以上のコマンドで今回の場合、リモート先の/var/www/配下にあるhtmlディレクトリを中身ごとローカルのdesktop上にコピーできます。 <br>
     <h3>ローカルからリモートへ転送</h3>
     上の部分を逆にしただけなのですが一応載せて置きます。 <br>
     同じくローカルのコマンドラインで <br>
-    <pre class="prettyprint linenums"><code>scp -i C:/Users/name/Documents/private_key_file -r -P 1234 C:/Users/name/Desktop/dir user@192.168.x.y:/var/www/html/
-    </code></pre>
+    <pre class="prettyprint linenums">scp -i C:/Users/name/Documents/private_key_file -r -P 1234 C:/Users/name/Desktop/dir user@192.168.x.y:/var/www/html/
+    </pre>
     これはローカルのdesktop上にあるdirディレクトリをリモートの/var/www/html/に転送しています。
   </p>
   <h2 class="sub-title-border">&nbsp;引数・オプションの説明</h2>

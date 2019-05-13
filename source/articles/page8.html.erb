@@ -9,8 +9,8 @@
     <h2 class="sub-title-border">&nbsp;ファイルの読み書きのやり方</h2>
   </div>
   <p>ファイルの読み書きにはFileクラスのopenメソッドを使います。<br>書式は
-<pre class="prettyprint linenums"><code>File.open("ファイルのパス", "オプション")
-</code></pre>
+<pre class="prettyprint linenums">File.open("ファイルのパス", "オプション")
+</pre>
   <br>で、第二引数にオプションの設定ができます。<br>第二引数のそれぞれの値と設定は</p>
   <div class="list-border"><ul>
     <li>"w" → 書き込み・設定したファイルがあれば上書き(元の中身は消える)、無ければ新規作成</li>
@@ -22,7 +22,7 @@
   </ul></div>
   <p>という感じです。</p>
   <p>簡単な使い方一覧</p>
-  <pre class="prettyprint linenums"><code>w_file = File.open("/file_path/test1.html", "w")
+  <pre class="prettyprint linenums">w_file = File.open("/file_path/test1.html", "w")
 r_file = File.open("/file_path/test2.html", "r")
 
 w_file.write("hello") #-&gt; helloと上書き
@@ -35,12 +35,12 @@ r_file.write #-&gt; 同じく第二引数がrのため、writeはエラー
 # ブロックを使うと、自動的にfileはcloseされる
 File.open("/file_path/test1.html", "w") do |w_file|
   w_file.write("hello")
-end</code></pre>
+end</pre>
   <div class="text-sub-title">
     <h2 class="sub-title-border">&nbsp;サンプルコード</h2>
   </div>
   <p>既存のHTMLファイルを取得し、中身を正規表現で書き換えて新規ファイルに書き換えた内容を保存します。<br>今回はHTMLタグ(h1とh2)をそれぞれ自分のサイトに合わせたタグに置き換えています。</p>
-  <pre class="prettyprint linenums"><code>
+  <pre class="prettyprint linenums">
 def replace_html_tag(args)
   File.open(args[:write_file_path], "w") do |write_file|
     File.open(args[:read_file_path], "r") do |read_file|
@@ -57,7 +57,7 @@ replace_html_tag(
   :write_file_path =&gt; "/file_path/test1.html",
   :read_file_path  =&gt; "/file_path/test2.html"
 )
-  </code></pre>
+  </pre>
   <p>※ハイライトのためタグのスラッシュをコメントアウトしています。</p>
   <p>htmlという変数に格納したファイルの中身をgsubで置き換え、その返り値をまたgsubで置き換えというのをメソッドチェーンで繰り返しています。 </p>
   <p>全体的に冗長な気が...正規表現とそのメソッドがあんまり使い慣れてないのでもっと簡潔に書ける気がします。。。。<br>あと、ついでに引数の順番に依存しないようハッシュを用いて渡すテクニック(?)を使ってます。</p>

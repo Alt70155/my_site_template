@@ -24,10 +24,10 @@
   <p>ファイルを作成したら、以下のように記載</p>
 
   <div>/var/www/html/.htaccess</div>
-  <pre class="prettyprint linenums"><code>RewriteEngine On
+  <pre class="prettyprint linenums">RewriteEngine On
 RewriteCond %{REQUEST_FILENAME} !-d
 RewriteRule ^([^.]+)$ $1.html [NC,L]
-</code></pre>
+</pre>
   <%= @article_page_middle_ads %>
 
   <div class="text-sub-title">
@@ -36,11 +36,11 @@ RewriteRule ^([^.]+)$ $1.html [NC,L]
   <p>デフォルトの設定では.htaccessを参照しないようになっているので、参照するようにhttpd.confを変更します。<br>変更する箇所はAllowOverrideという部分</p>
 
   <div>/etc/httpd/conf/httpd.conf</div>
-  <pre class="prettyprint linenums"><code>&lt;Directory &quot;&#047;var&#047;www&#047;html&quot;&gt;
+  <pre class="prettyprint linenums">&lt;Directory &quot;&#047;var&#047;www&#047;html&quot;&gt;
   ・・・略・・・
   AllowOverride None ←ここ
   ・・・略・・・
-&lt;&#047;Directory&gt;</code></pre>
+&lt;&#047;Directory&gt;</pre>
 
   <p>AllowOverrideが.htaccessでどのような設定を許可するかを指定する場所になります。<br>Noneだと.htaccessを全く参照しません。</p>
   <p>・オプション一覧</p>
@@ -84,14 +84,14 @@ RewriteRule ^([^.]+)$ $1.html [NC,L]
   </table><br>
   <p>ファイルの拡張子の設定変更のため、オプションをFileInfoに設定します。</p>
   <div>/etc/httpd/conf/httpd.conf</div>
-  <pre class="prettyprint linenums"><code>&lt;Directory &quot;&#047;var&#047;www&#047;html&quot;&gt;
+  <pre class="prettyprint linenums">&lt;Directory &quot;&#047;var&#047;www&#047;html&quot;&gt;
   ・・・略・・・
   AllowOverride FileInfo ←変更
   ・・・略・・・
-&lt;&#047;Directory&gt;</code></pre>
+&lt;&#047;Directory&gt;</pre>
 
   <p>設定したらApacheを再起動<br>
-  <pre class="prettyprint linenums"><code>service httpd restart</code></pre>
+  <pre class="prettyprint linenums">service httpd restart</pre>
   <div class="text-sub-title">
     <h2 class="sub-title-border">&nbsp;上手く設定できたか確認</h2>
   </div>

@@ -34,7 +34,7 @@
   <p>これを解決するには、要素数の帳尻を合わせつつ、画面には表示しないというダミーの要素を置きます。(これは自分の解決策なので、他のやり方もあるかもしれません)</p>
   <p>さっきの画像には、以下のようなarticle要素が5個あります。</p>
 
-<pre class="prettyprint linenums"><code>
+<pre class="prettyprint linenums">
 &lt;article class="article-item box"&gt;
   &lt;div class="article-inside"&gt;
     &lt;img src="page8.jpg" alt=""&gt;
@@ -43,10 +43,10 @@
     &lt;/div&gt;
   &lt;/div&gt;
 &lt;/article&gt;
-</code></pre>
+</pre>
 
   <p>それに加えて、以下のクラスとCSSを追加したarticle要素を6個目に追加します。</p>
-<pre class="prettyprint linenums"><code>
+<pre class="prettyprint linenums">
 &lt;!-- classにhidden-itemを追加 --&gt;
 &lt;article class="article-item box hidden-item"&gt;
   &lt;div class="article-inside"&gt;
@@ -56,12 +56,12 @@
     &lt;/div&gt;
   &lt;/div&gt;
 &lt;/article&gt;
-</code></pre><br>
+</pre><br>
 
-<pre class="prettyprint linenums"><code>.hidden-item {
+<pre class="prettyprint linenums">.hidden-item {
   visibility:hidden;
 }
-</code></pre>
+</pre>
 
   <p>HTML要素を表示させなくするCSSプロパティは2つあり、それぞれに以下のような特徴があります。</p>
   <ul>

@@ -5,7 +5,7 @@
 
   <p>Ruby入門を最近やっているのですが、そのサンプルで16進数カラーコードの変換プログラムがあり、それがとても短く書けていて「おお〜」となりました。</p>
   <div class="language-tag"><p>▼Ruby</p></div>
-  <pre class="prettyprint linenums"><code>
+  <pre class="prettyprint linenums">
 #リファクタリング前
 def to_ints(hex)
   r = hex[1..2]
@@ -22,12 +22,12 @@ end
 def to_ints(hex)
 hex.scan(/\w\w/).map(&:hex)
 end
-  </code></pre>
+  </pre>
   <p>そして、私が熱心に勉強しているJavaScriptでもこれくらい短く書けるだろうと挑戦してみたのですが、想像よりかなり酷いコードになり、絶望・・・</p>
   <p>それをtwitterに上げましたら、JSの先輩方が非常に短く書き直してくれたのでそれを少し見直しました。</p>
   <p>こちらが問題(?)の私が書いた16進数変換コード</p>
   <div class="language-tag"><p>▼JavaScript</p></div>
-  <pre class="prettyprint linenums"><code>
+  <pre class="prettyprint linenums">
 let toInts = (hex) =&gt; {
 let hexArray = [];
 let toIntArray = [];
@@ -38,11 +38,11 @@ toIntArray.push(parseInt(item, 16));
 return toIntArray;
 }
 console.log(toInts('#abcdef'));
-  </code></pre>
+  </pre>
   <p>長いですね、長い。</p>
   <p>こちらが送ってもらったコード(正規表現の説明も書いてもらっています)</p>
   <div class="language-tag"><p>▼JavaScript</p></div>
-  <pre class="prettyprint linenums"><code>
+  <pre class="prettyprint linenums">
 /*
 正規表現の解説
 (?:\w{2})=A-Za-z0-9_を含む2文字にマッチする
@@ -50,7 +50,7 @@ console.log(toInts('#abcdef'));
 */
 let colorCodeToInt = hex =&gt; hex.split(/(?=(?:\w{2})+$)/).map(hex =&gt; parseInt(hex, 16))
 console.log(colorCodeToInt("abcdef"))
-  </code></pre>
+  </pre>
   <p>まさかの一行で終わってます(^^;;<br>
   Rubyのほうでも正規表現+scanにより大幅に短くなっていましたが、jsでも正規表現+splitでslice+push作業がなくなりとても綺麗に。 <br>
   mapは処理した結果を新しい配列にして返すので空の配列を作る必要もなし。</p>
@@ -62,7 +62,7 @@ console.log(colorCodeToInt("abcdef"))
   <p>こんな感じの過程を経ています。 <br>
     プログラムの内容は配列の要素の長さを返すコード</p>
   <div class="language-tag"><p>▼JavaScript</p></div>
-  <pre class="prettyprint linenums"><code>
+  <pre class="prettyprint linenums">
 let materials = ["Hydrogen","Helium","Lithium", "Beryllium"];
 
 materials.map(function(x) {
@@ -78,7 +78,7 @@ return x.length; //アロー関数は引数が1つの場合、(x)のカッコを
 }) //[8, 6, 7, 9]
 
 materials.map( x =&gt; x.length ) //{}を省略したことにより、returnを省略できる
-  </code></pre>
+  </pre>
   <p>めっちゃシンプル。早く慣れたい。</p>
 
   <div class="text-sub-title">

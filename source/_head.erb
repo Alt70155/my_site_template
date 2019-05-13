@@ -4,8 +4,8 @@
   <% @base_title = "Knowledge-Blog" %>
   <meta charset="utf-8">
   <meta http-equiv="x-ua-compatible" content="ie=edge">
-  <!-- ここのwidth値を変えたらheaderのメディアクエリも変える -->
-  <meta name="viewport" content="width=830px">
+  <!-- ここのwidth値を変えたらheaderとcode-highlightのメディアクエリも変える -->
+  <meta name="viewport" content="width=700px">
   <%# <meta name="viewport" content="width=device-width,initial-scale=1"> %>
   <% if @body_id == "article" %>
     <% @title = @article_info_list[@page_number-1][:title] %>
@@ -15,13 +15,16 @@
     <meta property="og:title" content="<%= @title %>">
     <meta property="og:description" content="<%= @description || @title %>">
     <meta property="og:image" content="http://Knowledge-blog.net/images/page<%= @page_number.to_s %>.jpg">
+    <!-- サイドバー固定スクリプト -->
     <script src="../sidebar-fixed.js" charset="utf-8" defer></script>
   <% end %>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Inconsolata|Kaushan+Script|Ropa+Sans">
   <link rel="shortcut icon" href="../images/favicon.png">
   <title><%= @title ? @title + " | " + @base_title : @base_title %></title>
   <link rel="stylesheet" href="../css.css">
+  <!-- コードブロックのハイライト -->
   <script src="https://cdn.rawgit.com/google/code-prettify/master/loader/run_prettify.js"></script>
+  <link rel="stylesheet" href="../code-highlight.css">
   <!-- Global site tag (gtag.js) - Google Analytics -->
   <script async src="https://www.googletagmanager.com/gtag/js?id=UA-131321630-1"></script>
   <script>

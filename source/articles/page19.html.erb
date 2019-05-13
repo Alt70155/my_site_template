@@ -21,7 +21,7 @@
 <p>注意：jsファイルを分ける場合はリンクをbodyの最後に書くか、deferを付けて読み込んでください。</p>
 
 <div class="language-tag"><B>▼ HTML</B></div>
-<pre class="prettyprint linenums"><code>&lt;header id=&quot;header&quot;&gt;
+<pre class="prettyprint linenums">&lt;header id=&quot;header&quot;&gt;
   &lt;h1&gt;ヘッダー&lt;&#047;h1&gt;
 &lt;&#047;header&gt;
 
@@ -45,10 +45,10 @@
 &lt;footer&gt;
   &lt;h1&gt;フッター&lt;&#047;h1&gt;
 &lt;&#047;footer&gt;
-</code></pre>
+</pre>
 
     <div class="language-tag"><B>▼ CSS</B></div>
-    <pre class="prettyprint linenums"><code>header {
+    <pre class="prettyprint linenums">header {
   max-width: 980px;
   height: 300px;
   margin: auto;
@@ -114,13 +114,13 @@ footer {
     height: 300px;
   }
 }
-</code></pre>
+</pre>
 
     <div class="language-tag"><B>▼ JavaScript</B></div>
-    <pre class="prettyprint linenums"><code>const _window   = window
+    <pre class="prettyprint linenums">const _window   = window
 const _main     = document.querySelector('main')
 const _rightBar = document.querySelector('.right-bar')
-&#047;&#047; CSSのメティアクエリのmax-width値を設定
+&#047;&#047; CSSのメディアクエリのmax-width値を設定
 const HALFWAY_POINT_WIDTH = 1000
 
 &#047;&#047; サイドバーのposition:left値を更新する関数
@@ -179,7 +179,7 @@ const windowSizeJudge = () =&gt; {
 windowSizeJudge()
 _window.addEventListener('resize', windowSizeJudge)
 
-</code></pre>
+</pre>
 
 <div class="text-sub-title">
   <h2 class="sub-title-border">&nbsp;解説</h2>
@@ -198,11 +198,11 @@ _window.addEventListener('resize', windowSizeJudge)
 <p>今回のメインであるスクロール時にサイドバーを固定&amp;解除する処理を行います。<br>この関数はwindowSizeJudgeでscrollを検知したら毎回実行されるよう登録してあります。(スクロールのイベント種類名はscroll)</p>
 <p>まず固定する方法として、CSSにスクロールされても固定となるposition:fixedをクラスとして用意しておき、それを固定するタイミングになったらサイドバーにそのクラスを追加します。</p>
 <p>対応するCSSのクラス</p>
-    <pre class="prettyprint linenums"><code>.fixed {
+    <pre class="prettyprint linenums">.fixed {
   position: fixed;
   top: 0px;
 }
-</code></pre>
+</pre>
 
 <p>固定するかどうかの判定は、window.pageYOffsetでスクロール量を取得し、それがメインコンテンツの高さまで来たら固定、そしてフッターの高さまで来たら解除、という流れでやります。</p>
 <p>まず必要な情報としてブラウザの一番上からヘッダーまでの距離、ブラウザの一番上からfooterまでの距離をそれぞれ取得します。この値はスクロールされた状態でリロードするとスクロールされている分値がズレてしまうので、スクロール量も値に足しています。</p>

@@ -23,15 +23,15 @@
 
   <p>例として下のHTMLに対して置き換えていきます。</p>
   <p>codeはコードブロックを意味します。このcodeを使って探し、エスケープしたい文字列を取り出します。</p>
-  <pre class="prettyprint linenums"><code>&lt;h1&gt;ここはエスケープしない&lt;&#047;h1&gt;
+  <pre class="prettyprint linenums">&lt;h1&gt;ここはエスケープしない&lt;&#047;h1&gt;
 code
 &lt;h1&gt;ここのタグはエスケープしたい&lt;&#047;h1&gt;
 code
-</code></pre>
+</pre>
 
   <p>上のHTMLをhtml_file変数に格納し、matchでcodeからcodeまでの文字列を取得します。
     <br>gsubだと変換するための引数が必要になるので、単純に特定の文字列を抜き出すためにはmatchを使います。</p>
-  <pre class="prettyprint linenums"><code>match_html = html_file.match(&#047;code(&#092;s&#124;&#092;S)*?code&#047;)</code></pre>
+  <pre class="prettyprint linenums">match_html = html_file.match(&#047;code(&#092;s&#124;&#092;S)*?code&#047;)</pre>
 
   <p>これでmatch_html変数にマッチした文字列が入ります。</p>
   <p>今回はcodeからcodeまでの改行・空白含む全ての文字列が欲しいため、これを正規表現で表すとcode(&#092;s&#124;&#092;S)*?codeになります。</p>
@@ -42,22 +42,21 @@ code
 
   <p>上の正規表現によって</p>
 
-  <pre class="prettyprint linenums"><code>code
+  <pre class="prettyprint linenums">code
 &lt;h1&gt;ここのタグはエスケープしたい&lt;&#047;h1&gt;
-code</code></pre>
+code</pre>
 
   <p>この部分を取得できたので、これをgsubで置き換えます。</p>
   <p>気を付けるのはmatchが返すのはStringではなくMatchDataオブジェクトなので、.to_sでStringに置き換えてからgsubをします。</p>
-  <pre class="prettyprint linenums"><code>rewrite_html_escape_char = match_html.to_s
+  <pre class="prettyprint linenums lang-rb"><code>rewrite_html_escape_char = match_html.to_s
   .gsub(/[<>&quot;&#092;/]/, "<" => "&amp;lt;", ">" => "&amp;gt;", '&quot;' => "&amp;quot;", "/" => "&amp;#047;")
-</code></pre>
+</pre>
 
   <p>gsubの正規表現の詳しい説明は割愛しますが、マッチした文字(今回は&lt;&gt;&quot;&#047;のいずれか)を第二引数にてハッシュで指定すると、それを置き換えることができます。</p>
 
   <h3>・HTMLファイルに適用</h3>
   <p>ここまでは一致した文字列を抜き出し、その中の文字を置き換えましたが、それを大元のHTMLファイルに適用します。</p>
   <p>一番最初のmatchで行ったのと同じ正規表現を使って、今度はgsub!でhtml_fileに対してcode〜codeを探し、それを丸々rewrite_html_escape_charに書き換えます。</p>
-  <pre class="prettyprint linenums"><code>html_file.gsub!(/code(&#092;s&#124;&#092;S)*?code/, rewrite_html_escape_char)</code></pre>
+  <pre class="prettyprint linenums">html_file.gsub!(/code(&#092;s&#124;&#092;S)*?code/, rewrite_html_escape_char)</pre>
 
   <p>これにてHTMLファイルの書き換えが完了します。</p>
-

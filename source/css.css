@@ -554,22 +554,6 @@ footer small {
   font-family: 'Montserrat', sans-serif;
 }
 
-pre {
-  margin-top: 0px;
-  white-space: pre;
-  overflow: auto;
-}
-
-code {
-  font-family: Menlo, Consolas, 'DejaVu Sans Mono', monospace;
-  font-size: 14px;
-  line-height: 1.4;
-}
-
-.prettyprint ol.linenums>li {
-  list-style-type: decimal;
-}
-
 .articles-pic img{
   width: 400px;
   height: 320px;
@@ -719,7 +703,7 @@ code {
 /*-----portfolio end-----*/
 
 /* headerレスポンシブ */
-@media screen and (max-width: 790px) {
+@media screen and (max-width: 700px) {
   .nav-flex {
     display: block;
   }
@@ -735,7 +719,7 @@ code {
   }
 }
 
-@media screen and (max-width: 840px) {
+@media screen and (max-width: 700px) {
   header {
     background-size: contain;
   }
