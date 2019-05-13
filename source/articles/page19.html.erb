@@ -1,3 +1,4 @@
+<% partial "adsense" %>
 <% @body_id = "article" %>
 <% @page_number = 19 %>
 <% @description = "ページがスクロールされたら一定の位置でサイドバーを固定表示にし、スクロールされてもずっと残るようにして、更にページの一番下まで行ったら固定を解除する<br>という事をJavaScriptを使って実現したいと思います！" %>
@@ -119,7 +120,8 @@ footer {
     <pre class="prettyprint linenums"><code>const _window   = window
 const _main     = document.querySelector('main')
 const _rightBar = document.querySelector('.right-bar')
-const HALFWAY_POINT_WIDTH = 1000 &#047;&#047; CSSのメティアクエリのmax-width値を設定
+&#047;&#047; CSSのメティアクエリのmax-width値を設定
+const HALFWAY_POINT_WIDTH = 1000
 
 &#047;&#047; サイドバーのposition:left値を更新する関数
 &#047;&#047; 画面サイズが変わるたびにleft値を変更する
@@ -148,10 +150,12 @@ const fixSidebarWhenScrolled = () =&gt; {
     &#047;&#047; 固定するクラスを追加
     _rightBar.classList.add('fixed')
   } else {
-    _rightBar.style.top = `${rangeFromTopToHeader + 1}px` &#047;&#047; borderの1pxを追加
+    &#047;&#047; borderの1pxを追加
+    _rightBar.style.top = `${rangeFromTopToHeader + 1}px`
     &#047;&#047; 固定するクラスを削除
     _rightBar.classList.remove('fixed')
-    &#047;&#047; メインコンテンツ外かつ、メインコンテンツより下(フッター内)の場合、固定を解除してその場の高さを設定
+    &#047;&#047; メインコンテンツ外かつ、メインコンテンツより下(フッター内)の場合、
+    &#047;&#047; 固定を解除してその場の高さを設定
     if (_windowScrollWeight &gt;= rangeFromTopToFooter) {
       _rightBar.style.top = sidebarTopFixedVal
     }

@@ -551,6 +551,7 @@ footer small {
   width: 150px;
   height: 16px;
   padding-bottom: 15px;
+  font-family: 'Montserrat', sans-serif;
 }
 
 pre {
@@ -734,7 +735,7 @@ code {
   }
 }
 
-@media screen and (max-width: 660px) {
+@media screen and (max-width: 840px) {
   header {
     background-size: contain;
   }

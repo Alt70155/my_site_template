@@ -56,10 +56,11 @@ const fixSidebarWhenScrolled = () => {
 }
 
 const windowSizeJudge = () => {
+  _rightBar.classList.remove('hidden-item')
   // ブラウザが1080px以上だった場合はサイドバーを表示する
   if (matchMedia(`(min-width: ${HALFWAY_POINT_WIDTH}px)`).matches) {
     _rightBar.classList.add('right-bar')
-    _rightBar.classList.remove('right-bar-is-down', 'hidden-item')
+    _rightBar.classList.remove('right-bar-is-down')
     _otherTitle.classList.add('display-none')
     fixSidebarWhenScrolled()
     updateLeftValOfSidebar()

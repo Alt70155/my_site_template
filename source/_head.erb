@@ -4,7 +4,9 @@
   <% @base_title = "Knowledge-Blog" %>
   <meta charset="utf-8">
   <meta http-equiv="x-ua-compatible" content="ie=edge">
-  <meta name="viewport" content="width=620">
+  <!-- ここのwidth値を変えたらheaderのメディアクエリも変える -->
+  <meta name="viewport" content="width=830px">
+  <%# <meta name="viewport" content="width=device-width,initial-scale=1"> %>
   <% if @body_id == "article" %>
     <% @title = @article_info_list[@page_number-1][:title] %>
     <meta name="twitter:card" content="summary">

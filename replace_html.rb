@@ -5,11 +5,15 @@ def replace_html_tag(args)
   File.open(args[:write_file_path], "w") do |write_file|
     File.open(args[:read_file_path], "r") do |read_file|
       html = read_file.read
-      write_file.puts(%Q[<% @body_id = "article" %>
-<% @page_number = #{@page_num} %>
-<% @description = "" %>])
+      # インデントを考慮したUSAGEヒアドキュメント
+      write_file.puts(<<~USAGE
+          <% @body_id = "article" %>
+          <% @page_number = #{@page_num} %>
+          <% @description = "" %>
+        USAGE
+      )
       # 文字列の一部を抜き出し、その中から正規表現で探すことを一行ではできないため、
-      # 文字列全体から;から;を抜き出し、タグなどのエスケープ文字を置き換えたら変数に入れておく
+      # 文字列全体から[から]を抜き出し、タグなどのエスケープ文字を置き換えたら変数に入れておく
       # 次で文字全体から[から]を変数の文字に置き換える
       rewrite_html_escape_char = ''
       loop do
@@ -32,6 +36,7 @@ def replace_html_tag(args)
 end
 
 replace_html_tag(
-  :write_file_path => "/Users/chika/Documents/my_site_temp/source/articles/page#{@page_num}.html.erb",
-  :read_file_path  => "/Users/chika/Documents/my_site_temp/read.html",
+  # write_file_path: "/Users/chika/Documents/my_site_temp/source/articles/page#{@page_num}.html.erb",
+  write_file_path: "/Users/chika/Documents/my_site_temp/test2.html",
+  read_file_path:  "/Users/chika/Documents/my_site_temp/read.html",
 )
