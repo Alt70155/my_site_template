@@ -48,7 +48,7 @@ code</pre>
 
   <p>この部分を取得できたので、これをgsubで置き換えます。</p>
   <p>気を付けるのはmatchが返すのはStringではなくMatchDataオブジェクトなので、.to_sでStringに置き換えてからgsubをします。</p>
-  <pre class="prettyprint linenums lang-rb"><code>rewrite_html_escape_char = match_html.to_s
+  <pre class="prettyprint linenums lang-rb">rewrite_html_escape_char = match_html.to_s
   .gsub(/[<>&quot;&#092;/]/, "<" => "&amp;lt;", ">" => "&amp;gt;", '&quot;' => "&amp;quot;", "/" => "&amp;#047;")
 </pre>
 
