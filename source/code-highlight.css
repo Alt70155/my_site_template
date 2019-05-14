@@ -12,7 +12,9 @@
   white-space: -o-pre-wrap;
   white-space: pre-wrap;
   word-wrap: break-word;
+  max-width: 100%;
 }
+
 @media screen and (max-width: 710px) {
   .prettyprint {
     font-size: 13px;
