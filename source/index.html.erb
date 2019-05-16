@@ -5,17 +5,22 @@
 <p class="page-title">最新記事</p>
 <div class="container">
 
+  <% ct = 0 %>
+
   <% @article_info_list.each_with_index.reverse_each do |article, i| %>
-    <% page_num = i + 1 %>
-    <a href="../articles/page<%= page_num %>.html" class="article-item box fly">
-      <article class="article-inside">
-        <img src="../images/page<%= page_num %>.jpg" alt="">
-        <p>
-          <span class="date">Posted on <%= article[:post_date] %></span><br>
-          <%= article[:title] %>
-        </p>
-      </article>
-    </a>
+    <% ct += 1 %>
+    <% if ct <= 18 %>
+      <% page_num = i + 1 %>
+      <a href="../articles/page<%= page_num %>.html" class="article-item box fly">
+        <article class="article-inside">
+          <img src="../images/page<%= page_num %>.jpg" alt="">
+          <p>
+            <span class="date">Posted on <%= article[:post_date] %></span><br>
+            <%= article[:title] %>
+          </p>
+        </article>
+      </a>
+    <% end %>
   <% end %>
 
   <%# dummy article %>
@@ -29,5 +34,7 @@
       </div>
     </article>
   <% end %>
+
+  <%# TODO：2ページ目へのリンク %>
 
 </div>
