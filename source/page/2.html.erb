@@ -2,20 +2,26 @@
 <% @body_id = "index" %>
 <% @title = "専門学生の技術系・WEB開発ブログ" %>
 
-<%# <p class="page-title"></p> %>
+<p class="page-title"></p>
 <div class="container">
+
+  <% display_num = @article_info_list.length - 18 %>
+  <% ct = 0 %>
 
   <% @article_info_list.each_with_index.reverse_each do |article, i| %>
     <% page_num = i + 1 %>
-    <a href="../articles/page<%= page_num %>.html" class="article-item box fly">
-      <article class="article-inside">
-        <img src="../images/page<%= page_num %>.jpg" alt="">
-        <p>
-          <span class="date">Posted on <%= article[:post_date] %></span><br>
-          <%= article[:title] %>
-        </p>
-      </article>
-    </a>
+    <% ct += 1 %>
+    <% if page_num <= display_num %>
+      <a href="../articles/page<%= page_num %>.html" class="article-item box fly">
+        <article class="article-inside">
+          <img src="../images/page<%= page_num %>.jpg" alt="">
+          <p>
+            <span class="date">Posted on <%= article[:post_date] %></span><br>
+            <%= article[:title] %>
+          </p>
+        </article>
+      </a>
+    <% end %>
   <% end %>
 
   <%# dummy article %>
