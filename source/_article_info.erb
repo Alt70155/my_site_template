@@ -96,4 +96,8 @@
     <%  %>
 <% ] %>
 
-@article_info_list
+<% @article_info_list.map!.with_index { |hash, i| %>
+  <% hash[:page_num] = i + 1 %>
+  <%# 新しいハッシュを追加すると戻り値がvalueになるため、最後に追加後のハッシュを返す %>
+  <% hash %>
+<% } %>

@@ -4,24 +4,19 @@
 
 <p class="page-title"></p>
 <div class="container">
+  <%# 19から最後尾まで取得 %>
+  <% article_excerpt = @article_info_list.reverse_each.map { |n| n }[18..-1] %>
 
-  <% display_num = @article_info_list.length - 18 %>
-  <% ct = 0 %>
-
-  <% @article_info_list.each_with_index.reverse_each do |article, i| %>
-    <% page_num = i + 1 %>
-    <% ct += 1 %>
-    <% if page_num <= display_num %>
-      <a href="../articles/page<%= page_num %>.html" class="article-item box fly">
-        <article class="article-inside">
-          <img src="../images/page<%= page_num %>.jpg" alt="">
-          <p>
-            <span class="date">Posted on <%= article[:post_date] %></span><br>
-            <%= article[:title] %>
-          </p>
-        </article>
-      </a>
-    <% end %>
+  <% article_excerpt.each_with_index do |article, i| %>
+    <a href="../articles/page<%= article[:page_num] %>.html" class="article-item box fly">
+      <article class="article-inside">
+        <img src="../images/page<%= article[:page_num] %>.jpg" alt="">
+        <p>
+          <span class="date">Posted on <%= article[:post_date] %></span><br>
+          <%= article[:title] %>
+        </p>
+      </article>
+    </a>
   <% end %>
 
   <%# dummy article %>

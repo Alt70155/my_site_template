@@ -9,10 +9,9 @@
   <% article_excerpt = @article_info_list.reverse_each.map { |n| n }[0...18] %>
 
   <% article_excerpt.each_with_index do |article, i| %>
-    <% page_num = i + 1 %>
-    <a href="../articles/page<%= page_num %>.html" class="article-item box fly">
+    <a href="../articles/page<%= article[:page_num] %>.html" class="article-item box fly">
       <article class="article-inside">
-        <img src="../images/page<%= page_num %>.jpg" alt="">
+        <img src="../images/page<%= article[:page_num] %>.jpg" alt="">
         <p>
           <span class="date">Posted on <%= article[:post_date] %></span><br>
           <%= article[:title] %>
