@@ -6,7 +6,7 @@
 <div class="container">
 
   <%# 先頭18個の記事を取得 %>
-  <% article_excerpt = @article_info_list.reverse_each.map { |n| n }[0...18] %>
+  <% article_excerpt = @article_info_list.reverse[0...@division_num] %>
 
   <% article_excerpt.each_with_index do |article, i| %>
     <a href="../articles/page<%= article[:page_num] %>.html" class="article-item box fly">
