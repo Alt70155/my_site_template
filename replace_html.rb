@@ -5,7 +5,7 @@ def replace_html_tag(args)
   File.open(args[:write_file_path], "w") do |write_file|
     File.open(args[:read_file_path], "r") do |read_file|
       html = read_file.read
-      # インデントを考慮したUSAGEヒアドキュメント
+      # インデントを考慮しないUSAGEヒアドキュメント
       write_file.puts(<<~USAGE
           <% @body_id = "article" %>
           <% @page_number = #{@page_num} %>
@@ -36,7 +36,6 @@ def replace_html_tag(args)
 end
 
 replace_html_tag(
-  # write_file_path: "/Users/chika/Documents/my_site_temp/source/articles/page#{@page_num}.html.erb",
-  write_file_path: "/Users/chika/Documents/my_site_temp/test2.html",
-  read_file_path:  "/Users/chika/Documents/my_site_temp/read.html",
+  write_file_path: "",
+  read_file_path:  "",
 )

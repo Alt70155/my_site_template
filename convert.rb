@@ -16,7 +16,7 @@ def batch_str_replace(args)
 end
 
 batch_str_replace(
-  dir_path:              "/Users/chika/Documents/my_site_temp/source/articles/",
+  dir_path:              "",
   file_name_to_replace:  "*.html.erb",
   before_replace_regexp: %r[</code></pre>], # 正規表現
   after_replace_str:     %Q[</pre>]
