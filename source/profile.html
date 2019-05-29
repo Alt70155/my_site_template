@@ -89,7 +89,9 @@
     const topTitle = document.querySelector('.top')
     let ct = 0
     const id = setInterval(() => {
-      topTitle.textContent = topTitle.textContent + str[ct++]
+      const char = document.querySelector('.char')
+      if (char) char.classList.remove('char')
+      topTitle.innerHTML = `${topTitle.innerHTML}<span class='char'>${str[ct++]}</span>`
       if (ct === str.length) clearInterval(id)
     }, 85)
   })()

@@ -38,6 +38,7 @@ a:hover {
 
 .global-nav {
   margin-top: 60px;
+  margin-right: 10px;
   height: 100px;
   max-width: 400px;
 }
@@ -236,6 +237,18 @@ table {
   background: black;
   text-decoration: none;
   color: white;
+}
+
+@-webkit-keyframes blink-caret {
+  50% {
+    border-color: transparent;
+  }
+}
+
+.char {
+  border-right: 4px solid white;
+  padding-right: 10px;
+  -webkit-animation: blink-caret .4s step-end infinite alternate;
 }
 
 @media screen and (max-width: 920px) {
