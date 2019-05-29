@@ -133,6 +133,7 @@ footer small {
 
 .content {
   max-width: 960px;
+  height: auto;
   margin-left: auto;
   margin-right: auto;
 }
@@ -237,38 +238,28 @@ table {
   color: white;
 }
 
-@media screen and (max-width: 874px) {
+@media screen and (max-width: 920px) {
+  .mask {
+    margin-top: -30px;
+  }
+  .top {
+    padding-top: 30px;
+  }
+  header {
+    height: 300px;
+    margin-bottom: -60px;
+  }
+  .nav-flex {
+    display: block;
+  }
+  .global-nav {
+    margin-top: -32px;
+    margin-left: 15px;
+  }
+}
+
+@media screen and (max-width: 615px) {
   .top {
     font-size: 40px;
-  }
-}
-
-@media screen and (max-width: 766px) {
-  .top {
-    font-size: 35px;
-  }
-  .global-nav {
-    min-width: 270px;
-  }
-  .global-nav li {
-    font-size: 17px;
-  }
-}
-
-@media screen and (max-width: 697px) {
-  .top {
-    font-size: 30px;
-  }
-}
-
-@media screen and (max-width: 480px) {
-  .top {
-    font-size: 18px;
-  }
-  .global-nav {
-    min-width: 150px;
-  }
-  .global-nav li {
-    font-size: 12px;
   }
 }

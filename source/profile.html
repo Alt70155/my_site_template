@@ -19,67 +19,81 @@
 </head>
 
 <body id="Profile">
-<div class="mask">
-  <!--header-->
-  <header>
-    <div class="nav-flex">
-      <h1 class="top">Knowledge of Programming</h1>
-      <ul class="global-nav">
-        <li><a href="index.html">Blog</a></li>
-        <li><a href="profile.html">Profile</a></li>
-        <li><a href="portfolio.html">Portfolio</a></li>
-      </ul>
-    </div>
-  </header>
+  <div class="mask">
+    <!--header-->
+    <header>
+      <div class="nav-flex">
+        <h1 class="top"></h1>
+        <ul class="global-nav">
+          <li><a href="index.html">Blog</a></li>
+          <li><a href="profile.html">Profile</a></li>
+          <li><a href="portfolio.html">Portfolio</a></li>
+        </ul>
+      </div>
+    </header>
 
-  <!--wrap-->
-  <div id="Profile_wrap">
-    <div class="content">
-      <div class="main-center">
-        <section class="about">
-          <h1>専門学生のWEB開発・技術系ブログ</h1>
-          <p class="title">About</p>
-          <p>主にWeb系のことについて勉強しています。<br>
-          プログラミングで作ったものなどをポートフォリオとして載せたり、それについての記事や勉強したことを書いていく予定です。</p>
-        </section>
-          <a href="index.html" class="square_btn">記事一覧へ</a>
-          <a href="portfolio.html" class="square_btn">Portfolioへ</a><br>
-        <section class="prof">
-          <p class="title">Profile</p>
-          <table>
-            <tr>
-              <th>Age</th>
-              <td>20</td>
-            </tr>
-            <tr>
-              <th>Skill / Study</th>
-              <td>Java・Python(少し)　HTML/CSS(ある程度)　JavaScript・Ruby(そこそこ)<br>
-                その他：Rails,　CentOS7,　サーバー構築,　Webセキュリティ,　オブジェクト指向設計 など</td>
-            </tr>
-            <tr>
-              <th>Hobby</th>
-              <td>プログラミング　自作PC　洋画　アニメ鑑賞　EDM</td>
-            </tr>
-          </table>
-          <p class="title">Other</p>
-          <div class="sns">
-            <p>Twitter&nbsp;</p>
-            <div class="sns-twi">
-              <a href="https://twitter.com/70155" target="_blank" rel="noopener"><img src="images/sns_twi.png" alt="twitter" class="twi-image"></a>
+    <!--wrap-->
+    <div id="Profile_wrap">
+      <div class="content">
+        <div class="main-center">
+          <section class="about">
+            <h1>専門学生のWEB開発・技術系ブログ</h1>
+            <p class="title">About</p>
+            <p>主にWeb系のことについて勉強しています。<br>
+            プログラミングで作ったものなどをポートフォリオとして載せたり、それについての記事や勉強したことを書いていく予定です。</p>
+          </section>
+            <a href="index.html" class="square_btn">記事一覧へ</a>
+            <a href="portfolio.html" class="square_btn">Portfolioへ</a><br>
+          <section class="prof">
+            <br>
+            <p class="title">Profile</p>
+            <table>
+              <tr>
+                <th>Age</th>
+                <td>20</td>
+              </tr>
+              <tr>
+                <th>Skill / Study</th>
+                <td>Java・Python(少し)　HTML/CSS(ある程度)　JavaScript・Ruby(そこそこ)<br>
+                  その他：Rails,　Sinatra,　CentOS7,　Webサーバー構築,　Webセキュリティ,　オブジェクト指向設計 など</td>
+              </tr>
+              <tr>
+                <th>Hobby</th>
+                <td>プログラミング　自作PC　洋画　アニメ鑑賞　EDM</td>
+              </tr>
+            </table>
+            <br>
+            <p class="title">Other</p>
+            <div class="sns">
+              <p>Twitter&nbsp;</p>
+              <div class="sns-twi">
+                <a href="https://twitter.com/70155" target="_blank" rel="noopener"><img src="images/sns_twi.png" alt="twitter" class="twi-image"></a>
+              </div>
+              <p>&nbsp;&nbsp;GitHub</p>
+              <a href="https://github.com/Alt70155" target="_blank" rel="noopener"><img src="images/github_link.png" alt="github" class="github-image"></a>
             </div>
-            <p>&nbsp;&nbsp;GitHub</p>
-            <a href="https://github.com/Alt70155" target="_blank" rel="noopener"><img src="images/github_link.png" alt="github" class="github-image"></a>
-          </div>
-        </section>
+          </section>
+        </div>
       </div>
     </div>
+
+    <!--footer-->
+    <footer>
+      <small>(C)2018-2019 knowledge-Blog.</small>
+    </footer>
   </div>
 
-  <!--footer-->
-  <footer>
-    <small>(C)2018 knowledge-Blog.</small>
-  </footer>
-</div>
+  <script>
+  (() => {
+    const str = "Knowledge of Programming"
+    const topTitle = document.querySelector('.top')
+    let ct = 0
+    const id = setInterval(() => {
+      topTitle.textContent = topTitle.textContent + str[ct++]
+      if (ct === str.length) clearInterval(id)
+    }, 85)
+  })()
+  </script>
 </body>
 
 </html>
