@@ -32,6 +32,12 @@
           </div>
         <% else %>
           <%= yield %>
+          <div class="pager">
+            <ul class="pagination">
+              <li><a href="#" class="active"><span>1</span></a></li>
+              <li><a href="./page/2.html"><span>2</span></a></li>
+            </ul>
+          </div>
         <% end %>
 
       </div>
