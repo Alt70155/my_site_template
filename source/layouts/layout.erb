@@ -13,6 +13,7 @@
     <% else %>
       <div id="wrap">
     <% end %>
+
       <div class="content">
 
         <% if @body_id == "article" %>
@@ -32,12 +33,9 @@
           </div>
         <% else %>
           <%= yield %>
-          <div class="pager">
-            <ul class="pagination">
-              <li><a href="#" class="active"><span>1</span></a></li>
-              <li><a href="./page/2.html"><span>2</span></a></li>
-            </ul>
-          </div>
+          <% if @body_id == "index" && !@index_pg_num.nil? %>
+            <%= partial "paginate" %>
+          <% end %>
         <% end %>
 
       </div>
@@ -58,9 +56,13 @@
           const windowInnerWidth = window.innerWidth
 
           if (windowInnerWidth <= articleMaxWidth) {
-            prettyPrintList.forEach((elem) => elem.style.maxWidth = `${windowInnerWidth - articlePadding}px`)
+            prettyPrintList.forEach((elem) => {
+              elem.style.maxWidth = `${windowInnerWidth - articlePadding}px`
+            })
           } else {
-            prettyPrintList.forEach((elem) => elem.style.maxWidth = `${textContent.clientWidth}px`)
+            prettyPrintList.forEach((elem) => {
+              elem.style.maxWidth = `${textContent.clientWidth}px`
+            })
           }
         }
 

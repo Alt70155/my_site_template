@@ -1,0 +1,18 @@
+<div class="pager">
+  <ul class="pagination">
+    <% 2.times do |i| %>
+      <% i += 1 %>
+      <% if i == 1 %>
+        <% if i == @index_pg_num %>
+          <li><a href="#" class="active"><span>1</span></a></li>
+        <% else %>
+          <li><a href="../index.html"><span>1</span></a></li>
+        <% end %>
+      <% elsif i == @index_pg_num %>
+        <li><a href="#" class="active"><span><%= i %></span></a></li>
+      <% else %>
+        <li><a href="./page/<%= i %>.html"><span><%= i %></span></a></li>
+      <% end %>
+    <% end %>
+  </ul>
+</div>
