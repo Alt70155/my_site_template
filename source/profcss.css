@@ -129,7 +129,7 @@ footer small {
 }
 
 .mask {
-  background-color: rgba( 0, 0, 0, 0.5);
+  background-color: rgba( 0, 0, 0, 0.7);
 }
 
 .content {
@@ -164,8 +164,7 @@ p {
 }
 
 .title {
-  margin-top: -10px;
-  margin-bottom: 6px;
+  margin-bottom: 4px;
   font-size: 30px;
   font-family: 'Ropa Sans', sans-serif;
 }
