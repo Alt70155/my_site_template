@@ -173,6 +173,10 @@ p {
   padding: 0px 30px;
 }
 
+.main-center section {
+  margin-bottom: 25px;
+}
+
 table {
   color: white;
   border-collapse: 10px;
@@ -196,7 +200,7 @@ table {
 }
 
 .sns {
-  margin-top: 25px;
+  margin-top: 20px;
   display: flex;
 }
 
@@ -235,6 +239,14 @@ table {
   opacity: 0.7;
   background: black;
   text-decoration: none;
+  color: white;
+}
+
+.recent-tech-preferences {
+  margin-left: 20px;
+}
+
+.recent-tech-preferences li {
   color: white;
 }
 
