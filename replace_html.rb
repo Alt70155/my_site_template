@@ -36,6 +36,6 @@ def replace_html_tag(args)
 end
 
 replace_html_tag(
-  write_file_path: "",
-  read_file_path:  "",
+  write_file_path: "./source/articles/page#{@page_num}.html.erb",
+  read_file_path:  "./read.html",
 )

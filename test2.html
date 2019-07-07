@@ -1,61 +1,18 @@
-<% @body_id = "article" %>
-<% @page_number = 20 %>
-<% @description = "" %>
-<div class="language-tag"><B>▼</B></div><pre class="prettyprint linenums"><code>
-const _window   = window
-const _main     = document.querySelector('main')
-const _rightBar = document.querySelector('.right-bar')
-const HALFWAY_POINT_WIDTH = 1000 &#047;&#047; CSSのメティアクエリのmax-width値を設定
-
-&#047;&#047; サイドバーのposition:left値を更新する関数
-&#047;&#047; 画面サイズが変わるたびにleft値を変更する
-const updateLeftValOfSidebar = () =&gt; {
-  const rangeUpToMainRight = _main.getBoundingClientRect().right
-  &#047;&#047; サイドバーはmainの右隣にあるため、ブラウザの左zx端からmainの右までの距離を調べる
-  _rightBar.style.left = `${rangeUpToMainRight}px`
-}
-
-const fixSidebarWhenScrolled = () =&gt; {
-  const rangeFromTopToHeader = document.querySelector('header')
-    .getBoundingClientRect().bottom + _window.pageYOffset
-
-  const rangeFromTopToFooter = document.querySelector('footer')
-    .getBoundingClientRect().top + _window.pageYOffset - _rightBar.clientHeight
-  &#047;&#047; メインコンテンツより下(フッター内)の場合のtopの値を計算
-  &#047;&#047; right-barの位置をスクロール量を合わせて固定表示にする
-  const sidebarTopFixedVal = `${_main.getBoundingClientRect().bottom +
-    _window.pageYOffset - _rightBar.clientHeight}px`
-  &#047;&#047; スクロール量を取得
-  const _windowScrollWeight = _window.pageYOffset
-  &#047;&#047; サイドバーがメインコンテンツ内にある場合
-  if (_windowScrollWeight &gt; rangeFromTopToHeader &&
-    _windowScrollWeight &lt; rangeFromTopToFooter) {
-    _rightBar.style.top = `0px`
-    _rightBar.classList.add('fixed')
-  } else {
-    _rightBar.style.top = `${rangeFromTopToHeader + 1}px` &#047;&#047; borderの1pxを追加
-    _rightBar.classList.remove('fixed')
-    &#047;&#047; メインコンテンツ外かつ、メインコンテンツより下(フッター内)の場合、固定を解除してその場の高さを設定
-    if (_windowScrollWeight &gt;= rangeFromTopToFooter) {
-      _rightBar.style.top = sidebarTopFixedVal
-    }
-  }
-}
-
-const windowSizeJudge = () =&gt; {
-  &#047;&#047; CSSのメディアクエリでブラウザ幅が997px以下の場合はサイドバーを下に回り込ませているため、
-  &#047;&#047; サイドバーが横にある場合のみ固定&解除の処理をする
-  if (matchMedia(`(min-width: ${HALFWAY_POINT_WIDTH}px)`).matches) {
-    fixSidebarWhenScrolled()
-    updateLeftValOfSidebar()
-    _window.addEventListener('scroll', fixSidebarWhenScrolled)
-    _window.addEventListener('resize', updateLeftValOfSidebar)
-  } else {
-    _window.removeEventListener('scroll', fixSidebarWhenScrolled)
-    _window.removeEventListener('resize', updateLeftValOfSidebar)
-  }
-}
-
-windowSizeJudge()
-_window.addEventListener('resize', windowSizeJudge)
-</code></pre>
+<h1>【Python】Tkinterを使って8パズルを作る</h1>
+<div class="text-sub-title">
+  <h2 class="sub-title-border">&nbsp;はじめに</h2>
+</div>
+<p>最近Pythonを入門しているので、GUIライブラリのTkinterを使った8パズルを作ってみました。<br> まだPython歴4日くらいなのでだいぶポンコツコードだと思いますが、とりあえず動いたので公開してみます。<br> また勉強してリファクタリングしたら更新する予定</p>
+<div class="text-sub-title">
+  <h2 class="sub-title-border">&nbsp;実装</h2>
+</div>
+<p>二次元配列に状態を保存して、押された数字の上下左右にゼロがあればそれと位置を交換する。<br> それだけです(｀・∀・´)</p>
+<div class="language-tag"><B>▼Python</B></div>
+<pre class="prettyprint linenums"><code>import tkinter as tk import random from tkinter import messagebox # 配列を二次元配列に分割する関数 # rangeの第三引数はstep, nは0,3,9となり、idx:idx+nは0~3,3~6,6~9となる split_list = lambda l, n: [l[idx:idx + n] for idx in range(0, len(l), n)] def create_screen(list, flame): ct = 0 for i in range(0,3): for j in range(0,3): # それぞれのタイルを生成 label = tk.Label(flame, text = list[i][j]) label.bind(&#39;&lt;1&gt;&#39;, judge) # judge関数を登録 label.grid(column = ct % 3, row = ct // 3, padx = 30, pady = 30) ct+=1 # タイルが押されるとこの関数が実行される def judge(e): y, x = search_index(e.widget[&#39;text&#39;]) # クリックされた数字の座標を取得 if is_exist_zero(y, x): # 選択された数字の上下左右にゼロがあるか調べる zero_y, zero_x = search_index(0) # ゼロの座標を取得 # ゼロと選択された数字を入れ替え random_list[y][x], random_list[zero_y][zero_x] = random_list[zero_y][zero_x], random_list[y][x] create_screen(random_list, flame) # 表示更新 if random_list == correct_list: print(&#39;claer&#39;) close() else: print(&#39;no change&#39;) def search_index(search_num): # index関数は検索した数字が無い場合例外が発生するため、 # in演算子で存在を予め調べ、合った場合のみindex関数を使う for i in range(0,3): if search_num in random_list[i]: # それぞれ二次元配列のyとx座標になる return i, random_list[i].index(search_num) def is_exist_zero(y, x): for i in [-1, 1]: yi, xi = y + i, x + i # 上下左右にゼロがあるかを調べる if -1 &lt; xi &lt; 3 and random_list[y][xi] == 0 \ or -1 &lt; yi &lt; 3 and random_list[yi][x] == 0: return True return False def close(): messagebox.showinfo(&#39;ゲームクリア&#39;, message=&#39;ゲームクリア！\n終了します&#39;) root.destroy() # 状態管理用配列作成 first_list = [0 if i == 9 else i for i in range(1,10)] correct_list = split_list(first_list, 3) # 3分割 random_list = split_list(random.sample(first_list, len(first_list)), 3) # random_list = split_list([1,2,3,4,5,6,7,0,8],3) # ウィンドウ生成 root = tk.Tk() root.title(&#39;8パズル&#39;) root.geometry(&#39;250x250&#39;) flame = tk.LabelFrame(root) # フレーム生成 create_screen(random_list, flame) # フレームと配列を使ってスクリーンを生成 flame.pack(side = &#39;top&#39;) root.mainloop() # スタート </code></pre>
+<p>split_list関数はlambda式で書きましたが、普通に書くと下のようになります。</p>
+<div class="language-tag"><B>▼Python</B></div>
+<pre class="prettyprint linenums"><code>def split_list(l, n): list = [] for idx in range(0, len(l), n): list.append(l[idx:idx + n]) return list </code></pre>
+<div class="text-sub-title">
+  <h2 class="sub-title-border">&nbsp;最後に</h2>
+</div>
+<p>三項演算子の書き方や内包記法など、今まで自分がやってきた言語には無いような面白い書き方が色々あって、面白いな〜と思いました。(でも慣れるのが大変そう＿φ(￣ー￣ ))</p>

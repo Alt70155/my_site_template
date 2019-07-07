@@ -248,6 +248,8 @@ table {
 
 .recent-tech-preferences li {
   color: white;
+  font-family: sans-serif;
+  font-size: 16px;
 }
 
 @-webkit-keyframes blink-caret {

@@ -1,58 +1,19 @@
-<marquee>[
-const _window   = window
-const _main     = document.querySelector('main')
-const _rightBar = document.querySelector('.right-bar')
-const HALFWAY_POINT_WIDTH = 1000 // CSSのメティアクエリのmax-width値を設定
+<h2 id="-">はじめに</h2>
+<p>最近Pythonを入門しているので、GUIライブラリのTkinterを使った8パズルを作ってみました。<br>まだPython歴4日くらいなのでだいぶポンコツコードだと思いますが、とりあえず動いたので公開してみます。<br>また勉強してリファクタリングしたら更新する予定</p>
+<h2 id="-">実装</h2>
+<p>二次元配列に状態を保存して、押された数字の上下左右にゼロがあればそれと位置を交換する。<br>それだけです(｀・∀・´)</p>
+<marquee><br>import tkinter as tk<br>import random<br>from tkinter import messagebox<br><br># 配列を二次元配列に分割する関数<br># rangeの第三引数はstep, nは0,3,9となり、idx:idx+nは0~3,3~6,6~9となる<br>split_list = lambda l, n: [l[idx:idx + n] for idx in range(0, len(l), n)]<br><br>def
+  create_screen(list, flame):<br> ct = 0<br> for i in range(0,3):<br> for j in range(0,3):<br> # それぞれのタイルを生成<br> label = tk.Label(flame, text = list[i][j])<br> label.bind('&lt;1&gt;', judge) # judge関数を登録<br> label.grid(column = ct % 3, row = ct //
+  3, padx = 30, pady = 30)<br> ct+=1<br><br># タイルが押されるとこの関数が実行される<br>def judge(e):<br> y, x = search_index(e.widget['text']) # クリックされた数字の座標を取得<br><br> if is_exist_zero(y, x): # 選択された数字の上下左右にゼロがあるか調べる<br> zero_y, zero_x = search_index(0) # ゼロの座標を取得<br>
+  # ゼロと選択された数字を入れ替え<br> random_list[y][x], random_list[zero_y][zero_x] = random_list[zero_y][zero_x], random_list[y][x]<br> create_screen(random_list, flame) # 表示更新<br> if random_list == correct_list:<br> print('claer')<br> close()<br> else:<br>
+  print('no change')<br><br>def search_index(search_num):<br> # index関数は検索した数字が無い場合例外が発生するため、<br> # in演算子で存在を予め調べ、合った場合のみindex関数を使う<br> for i in range(0,3):<br> if search_num in random_list[i]:<br> # それぞれ二次元配列のyとx座標になる<br> return i,
+  random_list[i].index(search_num)<br><br>def is_exist_zero(y, x):<br> for i in [-1, 1]:<br> yi, xi = y + i, x + i<br> # 上下左右にゼロがあるかを調べる<br> if -1 &lt; xi &lt; 3 and random_list[y][xi] == 0 \<br> or -1 &lt; yi &lt; 3 and random_list[yi][x] == 0:<br>
+  return True<br> return False<br><br>def close():<br> messagebox.showinfo('ゲームクリア', message='ゲームクリア！\n終了します')<br> root.destroy()<br><br># 状態管理用配列作成<br>first_list = [0 if i == 9 else i for i in range(1,10)]<br>correct_list = split_list(first_list,
+  3) # 3分割<br>random_list = split_list(random.sample(first_list, len(first_list)), 3)<br># random_list = split_list([1,2,3,4,5,6,7,0,8],3)<br><br># ウィンドウ生成<br>root = tk.Tk()<br>root.title('8パズル')<br>root.geometry('250x250')<br>flame =
+  tk.LabelFrame(root) # フレーム生成<br>create_screen(random_list, flame) # フレームと配列を使ってスクリーンを生成<br><br>flame.pack(side = 'top')<br>root.mainloop() # スタート<br></marquee>
 
-// サイドバーのposition:left値を更新する関数
-// 画面サイズが変わるたびにleft値を変更する
-const updateLeftValOfSidebar = () => {
-  const rangeUpToMainRight = _main.getBoundingClientRect().right
-  // サイドバーはmainの右隣にあるため、ブラウザの左zx端からmainの右までの距離を調べる
-  _rightBar.style.left = `${rangeUpToMainRight}px`
-}
+<p>split_list関数はlambda式で書きましたが、普通に書くと下のようになります。</p>
+<marquee><br>def split_list(l, n):<br> list = []<br> for idx in range(0, len(l), n):<br> list.append(l[idx:idx + n])<br> return list<br></marquee>
 
-const fixSidebarWhenScrolled = () => {
-  const rangeFromTopToHeader = document.querySelector('header')
-    .getBoundingClientRect().bottom + _window.pageYOffset
-
-  const rangeFromTopToFooter = document.querySelector('footer')
-    .getBoundingClientRect().top + _window.pageYOffset - _rightBar.clientHeight
-  // メインコンテンツより下(フッター内)の場合のtopの値を計算
-  // right-barの位置をスクロール量を合わせて固定表示にする
-  const sidebarTopFixedVal = `${_main.getBoundingClientRect().bottom +
-    _window.pageYOffset - _rightBar.clientHeight}px`
-  // スクロール量を取得
-  const _windowScrollWeight = _window.pageYOffset
-  // サイドバーがメインコンテンツ内にある場合
-  if (_windowScrollWeight > rangeFromTopToHeader &&
-    _windowScrollWeight < rangeFromTopToFooter) {
-    _rightBar.style.top = `0px`
-    _rightBar.classList.add('fixed')
-  } else {
-    _rightBar.style.top = `${rangeFromTopToHeader + 1}px` // borderの1pxを追加
-    _rightBar.classList.remove('fixed')
-    // メインコンテンツ外かつ、メインコンテンツより下(フッター内)の場合、固定を解除してその場の高さを設定
-    if (_windowScrollWeight >= rangeFromTopToFooter) {
-      _rightBar.style.top = sidebarTopFixedVal
-    }
-  }
-}
-
-const windowSizeJudge = () => {
-  // CSSのメディアクエリでブラウザ幅が997px以下の場合はサイドバーを下に回り込ませているため、
-  // サイドバーが横にある場合のみ固定&解除の処理をする
-  if (matchMedia(`(min-width: ${HALFWAY_POINT_WIDTH}px)`).matches) {
-    fixSidebarWhenScrolled()
-    updateLeftValOfSidebar()
-    _window.addEventListener('scroll', fixSidebarWhenScrolled)
-    _window.addEventListener('resize', updateLeftValOfSidebar)
-  } else {
-    _window.removeEventListener('scroll', fixSidebarWhenScrolled)
-    _window.removeEventListener('resize', updateLeftValOfSidebar)
-  }
-}
-
-windowSizeJudge()
-_window.addEventListener('resize', windowSizeJudge)
-]</marquee>
+<h2 id="-">最後に</h2>
+<p>三項演算子の書き方や内包記法など、今まで自分がやってきた言語には無いような面白い書き方が色々あって、面白いな〜と思いました。(でも慣れるのが大変そう＿φ(￣ー￣ ))</p>
