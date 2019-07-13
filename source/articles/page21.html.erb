@@ -1,0 +1,254 @@
+<% partial "adsense" %>
+<% @body_id = "article" %>
+<% @page_number = 21 %>
+<% @description = "最近ずっとSinatraをやっているのですが、前にRailsを中途半端に勉強して、「よく分からんからSinatraで勉強するわ！」となったまでは良かったのですが、いざSinatraでRailsっぽい事をやろうとするととてつもなく大変でした。" %>
+
+<div class="text-sub-title">
+  <h2 class="sub-title-border">&nbsp;はじめに</h2>
+</div>
+<p>最近ずっとSinatraをやっているのですが、前にRailsを中途半端に勉強して、「よく分からんからSinatraで勉強するわ！」となったまでは良かったのですが、いざSinatraでRailsっぽい事をやろうとするととてつもなく大変でした。<br>
+  その中でも、テストがけっこう大変で、Railsの機能なのかRackの機能なのかSinatraの機能なのか、またはそれ以外なのかサッパリ分からず、右往左往しました。。。</p>
+<p>今ではある程度できるようになってきたので、今回は簡単なテストのやり方や参考資料などを紹介したいと思います。</p>
+<div class="text-sub-title">
+  <h2 class="sub-title-border">&nbsp;使うgem</h2>
+</div>
+<ul>
+  <li>
+    <strong>gem &#39;sinatra&#39;</strong>
+  </li>
+  <li>
+    <strong>gem &#39;minitest&#39;</strong>
+  </li>
+  <li>
+    <strong>gem &#39;rack-test&#39;</strong>
+  </li>
+</ul>
+<p>が今回のメイン</p>
+<p>一応Gemfile載せときます</p>
+<div class="language-tag">
+  <b>▼ Gemfile</b>
+</div>
+<pre class="prettyprint linenums"><code>gem &#39;sinatra&#39;
+gem &#39;sinatra-contrib&#39;
+gem &#39;slim&#39;
+gem &#39;mysql2&#39;
+gem &#39;rack-test&#39;
+gem &#39;minitest&#39;
+gem &#39;sinatra-activerecord&#39;
+</code></pre>
+
+<div class="text-sub-title">
+  <h2 class="sub-title-border">&nbsp;Module MiniTest::Assertions</h2>
+</div>
+
+<p>テストはMinitestでやっていくのですが、基本的なassert系メソッドはRailsやそれ関連のgemを入れない場合、Rubyに標準で導入されているMinitestのメソッドしか使えません。(当たり前の話ですが)<br>
+  つまり、assert_selectやassert_redirect_to、assert_templateなどの大変便利なメソッドも使えません。</p>
+<p>Minitest単体で使えるメソッドは以下のリファレンスに書いてあるので、そこを参照してください。<br>
+  <a href="https://docs.ruby-lang.org/ja/2.0.0/class/MiniTest=3a=3aAssertions.html" target="_blank" rel="noopener">https://docs.ruby-lang.org/ja/2.0.0/class/MiniTest=3a=3aAssertions.html#I__ASSERTIONS</a><br>
+  <a href="http://docs.seattlerb.org/minitest/Minitest/Assertions.html" target="_blank" rel="noopener">http://docs.seattlerb.org/minitest/Minitest/Assertions.html</a>
+</p>
+<div class="text-sub-title">
+  <h2 class="sub-title-border">&nbsp;Module Rack::Test::Methods</h2>
+</div>
+<p>SinatraはRackアプリケーションの上に乗っている(という表現で合っているのか？)ので、RackのモジュールであるRack::Test::Methodsを使います。RailsもRackを利用しているので、Railsで使われているメソッドと同じメソッドが使えます。</p>
+<p>ここに詳しく書いてあります。<br>
+  <a href="https://www.rubydoc.info/github/brynary/rack-test/master/Rack/Test/Methods" target="_blank" rel="noopener">https://www.rubydoc.info/github/brynary/rack-test/master/Rack/Test/Methods</a><br>
+  Methods以外にも、CookieやSessionなどのテストもあります。(使った事ないので割愛)</p>
+<p>次に、そのメソッドを使ったテストを簡単に紹介します。</p>
+<%= @article_page_middle_ads %>
+<div class="text-sub-title">
+  <h2 class="sub-title-border">&nbsp;test_helper</h2>
+</div>
+<p>test_helperの中身も一応載せときます。</p>
+<div class="language-tag">
+  <b>▼ ruby:test_helper.rb</b>
+</div>
+<pre class="prettyprint linenums"><code>require &#39;./app.rb&#39;
+require &#39;minitest/autorun&#39;
+require &#39;rack/test&#39;
+ENV[&#39;RACK_ENV&#39;] = &#39;test&#39;
+
+class Minitest::Test
+    include Rack::Test::Methods
+
+    def app
+        Sinatra::Application
+    end
+end
+</code></pre>
+
+<div class="text-sub-title">
+  <h2 class="sub-title-border">&nbsp;HTTPリクエストのテスト</h2>
+</div>
+
+<p>まずは/create_article(というコントローラがあるという事で)に対してgetリクエストを送り、レスポンスが帰ってくるかをテストしてみます。</p>
+<div class="language-tag">
+  <b>▼ ruby:post_controller_test.rb</b>
+</div>
+<pre class="prettyprint linenums"><code>require &#39;./test/test_helper.rb&#39;
+
+class PostControllerTest &lt; Minitest::Test
+    def test_should_be_able_to_get
+        get &#39;/create_article&#39;
+        assert last_response.ok?
+        assert_equal &#39;/create_article&#39;, last_request.path_info
+    end
+end
+</code></pre>
+
+<p>6,7行目で使ったlast_responseとlast_requestについては、次に詳しく説明します。</p>
+
+<div class="text-sub-title">
+  <h2 class="sub-title-border">&nbsp;last_responseとlast_request</h2>
+</div>
+
+<p>last_responseはテストの中で最後に受信したレスポンス、last_requestはテストの中で最後に送信したリクエストになります。</p>
+<p>それぞれに使えるメソッドは以下で確認できます。</p>
+<div class="language-tag">
+  <b>▼ ruby</b>
+</div>
+<pre class="prettyprint linenums"><code>p last_response.methods
+p last_request.methods
+</code></pre>
+<p>上を実行するとめっちゃありますが、かい摘んで紹介</p>
+<div class="language-tag">
+  <b>▼ ruby:last_response</b>
+</div>
+<pre class="prettyprint linenums"><code>def test_response_check
+    get &#39;/create_article&#39;
+    p last_response.ok? #=&gt; true
+    p last_response.body #=&gt; ページのhtml
+    p last_response.headers
+    #=&gt; {&quot;content-type&quot;=&gt;&quot;text/html;charset=utf-8&quot;, &quot;content-length&quot;=&gt;&quot;913&quot;, など
+    p last_response.status #=&gt; 200
+end
+</code></pre>
+<p>先ほどのテストのassert_equal '/create_article', last_request.path_infoのようにpathでそのページが読み込まれたかで判定しても良いですが、last_response.bodyを使って以下のようにも書けます。</p>
+<div class="language-tag">
+  <b>▼ ruby</b>
+</div>
+<pre class="prettyprint linenums"><code># /create_articleページに記事投稿というタイトルがある場合
+assert last_response.body.include?(&#39;記事投稿&#39;)
+</code></pre>
+<p>リダイレクトかレンダリングなのかによってはこの使い分けが活きる気がします。多分。</p>
+<p>last_requestも紹介</p>
+<div class="language-tag">
+  <b>▼ ruby:last_request</b>
+</div>
+<pre class="prettyprint linenums"><code>def test_last_request_check
+    get &#39;/create_article&#39;
+    p last_request.body # クライアントによって送信されたリクエストボディ
+    p last_request.scheme # &quot;http&quot;
+    p last_request.path_info # &quot;/create_article&quot;
+    p last_request.port # 80
+    p last_request.request_method # &quot;get&quot;
+    p last_request.host # &quot;example.org&quot;
+    p last_request.get? # true
+    p last_request.post? # false
+    p last_request.form_data? # false
+    p last_request.cookies # ブラウザクッキーのハッシュ
+    p last_request.xhr? # ajaxリクエストかどうか
+    p last_request.url # &quot;http://example.com/create_article&quot;
+    p last_request.path # &quot;/create_article&quot;
+    p last_request.ip # クライアントのipアドレス
+end
+</code></pre>
+<div class="text-sub-title">
+  <h2 class="sub-title-border">&nbsp;POSTのテスト</h2>
+</div>
+<p>次に、postリクエストのテスト。</p>
+<p>/create_articleページからformで/article_postへpostリクエストを送るという想定のテストを書いてみます。</p>
+<p>/create_articleのformは以下のような感じ</p>
+<div class="language-tag">
+  <b>▼ slim:create_article.slim</b>
+</div>
+<pre class="prettyprint linenums"><code>form method=&quot;post&quot; action=&quot;/article_post&quot; enctype=&quot;multipart/form-data&quot;
+    input type=&quot;text&quot; name=&quot;title&quot; placeholder=&quot;タイトル&quot;
+    textarea type=&quot;text&quot; name=&quot;body&quot; placeholder=&quot;記事を入力&quot;
+    input type=&quot;submit&quot; name=&quot;submit&quot; value=&quot;投稿&quot; </code></pre>
+<p>簡単にタイトルと記事を送るformです。</p>
+<p>これに対しテストでpostリクエストを送り、記事が投稿され、DBの記事が増えているかどうかを確認します。</p>
+<div class="language-tag">
+  <b>▼ ruby:post_controller_test.rb</b>
+</div>
+<pre class="prettyprint linenums"><code># 〜省略〜
+
+class PostControllerTest &lt; Minitest::Test
+    # 〜省略〜
+
+    def test_should_be_able_to_post
+        post_count = post.count
+        post &#39;/article_post&#39;, params = {
+            title: &#39;テストタイトル&#39;,
+            body: &#39;テスト本文&#39;
+        }
+        # 投稿前と後で記事が増えているか
+        assert_equal post_count + 1, post.count
+    end
+end
+</code></pre>
+<p>上のようにparams = {} にformのname属性: 値を設定して送ります。</p>
+<div class="text-sub-title">
+  <h2 class="sub-title-border">&nbsp;POSTリクエストに画像ファイルがある場合のテスト</h2>
+</div>
+<p>以下のように、formにファイルがある場合</p>
+<div class="language-tag">
+  <b>▼ slim:create_article.slim</b>
+</div>
+<pre class="prettyprint linenums"><code>form method=&quot;post&quot; action=&quot;/article_post&quot; enctype=&quot;multipart/form-data&quot;
+    input type=&quot;text&quot; name=&quot;title&quot; placeholder=&quot;タイトル&quot;
+    textarea type=&quot;text&quot; name=&quot;body&quot; placeholder=&quot;記事を入力&quot;
+    input type=&quot;file&quot; name=&quot;file&quot; accept=&quot;image/*&quot;
+    input type=&quot;submit&quot; name=&quot;submit&quot; value=&quot;投稿&quot; </code></pre>
+<p>このような場合にはRack::Test::UploadedFileを使います。</p>
+<div class="language-tag">
+  <b>▼ ruby:post_controller_test.rb</b>
+</div>
+<pre class="prettyprint linenums"><code># 〜省略〜
+
+class PostControllerTest &lt; Minitest::Test
+    # 〜省略〜
+
+    def test_should_be_able_to_post
+        post_count = post.count
+        post &#39;/article_post&#39;, params = {
+            title: &#39;テストタイトル&#39;,
+            body: &#39;テスト本文&#39;,
+            file: Rack::Test::UploadedFile.new(&#39;test/sample.jpg&#39;, &#39;image/jpeg&#39;)
+        }
+        assert_equal post_count + 1, post.count
+    end
+end
+</code></pre>
+<p>第一引数にファイルの場所を、第二引数にファイルタイプを指定します。</p>
+
+<div class="text-sub-title">
+  <h2 class="sub-title-border">&nbsp;リダイレクト</h2>
+</div>
+
+<p>テストでは、たとえコントローラ側でリダイレクト処理があったとしてもリダイレクトしないので、明示的にリダイレクトする処理を挟む必要があります。<br>
+  これにはRack::Test::Sessionにあるfollow_redirect!メソッドを使います。(たぶんRailsでも同じ)</p>
+<p>記事を投稿→投稿処理が成功したら作成した記事のページにリダイレクトするというコントローラのテストを書いてみます。</p>
+<div class="language-tag">
+  <b>▼ ruby:post_controller_test.rb</b>
+</div>
+<pre class="prettyprint linenums"><code># 〜省略〜
+
+class PostControllerTest &lt; Minitest::Test
+    # 〜省略〜
+
+    def test_should_redirect_after_post_an_article
+        post_count = post.count
+        post &#39;/article_post&#39;, params = {
+            title: &#39;テストタイトル&#39;,
+            body: &#39;テスト本文&#39;,
+            file: rack::test::uploadedfile.new(&#39;test/sample.jpg&#39;, &#39;image/jpeg&#39;)
+        }
+        assert_equal post_count + 1, post.count
+        follow_redirect! # リダイレクト
+        assert_equal &quot;/articles/#{post.count}&quot;, last_request.path_info
+    end
+end
+</code></pre>
+
+<p>以上が、MinitestとRack::Testを使ったテストのやり方でした。</p>
