@@ -35,12 +35,12 @@ def judge(e):
         # ゼロと選択された数字を入れ替え
         random_list[y][x], random_list[zero_y][zero_x] = random_list[zero_y][zero_x], random_list[y][x]
         create_screen(random_list, flame) # 表示更新
-            # 正しい配列と同じならクリア
-            if random_list == correct_list:
-                print('claer')
-                close()
-            else:
-                print('no change')
+        # 正しい配列と同じならクリア
+        if random_list == correct_list:
+            print('claer')
+            close()
+    else:
+        print('no change')
 
 def search_index(search_num):
     # index関数は検索した数字が無い場合例外が発生するため、
