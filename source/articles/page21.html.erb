@@ -8,12 +8,12 @@
 </div>
 <p>最近ずっとSinatraをやっているのですが、前にRailsを中途半端に勉強して、「よく分からんからSinatraで勉強するわ！」となったまでは良かったのですが、いざSinatraでRailsっぽい事をやろうとするととてつもなく大変でした。<br>
   その中でも、テストがけっこう大変で、Railsの機能なのかRackの機能なのかSinatraの機能なのか、またはそれ以外なのかサッパリ分からず、右往左往しました。。。</p>
-<p>今ではある程度できるようになってきたので、今回は簡単なテストのやり方や参考資料などを紹介したいと思います。</p>
+<p>最近やっとある程度できるようになってきたので、今回は簡単なテストのやり方や参考資料などを紹介したいと思います。</p>
 <div class="text-sub-title">
-  <h2 class="sub-title-border">&nbsp;公式サイトのテスト方法</h2>
+  <h2 class="sub-title-border">&nbsp;Sinatraの公式サイト</h2>
 </div>
 <p>
-  以下にSinatraとRack::Testを使ったテストの導入みたいなのが書いてあります。(そこまで詳しくは書いてないです。)
+  以下にSinatraとRack::Testを使ったテストの導入みたいなのが書いてありますので、まだ見てない人はこちらから。(そこまで詳しくは書いてないですが)<br>
   <a href="http://sinatrarb.com/testing.html">TESTING SINATRA WITH RACK::TEST</a>
 </p>
 <div class="text-sub-title">
@@ -127,10 +127,10 @@ p last_request.methods
 <pre class="prettyprint linenums"><code>def test_response_check
     get &#39;/create_article&#39;
     p last_response.ok? #=&gt; true
-    p last_response.body #=&gt; ページのhtml
+    p last_response.body #=&gt; 最後に表示されたページのHTML構造
     p last_response.headers
     #=&gt; {&quot;content-type&quot;=&gt;&quot;text/html;charset=utf-8&quot;, &quot;content-length&quot;=&gt;&quot;913&quot;, など
-    p last_response.status #=&gt; 200
+    p last_response.status #=&gt; ステータスコード200
 end
 </code></pre>
 <p>先ほどのテストのassert_equal '/create_article', last_request.path_infoのようにpathでそのページが読み込まれたかで判定しても良いですが、last_response.bodyを使って以下のようにも書けます。</p>
