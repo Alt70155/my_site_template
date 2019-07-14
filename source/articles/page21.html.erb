@@ -10,6 +10,13 @@
   その中でも、テストがけっこう大変で、Railsの機能なのかRackの機能なのかSinatraの機能なのか、またはそれ以外なのかサッパリ分からず、右往左往しました。。。</p>
 <p>今ではある程度できるようになってきたので、今回は簡単なテストのやり方や参考資料などを紹介したいと思います。</p>
 <div class="text-sub-title">
+  <h2 class="sub-title-border">&nbsp;公式サイトのテスト方法</h2>
+</div>
+<p>
+  以下にSinatraとRack::Testを使ったテストの導入みたいなのが書いてあります。(そこまで詳しくは書いてないです。)
+  <a href="http://sinatrarb.com/testing.html">TESTING SINATRA WITH RACK::TEST</a>
+</p>
+<div class="text-sub-title">
   <h2 class="sub-title-border">&nbsp;使うgem</h2>
 </div>
 <ul>
@@ -50,10 +57,13 @@ gem &#39;sinatra-activerecord&#39;
 <div class="text-sub-title">
   <h2 class="sub-title-border">&nbsp;Module Rack::Test::Methods</h2>
 </div>
-<p>SinatraはRackアプリケーションの上に乗っている(という表現で合っているのか？)ので、RackのモジュールであるRack::Test::Methodsを使います。RailsもRackを利用しているので、Railsで使われているメソッドと同じメソッドが使えます。</p>
-<p>ここに詳しく書いてあります。<br>
+<p>
+  SinatraはRackアプリケーションの上に乗っている(という表現で合っているのか？)ので、RackのモジュールであるRack::Test::Methodsを使います。これがアプリケーションのリクエストなどをシュミレートしてくれます。<br>
+  RailsもRackを利用しているので、Railsで使われているメソッドと同じメソッドが使えます。
+</p>
+<p>ドキュメント<br>
   <a href="https://www.rubydoc.info/github/brynary/rack-test/master/Rack/Test/Methods" target="_blank" rel="noopener">https://www.rubydoc.info/github/brynary/rack-test/master/Rack/Test/Methods</a><br>
-  Methods以外にも、CookieやSessionなどのテストもあります。(使った事ないので割愛)</p>
+  Methods以外にも、CookieやSessionなどのテストもできるようです。(使った事ないので割愛)</p>
 <p>次に、そのメソッドを使ったテストを簡単に紹介します。</p>
 <%= @article_page_middle_ads %>
 <div class="text-sub-title">
