@@ -6,7 +6,7 @@
 <div class="text-sub-title">
   <h2 class="sub-title-border">&nbsp;はじめに</h2>
 </div>
-<p>最近ずっとSinatraをやっているのですが、前にRailsを中途半端に勉強して、「よく分からんからSinatraで勉強するわ！」となったまでは良かったのですが、いざSinatraでRailsっぽい事をやろうとするととてつもなく大変でした。<br>
+<p>最近ずっとSinatraをやっていまして、前にRailsを中途半端に勉強して「よく分からんからSinatraで勉強するわ！」となったまでは良かったのですが、いざSinatraでRailsっぽい事をやろうとするととてつもなく大変でした。<br>
   その中でも、テストがけっこう大変で、Railsの機能なのかRackの機能なのかSinatraの機能なのか、またはそれ以外なのかサッパリ分からず、右往左往しました。。。</p>
 <p>最近やっとある程度できるようになってきたので、今回は簡単なテストのやり方や参考資料などを紹介したいと思います。</p>
 <div class="text-sub-title">
@@ -111,9 +111,9 @@ end
 <div class="text-sub-title">
   <h2 class="sub-title-border">&nbsp;last_responseとlast_request</h2>
 </div>
-
-<p>last_responseはテストの中で最後に受信したレスポンス、last_requestはテストの中で最後に送信したリクエストになります。</p>
-<p>それぞれに使えるメソッドは以下で確認できます。</p>
+<p>last_responseはテストの中で最後に受信したレスポンス、last_requestはテストの中で最後に送信したリクエストになっていて、それぞれテストに有用な情報を保持しています。<br>
+  それに対してメソッドを呼び出すことによってその情報所得できるようになっています。</p>
+<p>使えるメソッドは以下で確認できます。</p>
 <div class="language-tag">
   <b>▼ ruby</b>
 </div>

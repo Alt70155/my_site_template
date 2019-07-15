@@ -1,0 +1,47 @@
+<% @body_id = "article" %>
+<% @page_number = 22 %>
+<% @description = "Rubyにおけるコロンコロンの意味はメソッド呼び出しだと思っていたため、RailsのActiveRecord::Baseの意味が分からず、「ActiveRecordクラスのBaseメソッド...？" %>
+
+<div class="article-main-contents"><div class="text-sub-title"><h2 class="sub-title-border">&nbsp;はじめに</h2></div>
+
+<p>Rubyにおけるコロンコロンの意味はメソッド呼び出しだと思っていたため、RailsのActiveRecord::Baseの意味が分からず、「ActiveRecordクラスのBaseメソッド...？じゃあclass User &lt; ActiveRecord::BaseはBaseメソッドを継承しているのかー（！？）」とかアホなこと考えたり、地味にモヤモヤしていたので記事にしてみます。</p>
+
+<p>簡単に調べた知識なので間違っていたらすいません。</p>
+
+<div class="text-sub-title"><h2 class="sub-title-border">&nbsp;コロンコロンとは</h2></div>
+
+<p>まずRubyにおけるコロンコロンの役割から見直していきます。</p>
+
+<p>私の最初の理解であるメソッド呼び出しは正しいのですが、定数の呼び出しにも使えるらしい。へ〜</p>
+
+<div class="language-tag"><b>▼Ruby</b></div><pre class="prettyprint linenums prettyprinted" style="max-width: 515px;"><ol class="linenums"><li class="L0"><code><span class="kwd">class</span><span class="pln"> </span><span class="typ">TestClass</span></code></li><li class="L1"><code><span class="pln">    CONSTANT_VAR </span><span class="pun">=</span><span class="pln"> </span><span class="str">'hello'</span></code></li><li class="L2"><code></code></li><li class="L3"><code><span class="pln">    </span><span class="kwd">def</span><span class="pln"> </span><span class="kwd">self</span><span class="pun">.</span><span class="pln">test_method</span></code></li><li class="L4"><code><span class="pln">        puts </span><span class="str">'world'</span></code></li><li class="L5"><code><span class="pln">    </span><span class="kwd">end</span></code></li><li class="L6"><code><span class="kwd">end</span></code></li><li class="L7"><code></code></li><li class="L8"><code><span class="pln">puts </span><span class="typ">TestClass</span><span class="pun">::</span><span class="pln">CONSTANT_VAR </span><span class="com">#=&gt; hello</span></code></li><li class="L9"><code><span class="typ">TestClass</span><span class="pun">::</span><span class="pln">test_method </span><span class="com">#=&gt; world</span></code></li></ol></pre>
+
+<p>ちなみに、Rubyではクラスやモジュールも定数として扱われるらしい。よく分からないけどすごい。</p>
+
+<p>参考<br>
+<a href="https://qiita.com/ktarow/items/772014a4f0d48905f3ef#%E4%BA%8C%E9%87%8D%E3%82%B3%E3%83%AD%E3%83%B3%E8%A8%98%E6%B3%95">Rubyにおけるドット記法，二重コロン記法</a></p>
+
+<p>次の使い方<br>
+上に書いた内容と似てますが、Rubyの名前空間の（トップレベルからのパス）絶対パスで指定する場合に使われるらしい。</p>
+
+<div class="language-tag"><b>▼Ruby</b></div><pre class="prettyprint linenums prettyprinted" style="max-width: 515px;"><ol class="linenums"><li class="L0"><code><span class="kwd">module</span><span class="pln"> </span><span class="typ">MyNameSpace</span></code></li><li class="L1"><code><span class="pln">    </span><span class="kwd">class</span><span class="pln"> </span><span class="typ">TestClass</span></code></li><li class="L2"><code><span class="pln">        </span><span class="kwd">def</span><span class="pln"> </span><span class="kwd">self</span><span class="pun">.</span><span class="pln">test_method</span></code></li><li class="L3"><code><span class="pln">            puts </span><span class="str">'hello'</span></code></li><li class="L4"><code><span class="pln">        </span><span class="kwd">end</span></code></li><li class="L5"><code><span class="pln">    </span><span class="kwd">end</span></code></li><li class="L6"><code><span class="kwd">end</span></code></li><li class="L7"><code></code></li><li class="L8"><code><span class="kwd">class</span><span class="pln"> </span><span class="typ">TestClass</span></code></li><li class="L9"><code><span class="pln">    </span><span class="kwd">def</span><span class="pln"> </span><span class="kwd">self</span><span class="pun">.</span><span class="pln">test_method</span></code></li><li class="L0"><code><span class="pln">        puts </span><span class="str">'world'</span></code></li><li class="L1"><code><span class="pln">    </span><span class="kwd">end</span></code></li><li class="L2"><code><span class="kwd">end</span></code></li><li class="L3"><code></code></li><li class="L4"><code><span class="typ">MyNameSpace</span><span class="pun">::</span><span class="typ">TestClass</span><span class="pun">.</span><span class="pln">test_method </span><span class="com">#=&gt; hello</span></code></li><li class="L5"><code><span class="typ">TestClass</span><span class="pun">.</span><span class="pln">test_method </span><span class="com">#=&gt; world</span></code></li></ol></pre>
+
+<p>この例でいうと、上のTestClassを指すのか下のTestClassを指すのかを指定するのに使われる訳ですね。</p>
+
+<p>参考(こっちの記事ではこの辺の話をさらに深くやっています。)<br>
+<a href="https://qiita.com/Drumato/items/ec889d0c3b4b94c67120">Rubyの名前空間とレキシカルスコープについて簡潔に説明する｡</a></p>
+
+<div class="text-sub-title"><h2 class="sub-title-border">&nbsp;じゃあActiveRecord::Baseは</h2></div>
+
+<p>ここまでくればもう分かりますが、つまりActiveRecord::BaseはActiveRecordモジュールのBaseクラスを指しているということになります。Baseメソッドを継承じゃないんですね、良かった良かった。</p>
+
+<p>簡単に表すと以下のような感じ</p>
+
+<div class="language-tag"><b>▼Ruby</b></div><pre class="prettyprint linenums prettyprinted" style="max-width: 515px;"><ol class="linenums"><li class="L0"><code><span class="kwd">module</span><span class="pln"> </span><span class="typ">ActiveRecord</span></code></li><li class="L1"><code><span class="pln">    </span><span class="kwd">class</span><span class="pln"> </span><span class="typ">Base</span></code></li><li class="L2"><code><span class="pln">    </span><span class="kwd">end</span></code></li><li class="L3"><code><span class="kwd">end</span></code></li><li class="L4"><code></code></li><li class="L5"><code><span class="kwd">class</span><span class="pln"> </span><span class="typ">User</span><span class="pln"> </span><span class="pun">&lt;</span><span class="pln"> </span><span class="typ">ActiveRecord</span><span class="pun">::</span><span class="typ">Base</span></code></li><li class="L6"><code><span class="kwd">end</span></code></li></ol></pre>
+
+<p>このような長い道のりを経て、我々のアプリケーションに届けられているという事なんですねぇ～（？）</p>
+
+<p>ちなみに実際のActiveRecord::Baseの中身は以下で見れます。</p>
+
+<p><a href="https://github.com/rails/rails/blob/master/activerecord/lib/active_record/base.rb">https://github.com/rails/rails/blob/master/activerecord/lib/active_record/base.rb</a></p>
+</div>
