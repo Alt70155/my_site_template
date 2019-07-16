@@ -414,6 +414,10 @@ footer small {
   line-height: 40px;
 }
 
+.article-main-contents a {
+  word-break: break-all;
+}
+
 .torikesi-sen {
   text-decoration: line-through;
 }

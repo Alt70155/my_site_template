@@ -29,13 +29,13 @@ end
   <div class="language-tag"><p>▼JavaScript</p></div>
   <pre class="prettyprint linenums">
 let toInts = (hex) =&gt; {
-let hexArray = [];
-let toIntArray = [];
-hexArray.push(hex.slice(1, 3), hex.slice(3, 5), hex.slice(5, 7));
-hexArray.forEach(function(item) {
-toIntArray.push(parseInt(item, 16));
-});
-return toIntArray;
+  let hexArray = [];
+  let toIntArray = [];
+  hexArray.push(hex.slice(1, 3), hex.slice(3, 5), hex.slice(5, 7));
+  hexArray.forEach(function(item) {
+    toIntArray.push(parseInt(item, 16));
+  });
+  return toIntArray;
 }
 console.log(toInts('#abcdef'));
   </pre>
@@ -66,15 +66,15 @@ console.log(colorCodeToInt("abcdef"))
 let materials = ["Hydrogen","Helium","Lithium", "Beryllium"];
 
 materials.map(function(x) {
-return x.length; //引数xの無名関数を実行し、x.lengthを返す
+  return x.length; //引数xの無名関数を実行し、x.lengthを返す
 }); //[8, 6, 7, 9]
 
 materials.map((x) =&gt; {
-return x.length; //ES6のアロー関数により、無名関数のfunctionを省略できる
+  return x.length; //ES6のアロー関数により、無名関数のfunctionを省略できる
 }); //[8, 6, 7, 9]
 
 materials.map( x =&gt; {
-return x.length; //アロー関数は引数が1つの場合、(x)のカッコを省略できる
+  return x.length; //アロー関数は引数が1つの場合、(x)のカッコを省略できる
 }) //[8, 6, 7, 9]
 
 materials.map( x =&gt; x.length ) //{}を省略したことにより、returnを省略できる
@@ -86,4 +86,3 @@ materials.map( x =&gt; x.length ) //{}を省略したことにより、returnを
   </div>
   <p>正規表現やES6の仕様について今まで曖昧のまま使っていた為、もっとまともに勉強しようと思いました。</p>
   <p>いつも思うのですが、自分が時間をかけてまとめた(と思った)コードを先輩方が一瞬で簡潔にまとめてくれる凄技には毎回感動。。。いつも家で1人盛り上がってます。プログラミングは面白いですね。</p>
-
